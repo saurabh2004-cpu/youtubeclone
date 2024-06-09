@@ -2,18 +2,22 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { BsChevronRight, BsChevronLeft } from 'react-icons/bs';
+import { useSelector } from 'react-redux';
 
 function Subscriptions({ verticalSubscription = false }) {
     const [subscribedChannels, setSubscribedChannels] = useState([]);
     const [scrollPosition, setScrollPosition] = useState(0);
+    const currentUser=useSelector(state=>state.auth.userData)
 
     useEffect(() => {
         const fetchSubscriptions = async () => {
-            try {
-                const response = await axios.get(`/api/v1/subscription/get-subscribed-channels`);
-                setSubscribedChannels(response.data.data);
-            } catch (error) {
-                console.error('Error fetching subscriptions:', error);
+            if(currentUser){
+                try {
+                    const response = await axios.get(`/api/v1/subscription/get-subscribed-channels`);
+                    setSubscribedChannels(response.data.data);
+                } catch (error) {
+                    console.error('Error fetching subscriptions:', error);
+                }
             }
         };
 
@@ -37,7 +41,7 @@ function Subscriptions({ verticalSubscription = false }) {
             <div className="flex justify-between items-center mb-4">
                 <h2 className="text-2xl font-bold">Subscriptions</h2>
             </div>
-                <Link to="/all-subscriptions" className="text-blue-500">View all</Link>
+               {currentUser&& <Link to="/all-subscriptions" className="text-blue-500">View all</Link>}
             <div className={verticalSubscription ? "flex flex-col space-y-4" : "relative"}>
                 <div
                     id="subscriptions-container"

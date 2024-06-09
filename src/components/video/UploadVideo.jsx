@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Input, Header } from '../index';
+import axios from 'axios';
 
 function UploadVideo() {
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit,watch } = useForm();
     const [selectedTab, setSelectedTab] = useState('video');
     const [videoFile, setVideoFile] = useState(null);
     const [thumbnailFile, setThumbnailFile] = useState(null);
     const [uploadProgress, setUploadProgress] = useState(0);
+    const title = watch("title", "");
+
 
     const handleVideoSelect = (event) => {
         setVideoFile(event.target.files[0]);
+        console.log(videoFile)
     };
 
     const handleThumbnailSelect = (event) => {
@@ -22,13 +26,26 @@ function UploadVideo() {
     };
 
     const handleVideoUpload = async (data) => {
-        // Handle video upload logic
+        console.log(data)
+
+        const formData = new FormData();
+        formData.append("videoFile", videoFile);
+        formData.append("thumbnail", thumbnailFile);
+        formData.append("title", data.title);
+        formData.append("description", data.description);
+
+        console.log(formData)
+
+       const response= await axios.post('/api/v1/video//upload-video',formData)
+       if(response){
+        alert("video uploaded")
+       }
     };
 
     return (
         <>
             <Header showCatagories={false} />
-            <div className="flex items-center justify-center min-h-screen bg-gray-100">
+            <div className="flex items-center justify-center min-h-screen bg-black">
                 <div className="w-full max-w-2xl mx-auto bg-white rounded-xl p-10 shadow-md">
                     <div className="flex justify-between mb-8">
                         <button
@@ -115,9 +132,12 @@ function UploadVideo() {
                                 <Input
                                     label="Title"
                                     placeholder="Enter your title"
-                                    {...register("title", { required: true })}
+                                    {...register("title", { required: true, maxLength: 100})}
                                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 />
+                                {title.length > 100 && (
+                                    <p className="text-red-500 text-sm">Title must be 100 characters or less</p>
+                                )}
                                 <Input
                                     label="Description"
                                     placeholder="Enter your description"

@@ -18,6 +18,8 @@ function GetVideo() {
     const navigate = useNavigate();
     const viewCounted = useRef(false);
     const [commentsChanged, setCommentsChanged] = useState(false);
+    const user=useSelector(state=>state.auth.userData)
+    
 
     const videos = useSelector(state => state.videos.videosData);
 
@@ -30,11 +32,11 @@ function GetVideo() {
                     setVideo(videoData);
                     setViews(videoData.views);
         
-                    const isLikedResponse = await axios.get(`/api/v1/video/is-liked/${videoId}`); // Corrected URL
+                    // const isLikedResponse = await axios.get(`/api/v1/video/is-liked/${videoId}`); // Corrected URL
                
-                    if (isLikedResponse.status === 200) {
-                        setIsLiked(isLikedResponse.data.data.isLiked);
-                    }
+                    // if (isLikedResponse.status === 200) {
+                    //     setIsLiked(isLikedResponse.data.data.isLiked);
+                    // }
         
                     const channelProfileResponse = await axios.get(`/api/v1/users/get-channel-profile/${videoData.owner._id}`);
                     if (channelProfileResponse.status === 200) {
@@ -50,21 +52,25 @@ function GetVideo() {
         
 
         const createWatchHistory = async () => {
-            try {
-                await axios.post(`/api/v1/users/create-watch-history/${videoId}`);
-            } catch (error) {
-                console.error('Error creating watch history:', error);
+            if(user){
+                try {
+                    await axios.post(`/api/v1/users/create-watch-history/${videoId}`);
+                } catch (error) {
+                    console.error('Error creating watch history:', error);
+                }
             }
         };
 
         const createView = async () => {
-            try {
-                const response = await axios.post(`/api/v1/video/increment-video-views/${videoId}`);
-                if (response.data.success) {
-                    setViews(response.data.data.views);
+            if(user){
+                try {
+                    const response = await axios.post(`/api/v1/video/increment-video-views/${videoId}`);
+                    if (response.data.success) {
+                        setViews(response.data.data.views);
+                    }
+                } catch (error) {
+                    console.error('Error incrementing view count:', error);
                 }
-            } catch (error) {
-                console.error('Error incrementing view count:', error);
             }
         };
 
@@ -82,6 +88,7 @@ function GetVideo() {
     };
 
     const handleSubscribe = async (channelId) => {
+       if(user){
         try {
             const response = await axios.post(`/api/v1/subscription/toggle-subscription/${channelId}`);
             if (response.data.success) {
@@ -91,11 +98,16 @@ function GetVideo() {
         } catch (error) {
             setError(error.response?.data?.message || error.message);
         }
+       }
+       else{
+        navigate('/register')
+       }
     };
 
     const handleLikeVideo = async (videoId) => {
+       if(user){
         try {
-            const response = await axios.post(`/api/v1/like/toggle-video-like/${videoId}`);
+            // const response = await axios.post(`/api/v1/like/toggle-video-like/${videoId}`);
             if (response.data.success) {
                 setIsLiked(!isLiked);
                 console.log(isLiked)
@@ -104,6 +116,7 @@ function GetVideo() {
         } catch (error) {
             setError(error.response?.data?.message || error.message);
         }
+       }
     };
     
     
@@ -125,7 +138,7 @@ function GetVideo() {
             <Header showCatagories={false} />
             <div className="flex bg-black px-4 py-8">
                 {/* Left Section: Video Player and Details */}
-                <div className="flex-grow max-w-3xl h-screen  w-full bg-gray-800 rounded-xl p-6 shadow-md overflow-y-auto hide-scrollbar">
+                <div className="flex-grow max-w-3xl h-screen  w-full bg-black rounded-xl p-6 shadow-md overflow-y-auto hide-scrollbar">
                     <div className="relative">
                         <video controls className="w-full h-auto rounded-md mb-4 mx-auto">
                             <source src={video.videoFile} type="video/mp4" />

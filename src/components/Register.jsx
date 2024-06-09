@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { login } from '../store/authSlice.js';
 import Input from './utility/Input.jsx';
-import { FaCamera } from 'react-icons/fa';
+import { FaCamera,FaEye, FaEyeSlash  } from 'react-icons/fa';
 
 function Register() {
     const navigate = useNavigate();
@@ -15,6 +15,9 @@ function Register() {
     const [activeTab, setActiveTab] = useState(0);
     const [avatarPreview, setAvatarPreview] = useState(null);
     const [coverImagePreview, setCoverImagePreview] = useState(null);
+    const [showPassword, setShowPassword] = useState(false);
+    const [loading, setLoading] = useState(false);
+  
 
     const handleRegistration = async (data) => {
         console.log(data)
@@ -38,11 +41,13 @@ function Register() {
                     'Content-Type': 'multipart/form-data'
                 }
             });
+            // setLoading(true)
 
             if (response.status === 200) {
+                setLoading(false)
                 const userData = response.data.data;
                 dispatch(login(userData));
-                navigate("/");
+                navigate("/login");
             }
 
         } catch (error) {
@@ -71,6 +76,14 @@ function Register() {
             setCoverImagePreview(URL.createObjectURL(file));
         }
     };
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(prevState => !prevState);
+      };
+
+      if (loading) {
+        return <div className='text-white'>Loading...</div>;
+      }
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-pink-500 to-red-600">
@@ -122,11 +135,18 @@ function Register() {
                                 />
                                 <Input
                                     label="Password"
-                                    type="password"
+                                    type={showPassword ? 'text' : 'password'}
                                     placeholder="Enter your password"
                                     {...register("password", { required: true })}
                                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 />
+                                <button
+                                    type="button"
+                                    onClick={togglePasswordVisibility}
+                                    className="absolute mt-2 mr-2"
+                                    >
+                                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                                </button>
                             </>
                         )}
                         {activeTab === 2 && (

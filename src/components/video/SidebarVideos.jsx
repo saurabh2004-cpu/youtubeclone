@@ -29,13 +29,17 @@ const SidebarVideos = ({videos}) => {
   };
 
   const handleSaveToWatchLater = async (videoId) => {
-    const response = await axios.post(`/api/v1/users/add-to-watch-later/${videoId}`);
+    if(currentUser){
+      const response = await axios.post(`/api/v1/users/add-to-watch-later/${videoId}`);
     console.log(response);
+    }
+    navigate('/register')
   };
 
   const handlePlayNext = async (videoId) => {
-    const response = await axios.post(`/api/v1/users/add-to-play-next/${videoId}`);
-    console.log("playnext video", response);
+    if(!currentUser){
+      navigate('/register')
+    }
   };
 
   const calculateTimeAgo = (createdAt) => {

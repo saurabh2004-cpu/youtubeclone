@@ -13,6 +13,7 @@ function GetChannelVideos({ ShowDots }) {
     const [showConfirmDelete, setShowConfirmDelete] = useState(false);
     const [showAddToPlaylist, setShowAddToPlaylist] = useState(false);
     const navigate = useNavigate();
+
     const channel = useSelector(state => state.channel.channelData);
 
     useEffect(() => {
@@ -32,10 +33,11 @@ function GetChannelVideos({ ShowDots }) {
         navigate(`/getVideo/${videoId}`);
     };
 
-    const handleEditVideo = (videoId) => {
-        navigate(`/editVideo/${videoId}`);
+    const handleEditVideo = (video) => {
+        if (video) {
+            navigate(`/editVideo/${video._id}`, { state: { video } });
+        }
     };
-
     const toggleMenu = (videoId) => {
         setMenuVisible(prevState => ({
             ...prevState,
@@ -70,6 +72,14 @@ function GetChannelVideos({ ShowDots }) {
         setShowAddToPlaylist(true);
     };
 
+    const calculateDaysAgo = (createdAt) => {
+        const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+        const currentDate = new Date();
+        const createdDate = new Date(createdAt);
+        const diffDays = Math.round(Math.abs((currentDate - createdDate) / oneDay));
+        return `${diffDays} days ago`;
+    };
+
     return (
         <>
             <div className="container mx-auto p-4 bg-black-100 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -86,8 +96,8 @@ function GetChannelVideos({ ShowDots }) {
                             onClick={() => handleThumbnailClick(video._id)}
                         />
                         <div className="px-6 py-4">
-                            <div className="font-bold text-l mb-2 text-left text-white">{video.title}</div>
-                            <div className='text-white'>{video.views} Views</div>
+                            <div className="font-bold text-l mb-8 text-left text-white">{video.title}</div>
+                            <div className='text-gray-400 ' style={{ position: 'absolute', bottom: '10px' }}>{video.views} Views . {calculateDaysAgo(video.createdAt)}</div>
                         </div>
                         <div className="absolute top-2 right-2">
                             {ShowDots &&
@@ -105,7 +115,7 @@ function GetChannelVideos({ ShowDots }) {
                                 <div className="absolute top-8 right-0 bg-white rounded-lg shadow-lg text-black">
                                     <button
                                         className="block px-4 py-2 text-black hover:bg-gray-600 hover:text-white w-full"
-                                        onClick={() => handleEditVideo(video._id)}
+                                        onClick={() => handleEditVideo(video)}
                                     >
                                         Edit
                                     </button>

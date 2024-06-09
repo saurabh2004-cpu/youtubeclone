@@ -1,44 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { login } from '../store/authSlice';
+import { useSelector } from 'react-redux';
 import { Header,ProfileTabs } from './index.js';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import UpdateProfile from './UpdateProfile';
-import { setChannel } from '../store/channelSlice.js';
-import { FaCamera,FaPlay } from 'react-icons/fa';
+import { FaCamera } from 'react-icons/fa';
 
 
 
 const ChannelProfile = () => {
-  const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.userData);
   const [channelProfile, setChannelProfile] = useState(null);
   const [isAvatarHover, setIsAvatarHover] = useState(false);
   const [isCoverImageHover, setIsCoverImageHover] = useState(false);
   const [showUpdateProfile, setShowUpdateProfile] = useState(false);
 
+  const channel=useSelector(state=>state.channel.channelData)
+  console.log("object",channel)
+
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await axios.get("/api/v1/users/get-current-user");
-        if (response.status === 200) {
-          dispatch(login(response.data.data));
-
-          const channelProfileResponse = await axios.get(`/api/v1/users/get-channel-profile/${response.data.data._id}`);
-
-          if (channelProfileResponse.status === 200) {
-            setChannelProfile(channelProfileResponse.data.data);
-            dispatch(setChannel(channelProfileResponse.data.data))
-          }
-        }
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    };
-    
-    fetchUser();
-  }, [dispatch]);
+    setChannelProfile(channel)
+  }, );
 
   const handleAvatarChange = async (e) => {
     const file = e.target.files[0];

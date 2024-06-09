@@ -45,7 +45,7 @@ function Login() {
             <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-pink-500 to-red-600">
                 <div className="mx-auto w-full max-w-lg bg-gray-800 rounded-xl p-10 border border-gray-200 shadow-md text-white ">
                     <h2 className="text-center text-3xl font-bold text-white mb-8">Log in to your account</h2>
-                    {error && <p className="text-red-600 mt-4 text-center">{error}</p>}
+                    {error && <p className="enter correct details">{error}</p>}
                     <form onSubmit={handleSubmit(handleLogin)}>
                         <div className="space-y-5">
                             <Input

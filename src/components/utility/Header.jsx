@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { Sidebar, VideoCatagories } from '../index.js';
 import { login } from '../../store/authSlice.js';
 import { useNavigate } from 'react-router-dom';
+import { setChannel } from '../../store/channelSlice.js';
 
 function Header({ showCatagories = true }) {
   const dispatch = useDispatch();
@@ -12,13 +13,22 @@ function Header({ showCatagories = true }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false); // State for dropdown menu
   const navigate = useNavigate();
+  
 
   const user = useSelector((state) => state.auth.userData);
 
   useEffect(() => {
+    
     const fetchCurrentUser = async () => {
       const response = await axios.get('/api/v1/users/get-current-user');
+      dispatch(login(response.data.data));
       setUserData(response.data.data);
+
+      const channelProfileResponse = await axios.get(`/api/v1/users/get-channel-profile/${response.data.data._id}`);
+      if (channelProfileResponse.status === 200) {
+        dispatch(setChannel(channelProfileResponse.data.data))
+      }
+      
     };
     fetchCurrentUser();
   }, []);
@@ -121,13 +131,15 @@ function Header({ showCatagories = true }) {
               Signup
             </Link>
           )}
-          <Link to="/channel-profile">
+          {userData &&(
+            <Link to="/channel-profile">
             {user && user.avatar ? (
               <img src={user.avatar} alt="Profile" className="h-8 w-8 rounded-full" />
             ) : (
               <div className="h-8 w-8 rounded-full bg-gray-600"></div>
             )}
           </Link>
+          )}
         </div>
       </header>
       {showCatagories && <VideoCatagories categories={categories} />}
