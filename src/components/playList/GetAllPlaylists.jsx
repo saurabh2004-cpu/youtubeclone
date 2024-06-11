@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import { FiMoreVertical, FiPlus } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 import { ConfirmDeleteCard, CreatePlayList, UpdatePlaylist } from '../index.js';
-import axiosInstance from '../../axiosInstance.js';
 
 const EmptyPlaylistCard = ({ onClick }) => {
     return (
@@ -35,7 +34,7 @@ function GetAllPlaylists() {
     useEffect(() => {
         const fetchPlaylists = async () => {
             try {
-                const response = await  axiosInstance.get(`/api/v1/playlist/get-all-playlists/${channel._id}`);
+                const response = await axios.get(`/api/v1/playlist/get-all-playlists/${channel._id}`);
                 setPlaylists(response.data.data);
             } catch (error) {
                 console.error('Error fetching playlists:', error);
@@ -63,7 +62,7 @@ function GetAllPlaylists() {
 
     const handleConfirmDelete = async () => {
         try {
-            await  axiosInstance.post(`/api/v1/playlist/delete-playlist/${selectedPlaylist}`);
+            await axios.post(`/api/v1/playlist/delete-playlist/${selectedPlaylist}`);
             setPlaylists(playlists.filter(playlist => playlist._id !== selectedPlaylist));
             setShowConfirmDelete(false);
         } catch (error) {

@@ -7,14 +7,13 @@ import {Subscriptions} from "../index.js"
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import axiosInstance from '../../axiosInstance.js';
 
 function Sidebar({ isOpen, closeSidebar }) {
     const navigate=useNavigate()
     const currentUser=useSelector(state=>state.auth.userData)
 
     const handleLogoutClick = async() => {
-        const response=await  axiosInstance.post('/api/v1/users/logout')
+        const response=await axios.post('/api/v1/users/logout')
         alert('sucessfully logged Out')
         navigate('/')
     };

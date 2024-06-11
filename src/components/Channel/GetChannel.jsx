@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 import { ChannelTabs, Header } from '../index.js';
 import { useDispatch } from 'react-redux';
 import { setChannel } from '../../store/channelSlice.js';
-import axiosInstance from '../../axiosInstance.js';
 
 function GetChannel() {
     const { channelId } = useParams();
@@ -16,13 +15,13 @@ function GetChannel() {
         const fetchChannelData = async () => {
             try {
                 // Fetch Channel Stats
-                const statsResponse = await  axiosInstance.get(`/api/v1/dashbord/get-channel-stats/${channelId}`);
+                const statsResponse = await axios.get(`/api/v1/dashbord/get-channel-stats/${channelId}`);
                 if (statsResponse.status === 200) {
                     setChannelStats(statsResponse.data.data);
                 }
 
                 // Fetch Channel Profile
-                const profileResponse = await  axiosInstance.get(`/api/v1/users/get-channel-profile/${channelId}`);
+                const profileResponse = await axios.get(`/api/v1/users/get-channel-profile/${channelId}`);
                 if (profileResponse.status === 200) {
                     setChannelDetails(profileResponse.data.data);
                     dispatch(setChannel(profileResponse.data.data));

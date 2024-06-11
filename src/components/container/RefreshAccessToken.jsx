@@ -1,11 +1,10 @@
 // Function to refresh access token
 import axios from "axios";
-import axiosInstance from '../../axiosInstance.js';
 
 
 async function refreshAccessToken(refreshToken) {
     try {
-        const response = await  axiosInstance.post('/api/refresh-token', { refreshToken });
+        const response = await axios.post('/api/refresh-token', { refreshToken });
         const { accessToken } = response.data;
         // Update the access token in your frontend state
         // This could involve storing it securely in local storage or memory
@@ -23,7 +22,7 @@ async function makeSecureRequest() {
     const accessToken = localStorage.getItem('accessToken');
     try {
         // Make a request to a protected endpoint using the access token
-        const response = await  axiosInstance.get('/api/user/refresh-access-token', {
+        const response = await axios.get('/api/user/refresh-access-token', {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
             },

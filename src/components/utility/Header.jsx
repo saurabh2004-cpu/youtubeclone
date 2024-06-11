@@ -6,7 +6,7 @@ import { Sidebar, VideoCatagories } from '../index.js';
 import { login } from '../../store/authSlice.js';
 import { useNavigate } from 'react-router-dom';
 import { setChannel } from '../../store/channelSlice.js';
-import axiosInstance from '../../axiosInstance.js';
+
 
 function Header({ showCatagories = true }) {
   const dispatch = useDispatch();
@@ -22,11 +22,11 @@ function Header({ showCatagories = true }) {
     
     const fetchCurrentUser = async () => {
       if(user){
-        const response = await  axiosInstance.get('/api/v1/users/get-current-user');
+        const response = await axios.get('/api/v1/users/get-current-user');
         dispatch(login(response.data.data));
         setUserData(response.data.data);
       
-        const channelProfileResponse = await  axiosInstance.get(`/api/v1/users/get-channel-profile/${response.data.data._id}`);
+        const channelProfileResponse = await axios.get(`/api/v1/users/get-channel-profile/${response.data.data._id}`);
         if (channelProfileResponse.status === 200) {
           dispatch(setChannel(channelProfileResponse.data.data))
         }
