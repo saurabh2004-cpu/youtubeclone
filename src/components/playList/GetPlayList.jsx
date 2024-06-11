@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FiMoreVertical } from 'react-icons/fi';
 import { Header, ConfirmDeleteCard,SidebarVideos } from '../index.js';
+import axiosInstance from '../../axiosInstance';
 
 function GetPlayList() {
     const [playlist, setPlaylist] = useState(null);
@@ -18,7 +19,7 @@ function GetPlayList() {
     useEffect(() => {
         const fetchPlaylist = async () => {
             try {
-                const response = await axios.get(`/api/v1/playlist/get-playlist/${playlistId}`);
+                const response = await axiosInstance.get(`/api/v1/playlist/get-playlist/${playlistId}`);
                 setPlaylist(response.data.data);
                 setVideos(response.data.data.videos);
                 console.log(videos)
@@ -45,7 +46,7 @@ function GetPlayList() {
    
     const handleConfirmDelete = async () => {
         try {
-            await axios.post(`/api/v1/playlist/remove-video/${playlistId}/videos/${videoToRemove._id}`);
+            await axiosInstance.post(`/api/v1/playlist/remove-video/${playlistId}/videos/${videoToRemove._id}`);
             setPlaylist(prevPlaylist => ({
                 ...prevPlaylist,
                 videos: prevPlaylist.videos.filter(video => video._id !== videoToRemove._id)

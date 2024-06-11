@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { Input } from '../index.js';
+import axiosInstance from '../../axiosInstance';
 
 function UpdatePlaylist({ playlist, setShowEditPlayList }) {
     const { register, handleSubmit, formState: { errors } } = useForm({
@@ -17,7 +18,7 @@ function UpdatePlaylist({ playlist, setShowEditPlayList }) {
             description: data.description,
         };
         try {
-            const response = await axios.post(`/api/v1/playlist/update-playlist/${playlist._id}`, formData);
+            const response = await axiosInstance.post(`/api/v1/playlist/update-playlist/${playlist._id}`, formData);
             if (response.status === 200) {
                 setShowEditPlayList(false);
             }
