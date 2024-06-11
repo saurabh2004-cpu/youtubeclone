@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { Input } from '../index.js';
 import GetTweet from './GetTweet.jsx';
 import { useNavigate } from 'react-router-dom';
+import axiosInstance from '../../axiosInstance.js';
 
 function PostTweet() {
     const { register, handleSubmit, reset } = useForm();
@@ -11,7 +12,7 @@ function PostTweet() {
 
     const handleTweetPost = async (data) => {
         try {
-            const response = await axios.post('/api/v1/tweet/post-tweet', { content: data.tweet });
+            const response = await axiosInstance.post('/api/v1/tweet/post-tweet', { content: data.tweet });
             console.log("res", response);
             
             if (response.status === 200) {
