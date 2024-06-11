@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Header, AddComment, GetVideoComments, SidebarVideos } from "../index.js";
 import { AiOutlineLike, AiFillLike } from 'react-icons/ai';
+import axiosInstance from '../../axiosInstance.js';
 
 function GetVideo() {
     const { videoId } = useParams();
