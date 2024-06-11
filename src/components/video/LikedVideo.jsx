@@ -3,8 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Header } from '../index.js';
 import { FiMoreVertical } from 'react-icons/fi'; 
-import axiosInstance from '../../axiosInstance.js';
-
 
 function LikedVideo() {
   const [likedVideos, setLikedVideos] = useState([]);
@@ -15,7 +13,7 @@ function LikedVideo() {
   useEffect(() => {
     const fetchLikedVideos = async () => {
       try {
-        const response = await  axiosInstance.get('/api/v1/like/get-liked-video');
+        const response = await axios.get('/api/v1/like/get-liked-video');
         setLikedVideos(response.data.data);
         console.log(":resssssss",response)
       } catch (error) {
@@ -39,7 +37,7 @@ function LikedVideo() {
   };
 
   const handleRemoveVideoClick = async (videoId) => {
-    await  axiosInstance.post(`/api/v1/like/remove-from-liked-video/${videoId}`);
+    await axios.post(`/api/v1/like/remove-from-liked-video/${videoId}`);
     setLikedVideos(likedVideos.filter(video => video._id !== videoId));
     alert("Video removed");
   };

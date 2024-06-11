@@ -6,7 +6,6 @@ import { useDispatch } from 'react-redux';
 import { login } from '../store/authSlice.js';
 import Input from './utility/Input.jsx';
 import { FaCamera,FaEye, FaEyeSlash  } from 'react-icons/fa';
-import axiosInstance from '../../axiosInstance.js';
 
 function Register() {
     const navigate = useNavigate();
@@ -37,7 +36,7 @@ function Register() {
                 formData.append('coverImage', data.coverImage[0]);
             }
 
-            const response = await  axiosInstance.post('/api/v1/users/register', formData, {
+            const response = await axios.post('/api/v1/users/register', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }

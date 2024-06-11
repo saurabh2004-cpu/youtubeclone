@@ -3,7 +3,6 @@ import axios from 'axios';
 import { Header } from '../index.js';
 import { useNavigate } from 'react-router-dom';
 import { FiMoreVertical } from 'react-icons/fi';
-import axiosInstance from '../../axiosInstance.js';
 
 const WatchHistory = () => {
   const [history, setHistory] = useState([]);
@@ -15,7 +14,7 @@ const WatchHistory = () => {
   useEffect(() => {
     const fetchWatchHistory = async () => {
       try {
-        const response = await  axiosInstance.get('/api/v1/users/watch-history');
+        const response = await axios.get('/api/v1/users/watch-history');
         setHistory(response.data.data);
         setLoading(false);
       } catch (error) {
@@ -32,7 +31,7 @@ const WatchHistory = () => {
   };
 
   const handleRemoveVideoClick = async (videoId) => {
-    await  axiosInstance.post(`/api/v1/users/remove-from-history/${videoId}`);
+    await axios.post(`/api/v1/users/remove-from-history/${videoId}`);
     setHistory(history.filter(video => video._id !== videoId));
     alert("Video removed");
   };

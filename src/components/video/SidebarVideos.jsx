@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import axiosInstance from '../../axiosInstance.js';
 
 const SidebarVideos = ({videos}) => {
   const [loading, setLoading] = useState(false);
@@ -31,7 +30,7 @@ const SidebarVideos = ({videos}) => {
 
   const handleSaveToWatchLater = async (videoId) => {
     if(currentUser){
-      const response = await  axiosInstance.post(`/api/v1/users/add-to-watch-later/${videoId}`);
+      const response = await axios.post(`/api/v1/users/add-to-watch-later/${videoId}`);
     console.log(response);
     }
     navigate('/register')

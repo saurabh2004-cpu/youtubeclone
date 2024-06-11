@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Input, Header } from '../index';
 import axios from 'axios';
-import axiosInstance from '../../axiosInstance.js';
 
 function UploadVideo() {
     const { register, handleSubmit,watch } = useForm();
@@ -37,7 +36,7 @@ function UploadVideo() {
 
         console.log(formData)
 
-       const response= await  axiosInstance.post('/api/v1/video//upload-video',formData)
+       const response= await axios.post('/api/v1/video//upload-video',formData)
        if(response){
         alert("video uploaded")
        }

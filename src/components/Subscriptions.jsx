@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { BsChevronRight, BsChevronLeft } from 'react-icons/bs';
 import { useSelector } from 'react-redux';
-import axiosInstance from '../../axiosInstance.js';
 
 function Subscriptions({ verticalSubscription = false }) {
     const [subscribedChannels, setSubscribedChannels] = useState([]);
@@ -14,7 +13,7 @@ function Subscriptions({ verticalSubscription = false }) {
         const fetchSubscriptions = async () => {
             if(currentUser){
                 try {
-                    const response = await  axiosInstance.get(`/api/v1/subscription/get-subscribed-channels`);
+                    const response = await axios.get(`/api/v1/subscription/get-subscribed-channels`);
                     setSubscribedChannels(response.data.data);
                 } catch (error) {
                     console.error('Error fetching subscriptions:', error);

@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { login } from '../store/authSlice';
 import Input from './utility/Input';
-import axiosInstance from '../../axiosInstance.js';
 
 const UpdateProfile = ({ channelProfile, onClose }) => {
   const dispatch = useDispatch();
@@ -22,7 +21,7 @@ const UpdateProfile = ({ channelProfile, onClose }) => {
       username: data.username
     };
     try {
-      const response = await  axiosInstance.patch('/api/v1/users/update-account-details', formData);
+      const response = await axios.patch('/api/v1/users/update-account-details', formData);
 
       if (response.status === 200) {
         dispatch(login(response.data.data));
