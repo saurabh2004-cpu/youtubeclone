@@ -15,8 +15,7 @@ const AllUsersVideos = ({ isSidebarOpen }) => {
   const currentUser=useSelector(state=>state.auth.userData)
 
   const apiUrl = import.meta.env.VITE_API_URL;
-    console.log(apiUrl)
-
+ 
   
   useEffect(() => {
 

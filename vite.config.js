@@ -6,6 +6,7 @@ export default defineConfig({
     proxy: {
       '/api': {
         target: 'https://backend-project-7.onrender.com',  // Adjust this to match your backend server address and port
+        rewrite: (path) => path.replace(/^\/api/, ''),
         
       },
     },
