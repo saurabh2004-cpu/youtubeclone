@@ -51,6 +51,7 @@ function ChannelHome() {
                         </div>
                     ))}
                 </div>
+                
             </div>
 
             <div>
