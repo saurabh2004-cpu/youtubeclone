@@ -20,7 +20,9 @@ function Header({ showCatagories = true }) {
   useEffect(() => {
     
     const fetchCurrentUser = async () => {
-      const response = await axios.get('/api/v1/users/get-current-user');
+      if(user){
+        const response = await axios.get('/api/v1/users/get-current-user');
+      }
       dispatch(login(response.data.data));
       setUserData(response.data.data);
 

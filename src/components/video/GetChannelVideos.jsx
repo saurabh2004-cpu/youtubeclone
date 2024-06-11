@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { FiMoreVertical } from 'react-icons/fi'; 
 import { ConfirmDeleteCard, AddToPlaylist } from '../index.js'; 
 import { useSelector } from 'react-redux';
+import axiosInstance from '../../axiosInstance.js';
 
 function GetChannelVideos({ ShowDots }) {
     const [videos, setVideos] = useState([]);
@@ -19,7 +20,7 @@ function GetChannelVideos({ ShowDots }) {
     useEffect(() => {
         const fetchVideos = async () => {
             try {
-                const response = await axios.get(`/api/v1/video/get-channel-all-videos/${channel._id}`);
+                const response = await  axiosInstance.get(`/api/v1/video/get-channel-all-videos/${channel._id}`);
                 setVideos(response.data.data.docs);
             } catch (error) {
                 console.error('Error fetching videos:', error);
@@ -59,7 +60,7 @@ function GetChannelVideos({ ShowDots }) {
 
     const handleConfirmDelete = async () => {
         try {
-            await axios.post(`/api/v1/video/delete-video/${selectedVideoId}`);
+            await  axiosInstance.post(`/api/v1/video/delete-video/${selectedVideoId}`);
             setVideos(videos.filter(video => video._id !== selectedVideoId));
             setShowConfirmDelete(false);
         } catch (error) {
