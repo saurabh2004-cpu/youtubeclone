@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import axiosInstance from '../../axiosInstance.js';
 
 function ChannelHome() {
 
@@ -9,7 +10,7 @@ function ChannelHome() {
 
     useEffect(()=>{
         const fetchVideos=async()=>{
-            const response = await axios.get(`/api/v1/video/get-channel-all-videos/${channel._id}`);
+            const response = await  axiosInstance.get(`/api/v1/video/get-channel-all-videos/${channel._id}`);
             setVideos(response.data.data.docs)
         }
 

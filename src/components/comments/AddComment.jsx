@@ -4,6 +4,7 @@ import { Input } from '../index.js';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import axiosInstance from '../../axiosInstance.js';
 
 function AddComment({ videoId,onCommentAdded }) {
     const { register, handleSubmit, reset } = useForm();
@@ -14,7 +15,7 @@ function AddComment({ videoId,onCommentAdded }) {
     const handleComment = async (data) => {
        if(user){
             try {
-                const response = await axios.post(`/api/v1/comment/add-comment/${videoId}`, data);
+                const response = await  axiosInstance.post(`/api/v1/comment/add-comment/${videoId}`, data);
                 setCommentText(response.data.data.comment)
                 if (response.status !== 200) {
                     throw new Error('Failed to add comment');

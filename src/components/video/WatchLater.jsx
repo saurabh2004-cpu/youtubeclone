@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Header } from '../index.js';
 import { FiMoreVertical } from 'react-icons/fi'; 
+import axiosInstance from '../../axiosInstance.js';
 
 function WatchLater() {
     const [watchLaterVideos, setWatchLaterVideos] = useState([]);
@@ -13,7 +14,7 @@ function WatchLater() {
     useEffect(() => {
         const fetchWatchLater = async () => {
             try {
-                const response = await axios.get('/api/v1/users/get-watch-later');
+                const response = await  axiosInstance.get('/api/v1/users/get-watch-later');
                 setWatchLaterVideos(response.data.data);
             } catch (error) {
                 console.error('Error fetching watch later videos:', error);
@@ -36,7 +37,7 @@ function WatchLater() {
     };
 
     const handleRemoveVideoClick = async (videoId) => {
-        await axios.post(`/api/v1/users/remove-from-watch-later/${videoId}`);
+        await  axiosInstance.post(`/api/v1/users/remove-from-watch-later/${videoId}`);
         alert("Video removed");
     };
 
