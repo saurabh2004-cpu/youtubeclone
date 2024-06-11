@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import GetVideosByCategories from './GetVideosByCategories';
 import { setVideos } from '../../store/videosSlice';
 import { useRef } from 'react';
+import axiosInstance from '../../axiosInstance';
 
 const AllUsersVideos = ({ isSidebarOpen }) => {
   const [loading, setLoading] = useState(true);
@@ -14,7 +15,7 @@ const AllUsersVideos = ({ isSidebarOpen }) => {
   const render=useRef()
   const currentUser=useSelector(state=>state.auth.userData)
 
-  const apiUrl = import.meta.env.VITE_API_URL;
+  // const apiUrl = import.meta.env.VITE_API_URL;
  
   
   useEffect(() => {
@@ -22,7 +23,7 @@ const AllUsersVideos = ({ isSidebarOpen }) => {
 
     const fetchAllVideos = async () => {
       try {
-        const response = await axios.get(`${apiUrl}/api/v1/video/all-users-videos`);
+        const response = await  axiosInstance.get(`/api/v1/video/all-users-videos`);
         const shuffledVideos = response.data.data.filter(video => video.isPublished === true).sort(() => 0.5 - Math.random());
         dispatch(setVideos(shuffledVideos));
         setLoading(false);
@@ -42,7 +43,7 @@ const AllUsersVideos = ({ isSidebarOpen }) => {
 
   //getvideo
   const handleGetVideo = (videoId) => {
-    navigate(`${apiUrl}/getVideo/${videoId}`);
+    navigate(`/getVideo/${videoId}`);
   };
 
   //togglemenu
@@ -59,7 +60,7 @@ const AllUsersVideos = ({ isSidebarOpen }) => {
       navigate('/register')
     }
 
-    const response = await axios.post(`${apiUrl}/api/v1/users/add-to-watch-later/${videoId}`);
+    const response = await  axiosInstance.post(`/api/v1/users/add-to-watch-later/${videoId}`);
     console.log(response);
   };
 
@@ -69,7 +70,7 @@ const AllUsersVideos = ({ isSidebarOpen }) => {
       navigate('/register')
     }
 
-    const response = await axios.post(`${apiUrl}/api/v1/users/add-to-play-next/${videoId}`);
+    const response = await  axiosInstance.post(`/api/v1/users/add-to-play-next/${videoId}`);
     console.log("playnext video", response);
   };
 
