@@ -10,7 +10,7 @@ function ChannelHome() {
 
     useEffect(()=>{
         const fetchVideos=async()=>{
-            const response = await  axiosInstance.get(`/api/v1/video/get-channel-all-videos/${channel._id}`);
+            const response = await axiosInstance.get(`/api/v1/video/get-channel-all-videos/${channel._id}`);
             setVideos(response.data.data.docs)
         }
 
