@@ -14,6 +14,8 @@ const AllUsersVideos = ({ isSidebarOpen }) => {
   const render=useRef()
   const currentUser=useSelector(state=>state.auth.userData)
 
+  const apiUrl = import.meta.env.VITE_API_URL;
+    console.log(apiUrl)
 
   
   useEffect(() => {
@@ -21,7 +23,7 @@ const AllUsersVideos = ({ isSidebarOpen }) => {
 
     const fetchAllVideos = async () => {
       try {
-        const response = await axios.get('/api/v1/video/all-users-videos');
+        const response = await axios.get(`${apiUrl}/api/v1/video/all-users-videos`);
         const shuffledVideos = response.data.data.filter(video => video.isPublished === true).sort(() => 0.5 - Math.random());
         dispatch(setVideos(shuffledVideos));
         setLoading(false);
