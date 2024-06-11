@@ -42,7 +42,7 @@ const AllUsersVideos = ({ isSidebarOpen }) => {
 
   //getvideo
   const handleGetVideo = (videoId) => {
-    navigate(`/getVideo/${videoId}`);
+    navigate(`${apiUrl}/getVideo/${videoId}`);
   };
 
   //togglemenu
@@ -59,7 +59,7 @@ const AllUsersVideos = ({ isSidebarOpen }) => {
       navigate('/register')
     }
 
-    const response = await axios.post(`/api/v1/users/add-to-watch-later/${videoId}`);
+    const response = await axios.post(`${apiUrl}/api/v1/users/add-to-watch-later/${videoId}`);
     console.log(response);
   };
 
@@ -69,7 +69,7 @@ const AllUsersVideos = ({ isSidebarOpen }) => {
       navigate('/register')
     }
 
-    const response = await axios.post(`/api/v1/users/add-to-play-next/${videoId}`);
+    const response = await axios.post(`${apiUrl}/api/v1/users/add-to-play-next/${videoId}`);
     console.log("playnext video", response);
   };
 
