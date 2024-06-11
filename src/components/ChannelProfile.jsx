@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import UpdateProfile from './UpdateProfile';
 import { FaCamera } from 'react-icons/fa';
+import axiosInstance from "../axiosInstance.js"
 
 
 
@@ -30,7 +31,7 @@ const ChannelProfile = () => {
       formData.append('avatar', file);
 
       try {
-        const response = await axios.post('/api/v1/users/update-avatar', formData, {
+        const response = await axiosInstance.post('/api/v1/users/update-avatar', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -55,7 +56,7 @@ const ChannelProfile = () => {
       formData.append('coverImage', file);
 
       try {
-        const response = await axios.post('/api/v1/users/update-cover-image', formData, {
+        const response = await axiosInstance.post('/api/v1/users/update-cover-image', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },

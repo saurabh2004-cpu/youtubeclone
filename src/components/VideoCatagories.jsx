@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setVideos } from '../store/videosSlice';
+import axiosInstance from "../axiosInstance.js"
 
 const VideoCatagories = ({ categories }) => {
   const [categoryVideos, setCategoryVideo] = useState([]);
@@ -9,11 +10,11 @@ const VideoCatagories = ({ categories }) => {
 
   const handleCatagoryClick = async (category) => {
     if (category === 'All') {
-      const response = await axios.get('/api/v1/video/all-users-videos');
+      const response = await axiosInstance.get('/api/v1/video/all-users-videos');
       const shuffledVideos = response.data.data.sort(() => 0.5 - Math.random());
       dispatch(setVideos(shuffledVideos));
     } else {
-      const response = await axios.get(`/api/v1/video/get-videos-by-catagory/${category.toLowerCase()}`);
+      const response = await axiosInstance.get(`/api/v1/video/get-videos-by-catagory/${category.toLowerCase()}`);
       setCategoryVideo(response.data.data);
       dispatch(setVideos(response.data.data));
     }
