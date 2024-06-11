@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { Input,AddComment } from '../index.js';
 import { useSelector } from 'react-redux';
 import { AiOutlineLike, AiFillLike } from 'react-icons/ai';
+import axiosInstance from '../../axiosInstance.js';
 
 function GetVideoComments({ videoId }) {
     const [comments, setComments] = useState([]);
@@ -19,7 +20,7 @@ function GetVideoComments({ videoId }) {
     useEffect(() => {
         const fetchComments = async () => {
             try {
-                const response = await axios.get(`/api/v1/comment/get-video-comments/${videoId}`);
+                const response = await axiosInstance.get(`/api/v1/comment/get-video-comments/${videoId}`);
                 if (response.status === 200) {
                     const sortedComments = response.data.data.docs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
                     setComments(sortedComments);
@@ -43,7 +44,7 @@ function GetVideoComments({ videoId }) {
 
     const handleDelete = async (commentId) => {
         try {
-            await axios.post(`/api/v1/comment/delete-comment/${commentId}`);
+            await axiosInstance.post(`/api/v1/comment/delete-comment/${commentId}`);
             setComments(comments.filter(comment => comment._id !== commentId));
             setMenuState({ isOpen: false, commentId: null });
             alert("Comment deleted");
@@ -60,7 +61,7 @@ function GetVideoComments({ videoId }) {
 
     const handleUpdateSubmit = async (data) => {
         try {
-            await axios.post(`/api/v1/comment/update-comment/${updatingCommentId}`, { comment: data.comment });
+            await axiosInstance.post(`/api/v1/comment/update-comment/${updatingCommentId}`, { comment: data.comment });
             setComments(comments.map(comment => 
                 comment._id === updatingCommentId ? { ...comment, comment: data.comment } : comment
             ));
@@ -75,7 +76,7 @@ function GetVideoComments({ videoId }) {
 
     const handleLikeComment = async (commentId) => {
         try {
-            const response = await axios.post(`/api/v1/like/toggle-comment-like/${commentId}`);
+            const response = await axiosInstance.post(`/api/v1/like/toggle-comment-like/${commentId}`);
             if (response.data.success) {
                 setIsCommentLiked(!isCommentLiked)
                 setLikeCount(prev => isCommentLiked ? prev - 1 : prev + 1);
