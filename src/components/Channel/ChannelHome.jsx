@@ -1,7 +1,8 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import axiosInstance from '../../axiosInstance.js';
+// import axiosInstance from '../../axiosInstance.js';
+import axiosInstance from "../../axiosInstance.js"
 
 function ChannelHome() {
 
