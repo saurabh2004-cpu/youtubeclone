@@ -21,7 +21,6 @@ function Header({ showCatagories = true }) {
   useEffect(() => {
     
     const fetchCurrentUser = async () => {
-      if(user){
         const response = await axiosInstance.get('/api/v1/users/get-current-user');
         dispatch(login(response.data.data));
         setUserData(response.data.data);
@@ -32,7 +31,6 @@ function Header({ showCatagories = true }) {
         }
       }
       
-    };
     fetchCurrentUser();
   }, []);
 
