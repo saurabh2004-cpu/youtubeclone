@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { login } from '../store/authSlice.js';
 import { Input, Header } from './index.js';
 import { useNavigate } from 'react-router-dom';
+import axiosInstance from "../axiosInstance.js"
 
 function Login() {
     const [error, setError] = useState("");
@@ -21,7 +22,7 @@ function Login() {
                 password: data.password
             };
 
-            const response = await axios.post('/api/v1/users/login', formData, {
+            const response = await axiosInstance.post('/api/v1/users/login', formData, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
