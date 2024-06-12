@@ -24,11 +24,11 @@ function Header({ showCatagories = true }) {
     const fetchCurrentUser = async () => 
       {
         if(user){
-          const response = await axiosInstance.get('/api/v1/users/get-current-user');
-          dispatch(login(response.data.data));
-          setUserData(response.data.data);
+          // const response = await axiosInstance.get('/api/v1/users/get-current-user');
+          // dispatch(login(response.data.data));
+          // setUserData(response.data.data);
         
-          const channelProfileResponse = await axiosInstance.get(`/api/v1/users/get-channel-profile/${response.data.data._id}`);
+          const channelProfileResponse = await axiosInstance.get(`/api/v1/users/get-channel-profile/${user._id}`);
           if (channelProfileResponse.status === 200) {
             dispatch(setChannel(channelProfileResponse.data.data))
           }
