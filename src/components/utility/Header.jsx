@@ -142,10 +142,8 @@ function Header({ showCatagories = true }) {
           )}
           {userData &&(
             <Link to="/channel-profile">
-            {user && user.avatar ? (
+            {user &&  (
               <img src={user.avatar} alt="Profile" className="h-8 w-8 rounded-full" />
-            ) : (
-              <div className="h-8 w-8 rounded-full bg-gray-600"></div>
             )}
           </Link>
           )}
