@@ -1,6 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import axiosInstance from '../../axiosInstance';
+import axios from 'axios';
+import axiosInstance from "../../axiosInstance.js"
 
 function EditTweet({ tweet, onUpdate, onCancel }) {
     const { register, handleSubmit, reset, setValue } = useForm();
@@ -13,7 +14,7 @@ function EditTweet({ tweet, onUpdate, onCancel }) {
 
     const handleUpdateTweet = async (data) => {
         try {
-            const response = await axiosInstance.patch(`/tweet/update-tweet/${tweet._id}`, { content: data.tweet });
+            const response = await axiosInstance.post(`/${tweet._id}`, { content: data.tweet });
             if (response.status === 200) {
                 onUpdate(tweet._id, data.tweet);
                 alert("Tweet updated successfully");
