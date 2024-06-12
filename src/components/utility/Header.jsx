@@ -23,7 +23,7 @@ function Header({ showCatagories = true }) {
     const fetchCurrentUser = async () => {
       try {
         const response = await axiosInstance.get('/users/get-current-user');
-        console.log("currentUser")
+        console.log("currentUser",response)
       
         if (response.status === 200) {
           dispatch(login(response.data.data));
