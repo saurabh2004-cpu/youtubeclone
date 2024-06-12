@@ -36,7 +36,7 @@ function Register() {
                 formData.append('coverImage', data.coverImage[0]);
             }
 
-            const response = await axiosInstance.post('/api/v1/users/register', formData, {
+            const response = await axiosInstance.post('/users/register', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
