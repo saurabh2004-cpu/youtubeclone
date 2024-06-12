@@ -82,7 +82,7 @@ function GetTweet() {
     
     const handleEditTweet = (tweet) => {
         setTweetToEdit(tweet);
--    };
+    };
     
     const handleUpdateTweet = (tweetId, newContent) => {
         setTweets(tweets.map(tweet => tweet._id === tweetId ? { ...tweet, content: newContent } : tweet));
