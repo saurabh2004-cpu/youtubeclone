@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
-import axiosInstance from "../../axiosInstance.js"
+import axiosInstance from '../../axiosInstance';
 
 function EditTweet({ tweet, onUpdate, onCancel }) {
     const { register, handleSubmit, reset, setValue } = useForm();
