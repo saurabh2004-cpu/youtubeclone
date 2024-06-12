@@ -13,7 +13,7 @@ function EditTweet({ tweet, onUpdate, onCancel }) {
 
     const handleUpdateTweet = async (data) => {
         try {
-            const response = await axiosInstance.post(`/tweet/update-tweet/${tweet._id}`, { content: data.tweet });
+            const response = await axiosInstance.patch(`/tweet/update-tweet/${tweet._id}`, { content: data.tweet });
             if (response.status === 200) {
                 onUpdate(tweet._id, data.tweet);
                 alert("Tweet updated successfully");
