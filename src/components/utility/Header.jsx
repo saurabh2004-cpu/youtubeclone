@@ -17,7 +17,7 @@ function Header({ showCatagories = true }) {
   
 
   const user = useSelector((state) => state.auth.userData);
-  console.log("usercurre",user)
+  console.log("usercurre",user.user)
 
   useEffect(() => {
     
