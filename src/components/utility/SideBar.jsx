@@ -15,6 +15,7 @@ function Sidebar({ isOpen, closeSidebar }) {
 
     const handleLogoutClick = async() => {
         const response=await axiosInstance.post('/users/logout')
+        localStorage.removeItem('accessToken');
         alert('sucessfully logged Out')
         navigate('/')
     };
