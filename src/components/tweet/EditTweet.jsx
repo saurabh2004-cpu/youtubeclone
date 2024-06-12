@@ -14,6 +14,7 @@ function EditTweet({ tweet, onUpdate, onCancel }) {
 
     const handleUpdateTweet = async (data) => {
         try {
+            console.log("Tweet ID:", tweet._id); // Add this line
             const response = await axiosInstance.post(`/tweet/update-tweet/${tweet._id}`, { content: data.tweet });
             if (response.status === 200) {
                 onUpdate(tweet._id, data.tweet);
@@ -24,6 +25,7 @@ function EditTweet({ tweet, onUpdate, onCancel }) {
             console.error("Error updating tweet:", err);
         }
     };
+    
 
     return (
         <div className="bg-gray-800 p-4 rounded-lg mt-4">
