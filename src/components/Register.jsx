@@ -21,7 +21,6 @@ function Register() {
   
 
     const handleRegistration = async (data) => {
-        console.log(data)
         setError("");
         try {
             const formData = new FormData();
@@ -47,6 +46,7 @@ function Register() {
             if (response.status === 200) {
                 setLoading(false)
                 const userData = response.data.data;
+                console.log("userData",response)
                 dispatch(login(userData));
                 navigate("/login");
             }

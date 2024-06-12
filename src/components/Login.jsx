@@ -27,12 +27,14 @@ function Login() {
                     'Content-Type': 'application/json'
                 }
             });
-
+            dispatch(login(response.data.data));
+            
             if (response.status === 200) {
                 const userData = response.data.data;
-                dispatch(login(userData));
+                localStorage.setItem('accessToken', response.data.data.accessToken);
+                localStorage.setItem('refreshToken', response.data.data.refreshToken);
                 navigate("/");
-            }
+                }
 
         } catch (error) {
             setError(error.response?.data?.message || error.message);
