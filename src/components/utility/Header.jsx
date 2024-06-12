@@ -25,7 +25,7 @@ function Header({ showCatagories = true }) {
         const response = await axiosInstance.get('/users/get-current-user');
         if (response.status === 200) {
           dispatch(login(response.data.data));
-          const channelProfileResponse = await axiosInstance.get(`api/v1/users/get-channel-profile/${response.data.data._id}`);
+          const channelProfileResponse = await axiosInstance.get(`users/get-channel-profile/${response.data.data._id}`);
           if (channelProfileResponse.status === 200) {
             dispatch(setChannel(channelProfileResponse.data.data));
           }
