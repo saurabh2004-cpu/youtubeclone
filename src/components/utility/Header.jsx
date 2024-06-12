@@ -39,16 +39,16 @@ function Header({ showCatagories = true }) {
     fetchCurrentUser();
   }, []);
 
-  useEffect(() => {
-    if (userData) {
-      dispatch(login(userData));
-    }
-  }, [userData, dispatch]);
+  // useEffect(() => {
+  //   if (userData) {
+  //     dispatch(login(userData));
+  //   }
+  // }, [userData, dispatch]);
 
   const categories = ['All', 'Music', 'Gaming', 'News', 'Sports'];
 
   const toggleDropdown = () => {
-    if (!userData) {
+    if (!user) {
       navigate('/register');
     }
     setDropdownOpen(!dropdownOpen);
@@ -132,12 +132,12 @@ function Header({ showCatagories = true }) {
               </div>
             )}
           </div>
-          {!userData && (
+          {!user && (
             <Link to="/register" className="p-2 rounded-full bg-gray-800 hover:bg-gray-700">
               Signup
             </Link>
           )}
-          {userData &&(
+          {user &&(
             <Link to="/channel-profile">
             {user && user.avatar ? (
               <img src={user.avatar} alt="Profile" className="h-8 w-8 rounded-full" />
