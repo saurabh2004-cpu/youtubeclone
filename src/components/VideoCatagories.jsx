@@ -10,11 +10,11 @@ const VideoCatagories = ({ categories }) => {
 
   const handleCatagoryClick = async (category) => {
     if (category === 'All') {
-      const response = await axiosInstance.get('/api/v1/video/all-users-videos');
+      const response = await axiosInstance.get('/video/all-users-videos');
       const shuffledVideos = response.data.data.sort(() => 0.5 - Math.random());
       dispatch(setVideos(shuffledVideos));
     } else {
-      const response = await axiosInstance.get(`/api/v1/video/get-videos-by-catagory/${category.toLowerCase()}`);
+      const response = await axiosInstance.get(`/video/get-videos-by-catagory/${category.toLowerCase()}`);
       setCategoryVideo(response.data.data);
       dispatch(setVideos(response.data.data));
     }
