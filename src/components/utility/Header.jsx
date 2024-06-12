@@ -27,7 +27,7 @@ function Header({ showCatagories = true }) {
         if (response.status === 200) {
           dispatch(login(response.data.data));
           const channelProfileResponse = await axiosInstance.get(`users/get-channel-profile/${response.data.data._id}`);
-          console.log("channelProf",channelProfileResponse)
+         
           if (channelProfileResponse.status === 200) {
             dispatch(setChannel(channelProfileResponse.data.data));
           }
@@ -36,6 +36,7 @@ function Header({ showCatagories = true }) {
         console.error('Error fetching current user:', error);
       }
     };
+    console.log("channelProf",channelProfileResponse)
   
     fetchCurrentUser();
   }, [dispatch]);
