@@ -27,19 +27,19 @@ function GetVideo() {
     useEffect(() => {
         const fetchVideo = async () => {
             try {
-                const response = await  axiosInstance.get(`/api/v1/video/get-video/${videoId}`);
+                const response = await  axiosInstance.get(`/video/get-video/${videoId}`);
                 if (response.status === 200) {
                     const videoData = response.data.data.video;
                     setVideo(videoData);
                     setViews(videoData.views);
         
-                    // const isLikedResponse = await  axiosInstance.get(`/api/v1/video/is-liked/${videoId}`); // Corrected URL
+                    // const isLikedResponse = await  axiosInstance.get(`/video/is-liked/${videoId}`); // Corrected URL
                
                     // if (isLikedResponse.status === 200) {
                     //     setIsLiked(isLikedResponse.data.data.isLiked);
                     // }
         
-                    const channelProfileResponse = await  axiosInstance.get(`/api/v1/users/get-channel-profile/${videoData.owner._id}`);
+                    const channelProfileResponse = await  axiosInstance.get(`/users/get-channel-profile/${videoData.owner._id}`);
                     if (channelProfileResponse.status === 200) {
                         const channelData = channelProfileResponse.data.data;
                         setSubscribers(channelData.subscribersCount);
@@ -55,7 +55,7 @@ function GetVideo() {
         const createWatchHistory = async () => {
             if(user){
                 try {
-                    await  axiosInstance.post(`/api/v1/users/create-watch-history/${videoId}`);
+                    await  axiosInstance.post(`/users/create-watch-history/${videoId}`);
                 } catch (error) {
                     console.error('Error creating watch history:', error);
                 }
@@ -65,7 +65,7 @@ function GetVideo() {
         const createView = async () => {
             if(user){
                 try {
-                    const response = await  axiosInstance.post(`/api/v1/video/increment-video-views/${videoId}`);
+                    const response = await  axiosInstance.post(`/video/increment-video-views/${videoId}`);
                     if (response.data.success) {
                         setViews(response.data.data.views);
                     }
@@ -91,7 +91,7 @@ function GetVideo() {
     const handleSubscribe = async (channelId) => {
        if(user){
         try {
-            const response = await  axiosInstance.post(`/api/v1/subscription/toggle-subscription/${channelId}`);
+            const response = await  axiosInstance.post(`/subscription/toggle-subscription/${channelId}`);
             if (response.data.success) {
                 setIsSubscribed(!isSubscribed);
                 setSubscribers(prev => isSubscribed ? prev - 1 : prev + 1);
@@ -108,7 +108,7 @@ function GetVideo() {
     const handleLikeVideo = async (videoId) => {
        if(user){
         try {
-            // const response = await  axiosInstance.post(`/api/v1/like/toggle-video-like/${videoId}`);
+            // const response = await  axiosInstance.post(`/like/toggle-video-like/${videoId}`);
             if (response.data.success) {
                 setIsLiked(!isLiked);
                 console.log(isLiked)

@@ -14,7 +14,7 @@ function WatchLater() {
     useEffect(() => {
         const fetchWatchLater = async () => {
             try {
-                const response = await axiosInstance.get('/api/v1/users/get-watch-later');
+                const response = await axiosInstance.get('/users/get-watch-later');
                 setWatchLaterVideos(response.data.data);
             } catch (error) {
                 console.error('Error fetching watch later videos:', error);
@@ -37,7 +37,7 @@ function WatchLater() {
     };
 
     const handleRemoveVideoClick = async (videoId) => {
-        await axiosInstance.post(`/api/v1/users/remove-from-watch-later/${videoId}`);
+        await axiosInstance.post(`/users/remove-from-watch-later/${videoId}`);
         alert("Video removed");
     };
 

@@ -22,7 +22,7 @@ const UpdateProfile = ({ channelProfile, onClose }) => {
       username: data.username
     };
     try {
-      const response = await axiosInstance.patch('/api/v1/users/update-account-details', formData);
+      const response = await axiosInstance.patch('/users/update-account-details', formData);
 
       if (response.status === 200) {
         dispatch(login(response.data.data));

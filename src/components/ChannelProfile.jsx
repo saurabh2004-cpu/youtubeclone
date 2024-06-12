@@ -31,7 +31,7 @@ const ChannelProfile = () => {
       formData.append('avatar', file);
 
       try {
-        const response = await axiosInstance.post('/api/v1/users/update-avatar', formData, {
+        const response = await axiosInstance.post('/users/update-avatar', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -56,7 +56,7 @@ const ChannelProfile = () => {
       formData.append('coverImage', file);
 
       try {
-        const response = await axiosInstance.post('/api/v1/users/update-cover-image', formData, {
+        const response = await axiosInstance.post('/users/update-cover-image', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },

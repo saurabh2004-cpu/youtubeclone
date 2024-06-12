@@ -37,7 +37,7 @@ function UploadVideo() {
 
         console.log(formData)
 
-       const response= await axiosInstance.post('/api/v1/video//upload-video',formData)
+       const response= await axiosInstance.post('/video//upload-video',formData)
        if(response){
         alert("video uploaded")
        }

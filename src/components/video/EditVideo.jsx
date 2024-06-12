@@ -33,7 +33,7 @@ const EditVideo = () => {
   useEffect(() => {
     const fetchVideo = async () => {
       try {
-        const response = await  axiosInstance.get(`/api/v1/video/get-video/${videoId}`);
+        const response = await  axiosInstance.get(`/video/get-video/${videoId}`);
         const videoData = response.data.data.video;
         setOwner(videoData.owner);
         setThumbnailPreview(videoData.thumbnail); 
@@ -47,7 +47,7 @@ const EditVideo = () => {
 
   const handleUpdateDetails = async (data) => {
     try {
-      const response = await  axiosInstance.patch(`/api/v1/video/update-video-details/${videoId}`, data);
+      const response = await  axiosInstance.patch(`/video/update-video-details/${videoId}`, data);
       alert(response.data.message);
     } catch (error) {
       console.error('Error updating video details:', error);
@@ -59,7 +59,7 @@ const EditVideo = () => {
     formData.append('thumbnail', thumbnailFile);
 
     try {
-      const response = await  axiosInstance.patch(`/api/v1/video/update-video-thumbnail/${videoId}`, formData, {
+      const response = await  axiosInstance.patch(`/video/update-video-thumbnail/${videoId}`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       alert(response.data.message);
@@ -76,7 +76,7 @@ const EditVideo = () => {
 
   const handleDeleteVideo = async () => {
     try {
-      const response = await  axiosInstance.post(`/api/v1/video/delete-video/${videoId}`);
+      const response = await  axiosInstance.post(`/video/delete-video/${videoId}`);
       alert(response.data.message);
       navigate('/manageVideo'); // Redirect to the manage videos page
     } catch (error) {
@@ -86,7 +86,7 @@ const EditVideo = () => {
 
   const handleTogglePublishStatus = async () => {
     try {
-      const response = await  axiosInstance.post(`/api/v1/video/toggle-status/${videoId}`);
+      const response = await  axiosInstance.post(`/video/toggle-status/${videoId}`);
       setIsPublished(response.data.data.isPublished);
       alert(response.data.message);
     } catch (error) {
