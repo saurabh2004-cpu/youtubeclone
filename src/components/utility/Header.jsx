@@ -21,14 +21,18 @@ function Header({ showCatagories = true }) {
 
   useEffect(() => {
     
-    const fetchCurrentUser = async () => {
-        const response = await axiosInstance.get('/api/v1/users/get-current-user');
-        dispatch(login(response.data.data));
-        setUserData(response.data.data);
-      
-        const channelProfileResponse = await axiosInstance.get(`/api/v1/users/get-channel-profile/${response.data.data._id}`);
-        if (channelProfileResponse.status === 200) {
-          dispatch(setChannel(channelProfileResponse.data.data))
+    const fetchCurrentUser = async () => 
+      {
+        if(user){
+          const response = await axiosInstance.get('/api/v1/users/get-current-user');
+          dispatch(login(response.data.data));
+          setUserData(response.data.data);
+        
+          const channelProfileResponse = await axiosInstance.get(`/api/v1/users/get-channel-profile/${response.data.data._id}`);
+          if (channelProfileResponse.status === 200) {
+            dispatch(setChannel(channelProfileResponse.data.data))
+          }
+
         }
       }
       
