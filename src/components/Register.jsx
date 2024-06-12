@@ -41,7 +41,8 @@ function Register() {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-            
+
+            dispatch(login(response.data.data));
             console.log("register",response)
             // setLoading(true)
 
@@ -49,7 +50,6 @@ function Register() {
                 setLoading(false)
                 const userData = response.data.data;
                 console.log("userData",response)
-                dispatch(login(userData));
                 navigate("/login");
             }
 
