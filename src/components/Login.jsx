@@ -27,6 +27,7 @@ function Login() {
                     'Content-Type': 'application/json'
                 }
             });
+            console.log("login",response)
             dispatch(login(response.data.data));
             
             if (response.status === 200) {
