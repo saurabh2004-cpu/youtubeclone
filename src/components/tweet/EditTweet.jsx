@@ -1,6 +1,5 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
 import axiosInstance from '../../axiosInstance';
 
 function EditTweet({ tweet, onUpdate, onCancel }) {
@@ -13,9 +12,8 @@ function EditTweet({ tweet, onUpdate, onCancel }) {
     }, [tweet, setValue]);
 
     const handleUpdateTweet = async (data) => {
-        const content= data.tweet
         try {
-            const response = await axiosInstance.post(`/tweet/update-tweet/${tweet._id}`,content   );
+            const response = await axiosInstance.post(`/tweet/update-tweet/${tweet._id}`, { content: data.tweet });
             if (response.status === 200) {
                 onUpdate(tweet._id, data.tweet);
                 alert("Tweet updated successfully");
@@ -25,7 +23,6 @@ function EditTweet({ tweet, onUpdate, onCancel }) {
             console.error("Error updating tweet:", err);
         }
     };
-    
 
     return (
         <div className="bg-gray-800 p-4 rounded-lg mt-4">
