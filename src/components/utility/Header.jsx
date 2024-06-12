@@ -29,6 +29,7 @@ function Header({ showCatagories = true }) {
           // setUserData(response.data.data);
         
           const channelProfileResponse = await axiosInstance.get(`/api/v1/users/get-channel-profile/${user._id}`);
+          console.log("channelProf",channelProfileResponse)
           if (channelProfileResponse.status === 200) {
             dispatch(setChannel(channelProfileResponse.data.data))
           }
