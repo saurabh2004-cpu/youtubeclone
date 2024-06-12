@@ -13,7 +13,7 @@ function AddToPlaylist({ video, onClose }) {
     useEffect(() => {
         const fetchPlaylists = async () => {
             try {
-                const response = await axiosInstance.get(`/api/v1/playlist/get-all-playlists/${video.owner}`);
+                const response = await axiosInstance.get(`/playlist/get-all-playlists/${video.owner}`);
                 setPlaylists(response.data.data);
                 setIsLoading(false);
             } catch (error) {
@@ -30,7 +30,7 @@ function AddToPlaylist({ video, onClose }) {
 
     const handleAddToPlaylist = async () => {
         try {
-            const response = await axiosInstance.post(`/api/v1/playlist/add-video-to-playlist/${selectedPlaylist}/video/${video._id}`);
+            const response = await axiosInstance.post(`/playlist/add-video-to-playlist/${selectedPlaylist}/video/${video._id}`);
             if (response.status === 200) {
                 alert("Video added to the playlist");
                 handleClose();

@@ -15,7 +15,7 @@ function AddComment({ videoId,onCommentAdded }) {
     const handleComment = async (data) => {
        if(user){
             try {
-                const response = await axiosInstance.post(`/api/v1/comment/add-comment/${videoId}`, data);
+                const response = await axiosInstance.post(`/comment/add-comment/${videoId}`, data);
                 setCommentText(response.data.data.comment)
                 if (response.status !== 200) {
                     throw new Error('Failed to add comment');

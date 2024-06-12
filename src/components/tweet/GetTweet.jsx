@@ -35,7 +35,7 @@ function GetTweet() {
 
     const fetchTweets = async () => {
         try {
-            const response = await axiosInstance.get(`/api/v1/tweet/get-tweets/${channel._id}`);
+            const response = await axiosInstance.get(`/tweet/get-tweets/${channel._id}`);
             setTweets(response.data.data);
         } catch (err) {
             setError(err.response?.data?.message || 'An error occurred while fetching tweets.');
@@ -51,7 +51,7 @@ function GetTweet() {
 
     const handleLikeTweet = async (tweetId) => {
         try {
-            const response = await axiosInstance.post(`/api/v1/tweet/toggle-tweet-like/${tweetId}`);
+            const response = await axiosInstance.post(`/tweet/toggle-tweet-like/${tweetId}`);
             if (response.data.success) {
                 setLikedTweets((prev) => ({
                     ...prev,
@@ -65,7 +65,7 @@ function GetTweet() {
     
     const handleDeleteTweet = async () => {
         try {
-            const response = await axiosInstance.post(`/api/v1/tweet/delete-tweet/${tweetToDelete._id}`);
+            const response = await axiosInstance.post(`/tweet/delete-tweet/${tweetToDelete._id}`);
             if (response.status === 200) {
                 setTweets(tweets.filter(tweet => tweet._id !== tweetToDelete._id));
                 setShowConfirmDelete(false);

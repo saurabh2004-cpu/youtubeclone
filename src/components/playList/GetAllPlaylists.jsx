@@ -35,7 +35,7 @@ function GetAllPlaylists() {
     useEffect(() => {
         const fetchPlaylists = async () => {
             try {
-                const response = await axiosInstance.get(`/api/v1/playlist/get-all-playlists/${channel._id}`);
+                const response = await axiosInstance.get(`/playlist/get-all-playlists/${channel._id}`);
                 setPlaylists(response.data.data);
             } catch (error) {
                 console.error('Error fetching playlists:', error);
@@ -63,7 +63,7 @@ function GetAllPlaylists() {
 
     const handleConfirmDelete = async () => {
         try {
-            await axiosInstance.post(`/api/v1/playlist/delete-playlist/${selectedPlaylist}`);
+            await axiosInstance.post(`/playlist/delete-playlist/${selectedPlaylist}`);
             setPlaylists(playlists.filter(playlist => playlist._id !== selectedPlaylist));
             setShowConfirmDelete(false);
         } catch (error) {

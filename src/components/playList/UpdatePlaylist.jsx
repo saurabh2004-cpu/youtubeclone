@@ -18,7 +18,7 @@ function UpdatePlaylist({ playlist, setShowEditPlayList }) {
             description: data.description,
         };
         try {
-            const response = await axiosInstance.post(`/api/v1/playlist/update-playlist/${playlist._id}`, formData);
+            const response = await axiosInstance.post(`/playlist/update-playlist/${playlist._id}`, formData);
             if (response.status === 200) {
                 setShowEditPlayList(false);
             }

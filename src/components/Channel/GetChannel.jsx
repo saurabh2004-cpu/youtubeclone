@@ -17,7 +17,7 @@ function GetChannel() {
         const fetchChannelData = async () => {
             try {
                 // Fetch Channel Stats
-                const statsResponse = await axiosInstance.get(`/api/v1/dashbord/get-channel-stats/${channelId}`);
+                const statsResponse = await axiosInstance.get(`/dashbord/get-channel-stats/${channelId}`);
                 if (statsResponse.status === 200) {
                     setChannelStats(statsResponse.data.data);
                 }

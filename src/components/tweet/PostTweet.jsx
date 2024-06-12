@@ -12,7 +12,7 @@ function PostTweet() {
 
     const handleTweetPost = async (data) => {
         try {
-            const response = await axiosInstance.post('/api/v1/tweet/post-tweet', { content: data.tweet });
+            const response = await axiosInstance.post('/tweet/post-tweet', { content: data.tweet });
             console.log("res", response);
             
             if (response.status === 200) {

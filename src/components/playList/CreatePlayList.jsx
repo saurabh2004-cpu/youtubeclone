@@ -17,7 +17,7 @@ function CreatePlayList({ setShowCreatePlayList }) {
                 description: data.description,
             };
 
-            const response = await axiosInstance.post('/api/v1/playlist/create-playlist', formData);
+            const response = await axiosInstance.post('/playlist/create-playlist', formData);
             console.log('res, play', response.data.data);
             reset();
             setShowCreatePlayList(false); // Hide the form after submission

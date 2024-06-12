@@ -19,7 +19,7 @@ function GetPlayList() {
     useEffect(() => {
         const fetchPlaylist = async () => {
             try {
-                const response = await axiosInstance.get(`/api/v1/playlist/get-playlist/${playlistId}`);
+                const response = await axiosInstance.get(`/playlist/get-playlist/${playlistId}`);
                 setPlaylist(response.data.data);
                 setVideos(response.data.data.videos);
                 console.log(videos)
@@ -46,7 +46,7 @@ function GetPlayList() {
    
     const handleConfirmDelete = async () => {
         try {
-            await axiosInstance.post(`/api/v1/playlist/remove-video/${playlistId}/videos/${videoToRemove._id}`);
+            await axiosInstance.post(`/playlist/remove-video/${playlistId}/videos/${videoToRemove._id}`);
             setPlaylist(prevPlaylist => ({
                 ...prevPlaylist,
                 videos: prevPlaylist.videos.filter(video => video._id !== videoToRemove._id)
