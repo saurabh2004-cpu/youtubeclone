@@ -22,7 +22,7 @@ function Login() {
                 password: data.password
             };
 
-            const response = await axiosInstance.post('/api/v1/users/login', formData, {
+            const response = await axiosInstance.post('/users/login', formData, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
