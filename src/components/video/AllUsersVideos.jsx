@@ -60,7 +60,7 @@ const AllUsersVideos = ({ isSidebarOpen }) => {
       navigate('/register')
     }
 
-    const response = await  axiosInstance.post(`/api/v1/users/add-to-watch-later/${videoId}`);
+    const response = await  axiosInstance.post(`/users/add-to-watch-later/${videoId}`);
     console.log(response);
   };
 
@@ -70,7 +70,7 @@ const AllUsersVideos = ({ isSidebarOpen }) => {
       navigate('/register')
     }
 
-    const response = await  axiosInstance.post(`/api/v1/users/add-to-play-next/${videoId}`);
+    const response = await  axiosInstance.post(`/users/add-to-play-next/${videoId}`);
     console.log("playnext video", response);
   };
 
