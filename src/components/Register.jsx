@@ -79,6 +79,7 @@ function Register() {
         setShowPassword((prevState) => !prevState);
     };
 
+    
     return (
         <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-pink-500 to-red-600">
             <div className="mx-auto w-full max-w-lg space-y-5 bg-gray-800 text-white rounded-xl p-10 border border-gray-200 shadow-md">
@@ -222,7 +223,7 @@ function Register() {
                                     Create Account
                                 </button>
                             )}
-                            
+
                         </div>
                     </form>
                 )}
