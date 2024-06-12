@@ -31,13 +31,13 @@ function Header({ showCatagories = true }) {
           if (channelProfileResponse.status === 200) {
             dispatch(setChannel(channelProfileResponse.data.data));
           }
-        }
+          }
+          console.log("channelProf",channelProfileResponse)
+          console.log("currentUser")
       } catch (error) {
         console.error('Error fetching current user:', error);
       }
     };
-    console.log("channelProf",channelProfileResponse)
-    console.log("currentUser")
   
     fetchCurrentUser();
   }, [dispatch]);
