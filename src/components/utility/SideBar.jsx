@@ -21,7 +21,6 @@ function Sidebar({ isOpen, closeSidebar }) {
     };
 
    
-
     return (
         <div className={`fixed inset-0 flex z-50 transition-transform transform ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
             <div className="w-64 bg-black text-white h-screen overflow-y-auto hide-scrollbar px-4 py-8 space-y-4">
