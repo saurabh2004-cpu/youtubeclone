@@ -14,7 +14,7 @@ function Sidebar({ isOpen, closeSidebar }) {
     const currentUser=useSelector(state=>state.auth.userData)
 
     const handleLogoutClick = async() => {
-        const response=await axiosInstance.post('users/logout')
+        const response=await axiosInstance.post('/users/logout')
         alert('sucessfully logged Out')
         navigate('/')
     };
