@@ -20,25 +20,18 @@ function Header({ showCatagories = true }) {
   console.log("usercurre",user)
 
   useEffect(() => {
-    
-    const fetchCurrentUser = async () => 
-      {
-        if(user){
-          // const response = await axiosInstance.get('/api/v1/users/get-current-user');
-          // dispatch(login(response.data.data));
-          // setUserData(response.data.data);
-        
-          const channelProfileResponse = await axiosInstance.get(`/api/v1/users/get-channel-profile/${user._id}`);
-          console.log("channelProf",channelProfileResponse)
-          if (channelProfileResponse.status === 200) {
-            dispatch(setChannel(channelProfileResponse.data.data))
-          }
-
+    const fetchCurrentUser = async () => {
+      if (user) {
+        const channelProfileResponse = await axiosInstance.get(`/api/v1/users/get-channel-profile/${user.user._id}`);
+        console.log("channelProf", channelProfileResponse);
+        if (channelProfileResponse.status === 200) {
+          dispatch(setChannel(channelProfileResponse.data.data));
         }
       }
+    }
       
     fetchCurrentUser();
-  }, []);
+  }, [user, dispatch]);
 
   // useEffect(() => {
   //   if (userData) {
