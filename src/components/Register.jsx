@@ -41,6 +41,7 @@ function Register() {
                     'Content-Type': 'multipart/form-data'
                 }
             });
+            
             console.log("register",response)
             // setLoading(true)
 
