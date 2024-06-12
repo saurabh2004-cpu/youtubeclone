@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FiMoreVertical } from 'react-icons/fi';
 import { Header, ConfirmDeleteCard,SidebarVideos } from '../index.js';
-import axiosInstance from '../../axiosInstance';
+import axiosInstance from '../../axiosInstance.js';
+
 
 function GetPlayList() {
     const [playlist, setPlaylist] = useState(null);
