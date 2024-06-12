@@ -23,7 +23,7 @@ const AllUsersVideos = ({ isSidebarOpen }) => {
 
     const fetchAllVideos = async () => {
       try {
-        const response = await  axiosInstance.get(`/api/v1/video/all-users-videos`);
+        const response = await  axiosInstance.get(`/video/all-users-videos`);
         const shuffledVideos = response.data.data.filter(video => video.isPublished === true).sort(() => 0.5 - Math.random());
         dispatch(setVideos(shuffledVideos));
         setLoading(false);
