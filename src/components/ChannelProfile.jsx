@@ -9,26 +9,25 @@ import { setChannel } from '../store/channelSlice.js';
 
 const ChannelProfile = () => {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.userData);
   const channel = useSelector((state) => state.channel.channelData);
   const [channelProfile, setChannelProfile] = useState(channel || null);
   const [isAvatarHover, setIsAvatarHover] = useState(false);
   const [isCoverImageHover, setIsCoverImageHover] = useState(false);
   const [showUpdateProfile, setShowUpdateProfile] = useState(false);
-  
+
   const fetchChannel = async () => {
-    const user = useSelector((state) => state.auth.userData);
     try {
       const response = await axiosInstance.get(`/users/get-channel-profile/${user._id}`);
       if (response.status === 200) {
         const channelData = response.data.data;
         setChannelProfile(channelData);
         dispatch(setChannel(channelData));
-        }
-        } catch (error) {
-          console.error('Error fetching channel profile:', error);
-          }
-          };
-       
+      }
+    } catch (error) {
+      console.error('Error fetching channel profile:', error);
+    }
+  };
 
   useEffect(() => {
     if (user && !channelProfile) {
