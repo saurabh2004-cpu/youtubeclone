@@ -49,7 +49,7 @@ function Header({ showCatagories = true, dispatchChannel }) {
   
   useEffect(() => {
     if (userData) {
-      dispatch(login(userData));
+      // dispatch(login(userData));
     }
   }, [userData, dispatch]);
 
