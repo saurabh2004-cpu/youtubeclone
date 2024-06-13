@@ -1,12 +1,9 @@
-import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { ChannelTabs, Header } from '../index.js';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setChannel } from '../../store/channelSlice.js';
-import axiosInstance from "../../axiosInstance.js"
-import { useSelector } from 'react-redux';
-
+import axiosInstance from "../../axiosInstance.js";
+import { ChannelTabs, Header } from '../index.js';
 
 function GetChannel() {
     const { channelId } = useParams();
@@ -25,9 +22,9 @@ function GetChannel() {
 
                 // Fetch Channel Profile
                 const profileResponse = await axiosInstance.get(`/users/get-channel-profile/${channelId}`);
-                dispatch(setChannel(profileResponse.data.data));
                 if (profileResponse.status === 200) {
                     setChannelDetails(profileResponse.data.data);
+                    dispatch(setChannel(profileResponse.data.data));
                 }
             } catch (error) {
                 console.error("Error fetching channel data:", error);
@@ -37,8 +34,8 @@ function GetChannel() {
         fetchChannelData();
     }, [channelId, dispatch]);
 
-    const channel=useSelector(state=>state.channel.channelData)
-    console.log("getchan",channel)
+    const channel = useSelector(state => state.channel.channelData);
+    console.log("getchan", channel);
 
     if (!channelDetails || !channelStats) {
         return <div>Loading...</div>;
