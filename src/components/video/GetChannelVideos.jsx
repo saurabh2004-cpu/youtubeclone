@@ -13,6 +13,7 @@ function GetChannelVideos({ ShowDots }) {
     const [menuVisible, setMenuVisible] = useState({});
     const [showConfirmDelete, setShowConfirmDelete] = useState(false);
     const [showAddToPlaylist, setShowAddToPlaylist] = useState(false);
+    const [hoveredVideoId, setHoveredVideoId] = useState(null);
     const navigate = useNavigate();
 
     const channel = useSelector(state => state.channel.channelData);
@@ -48,6 +49,7 @@ function GetChannelVideos({ ShowDots }) {
     };
 
     const handleMouseLeave = (videoId) => {
+        setHoveredVideoId(null);
         setMenuVisible(prevState => ({
             ...prevState,
             [videoId]: false,
@@ -90,7 +92,7 @@ function GetChannelVideos({ ShowDots }) {
                     <div
                         key={video._id}
                         className="overflow-hidden cursor-pointer rounded-lg shadow-lg relative"
-                        onMouseEnter={() => toggleMenu(video._id)}
+                        onMouseEnter={() => setHoveredVideoId(video._id)}
                         onMouseLeave={() => handleMouseLeave(video._id)}
                     >
                         <img
@@ -104,7 +106,7 @@ function GetChannelVideos({ ShowDots }) {
                             <div className='text-gray-400 ' style={{ position: 'absolute', bottom: '10px' }}>{video.views} Views . {calculateDaysAgo(video.createdAt)}</div>
                         </div>
                         <div className="absolute top-2 right-2">
-                            {ShowDots &&
+                            {ShowDots && hoveredVideoId === video._id &&
                                 <button
                                     className="text-gray-600"
                                     onClick={(e) => {
