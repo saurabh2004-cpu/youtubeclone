@@ -53,7 +53,7 @@ function LikedVideo() {
 
   if(!likedVideos && likedVideos.length==0){
     return(
-      <h1>No Lied Video Found </h1>
+      <h1>No Liked Video Found </h1>
     )
   }
 
