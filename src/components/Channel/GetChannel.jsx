@@ -5,6 +5,7 @@ import { ChannelTabs, Header } from '../index.js';
 import { useDispatch } from 'react-redux';
 import { setChannel } from '../../store/channelSlice.js';
 import axiosInstance from "../../axiosInstance.js"
+import { useSelector } from 'react-redux';
 
 
 function GetChannel() {
