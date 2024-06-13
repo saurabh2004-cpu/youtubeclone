@@ -30,8 +30,6 @@ function Header({ showCatagories = true }) {
           setUserData(response.data.data)
           dispatch(login(response.data.data));
 
-          
-
         }
       } catch (error) {
         console.error('Error fetching current user:', error);

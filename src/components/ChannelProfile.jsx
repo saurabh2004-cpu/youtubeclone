@@ -16,6 +16,9 @@ const ChannelProfile = () => {
   const [isCoverImageHover, setIsCoverImageHover] = useState(false);
   const [showUpdateProfile, setShowUpdateProfile] = useState(false);
 
+  
+
+
   const fetchChannel = async () => {
     try {
       const response = await axiosInstance.get(`/users/get-channel-profile/${user._id}`);
@@ -30,9 +33,10 @@ const ChannelProfile = () => {
   };
 
   useEffect(() => {
-    if (user && !channelProfile) {
+    // if (user && !channelProfile) {
       fetchChannel();
-    }
+    // }
+
   }, [user, channelProfile]);
 
   const handleAvatarChange = async (e) => {
@@ -157,7 +161,7 @@ const ChannelProfile = () => {
               onClick={() => setShowUpdateProfile(true)}
               className="bg-green-500 text-white font-semibold px-3 py-1 sm:px-4 sm:py-2 rounded-lg shadow-md hover:bg-green-600 hover:shadow-lg transition-transform transform hover:-translate-y-1"
             >
-              
+
               Customize Channel
             </button>
             {showUpdateProfile && (
