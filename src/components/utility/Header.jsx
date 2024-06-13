@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { setChannel } from '../../store/channelSlice.js';
 import axiosInstance from '../../axiosInstance.js';
 
-function Header({ showCatagories = true,dispatchChannel }) {
+function Header({ showCatagories = true,dispatchChannel=true }) {
   const dispatch = useDispatch();
   const [userData, setUserData] = useState();
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -22,7 +22,7 @@ function Header({ showCatagories = true,dispatchChannel }) {
 
   useEffect(() => {
     const fetchCurrentUser = async () => {
-      dispatchChannel=true
+      // dispatchChannel=true
       try {
         const response = await axiosInstance.get('/users/get-current-user');
         // console.log("currentUser",response)
