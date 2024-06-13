@@ -22,7 +22,6 @@ function Header({ showCatagories = true,dispatchChannel }) {
 
   useEffect(() => {
     const fetchCurrentUser = async () => {
-      dispatchChannel=true
       try {
         const response = await axiosInstance.get('/users/get-current-user');
         // console.log("currentUser",response)
@@ -46,7 +45,7 @@ function Header({ showCatagories = true,dispatchChannel }) {
     };
   
     fetchCurrentUser();
-  }, [dispatch]);
+  }, []);
   
   useEffect(() => {
     if (userData) {
