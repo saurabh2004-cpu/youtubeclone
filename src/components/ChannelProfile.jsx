@@ -18,7 +18,7 @@ const ChannelProfile = () => {
   const [showUpdateProfile, setShowUpdateProfile] = useState(false);
 
   const channel=useSelector(state=>state.channel.channelData)
-  console.log("object",channel)
+  // console.log("object",channel)
 
   useEffect(() => {
     setChannelProfile(channel)
