@@ -157,6 +157,7 @@ const ChannelProfile = () => {
               onClick={() => setShowUpdateProfile(true)}
               className="bg-green-500 text-white font-semibold px-3 py-1 sm:px-4 sm:py-2 rounded-lg shadow-md hover:bg-green-600 hover:shadow-lg transition-transform transform hover:-translate-y-1"
             >
+              
               Customize Channel
             </button>
             {showUpdateProfile && (
