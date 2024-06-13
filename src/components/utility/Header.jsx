@@ -17,7 +17,8 @@ function Header({ showCatagories = true,dispatchChannel }) {
   
 
   const user = useSelector((state) => state.auth.userData);
-  console.log("usercurre",user)
+  const currrentChannel = useSelector((state) => state.channel.channelData);
+  console.log("currentchan",currrentChannel)
 
   useEffect(() => {
     const fetchCurrentUser = async () => {
