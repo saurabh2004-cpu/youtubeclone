@@ -22,8 +22,8 @@ const ChannelProfile = () => {
 
   const fetchChannel=async()=>{
     const channel = await axiosInstance.get(`/users/get-channel-profile/${user._id}`);
-    if (channelProfileResponse.status === 200) {
-      setChannelProfile(channel)
+    if (channel === 200) {
+      setChannelProfile(channel.data.data)
       dispatch(setChannel(channelProfileResponse.data.data));
     }
   }
