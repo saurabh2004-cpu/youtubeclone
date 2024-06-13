@@ -36,6 +36,9 @@ function GetChannel() {
         fetchChannelData();
     }, [channelId, dispatch]);
 
+    const channel=useSelector(state=>state.channel.channelData)
+    console.log("getchan",channel)
+
     if (!channelDetails || !channelStats) {
         return <div>Loading...</div>;
     }
