@@ -134,7 +134,7 @@ function UploadVideo() {
                                     label="Title"
                                     placeholder="Enter your title"
                                     {...register("title", { required: true, maxLength: 100})}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full px-4 py-2 text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 />
                                 {title.length > 100 && (
                                     <p className="text-red-500 text-sm">Title must be 100 characters or less</p>
@@ -143,7 +143,7 @@ function UploadVideo() {
                                     label="Description"
                                     placeholder="Enter your description"
                                     {...register("description", { required: true })}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full px-4 py-2 text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 />
                                 <div className="w-full">
                                     <label htmlFor="category" className="block text-sm font-medium text-gray-700">Category</label>
