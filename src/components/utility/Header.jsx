@@ -45,7 +45,7 @@ function Header({ showCatagories = true }) {
   
   useEffect(() => {
     if (userData) {
-      dispatch(login(userData));
+      // dispatch(login(userData));
     }
   }, [userData, dispatch]);
 
