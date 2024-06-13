@@ -41,7 +41,7 @@ function Header({ showCatagories = true }) {
     };
   
     fetchCurrentUser();
-  }, []);
+  }, [dispatch]);
   
   useEffect(() => {
     if (userData) {
