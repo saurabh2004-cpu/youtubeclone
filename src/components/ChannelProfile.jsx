@@ -1,41 +1,39 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { Header,ProfileTabs } from './index.js';
-import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { Header, ProfileTabs } from './index.js';
 import { Link } from 'react-router-dom';
 import UpdateProfile from './UpdateProfile';
 import { FaCamera } from 'react-icons/fa';
-import axiosInstance from "../axiosInstance.js"
+import axiosInstance from "../axiosInstance.js";
 import { setChannel } from '../store/channelSlice.js';
-import { useDispatch } from 'react-redux';
-
-
-
 
 const ChannelProfile = () => {
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.userData);
-  const [channelProfile, setChannelProfile] = useState(null);
+  const channel = useSelector((state) => state.channel.channelData);
+  const [channelProfile, setChannelProfile] = useState(channel || null);
   const [isAvatarHover, setIsAvatarHover] = useState(false);
   const [isCoverImageHover, setIsCoverImageHover] = useState(false);
   const [showUpdateProfile, setShowUpdateProfile] = useState(false);
-  const dispatch=useDispatch()
 
-  const fetchChannel=async()=>{
-    const channel = await axiosInstance.get(`/users/get-channel-profile/${user._id}`);
-    console.log(channel,user)
-    if (channel.status === 200) {
-      setChannelProfile(channel.data.data)
-      dispatch(setChannel(channelProfileResponse.data.data));
+  const fetchChannel = async () => {
+    try {
+      const response = await axiosInstance.get(`/users/get-channel-profile/${user._id}`);
+      if (response.status === 200) {
+        const channelData = response.data.data;
+        setChannelProfile(channelData);
+        dispatch(setChannel(channelData));
+      }
+    } catch (error) {
+      console.error('Error fetching channel profile:', error);
     }
-  }
-
-  const channelll=useSelector(state=>state.auth.channelData)
-  console.log("chanProf",channelll)
-
+  };
 
   useEffect(() => {
-    fetchChannel()
-  }, []);
+    if (user && !channelProfile) {
+      fetchChannel();
+    }
+  }, [user, channelProfile]);
 
   const handleAvatarChange = async (e) => {
     const file = e.target.files[0];
@@ -51,8 +49,8 @@ const ChannelProfile = () => {
         });
 
         if (response.status === 200) {
-          alert("avatar image updated ")
-          setChannelProfile(prev => ({
+          alert("Avatar image updated");
+          setChannelProfile((prev) => ({
             ...prev,
             avatar: response.data.data.avatar,
           }));
@@ -77,8 +75,8 @@ const ChannelProfile = () => {
         });
 
         if (response.status === 200) {
-          alert("cover image updated ")
-          setChannelProfile(prev => ({
+          alert("Cover image updated");
+          setChannelProfile((prev) => ({
             ...prev,
             coverImage: response.data.data.coverImage,
           }));
@@ -94,22 +92,18 @@ const ChannelProfile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-black ">
-      <Header showCatagories={false}/>
-      
-      
+    <div className="min-h-screen bg-black">
+      <Header showCatagories={false} />
       <div
         className="w-full h-48 bg-cover bg-center relative"
         style={{ backgroundImage: `url(${channelProfile.coverImage})` }}
         onMouseEnter={() => setIsCoverImageHover(true)}
         onMouseLeave={() => setIsCoverImageHover(false)}
       >
-        
         {isCoverImageHover && (
-          <div className="absolute  bg-opacity-50 flex items-center ">
-            <label className=" text-white py-2 px-4 rounded cursor-pointer">
-            <FaCamera />
-             
+          <div className="absolute inset-0 flex items-center justify-center bg-opacity-50 bg-black">
+            <label className="text-white py-2 px-4 rounded cursor-pointer">
+              <FaCamera />
               <input
                 type="file"
                 accept="image/*"
@@ -120,7 +114,7 @@ const ChannelProfile = () => {
           </div>
         )}
         <div
-          className="w-full h-full bg-black bg-opacity-50 flex items-center justify-center"
+          className="w-full h-full flex items-center justify-center"
           onMouseEnter={() => setIsAvatarHover(true)}
           onMouseLeave={() => setIsAvatarHover(false)}
         >
@@ -131,8 +125,8 @@ const ChannelProfile = () => {
           />
           {isAvatarHover && (
             <div className="absolute">
-              <label className=" text-black  py-2 px-4 rounded cursor-pointer">
-              <FaCamera />
+              <label className="text-black py-2 px-4 rounded cursor-pointer">
+                <FaCamera />
                 <input
                   type="file"
                   accept="image/*"
@@ -167,18 +161,14 @@ const ChannelProfile = () => {
             </button>
             {showUpdateProfile && (
               <UpdateProfile
-              channelProfile={channelProfile}
-              onClose={() => setShowUpdateProfile(false)}
-        />
-      )}
+                channelProfile={channelProfile}
+                onClose={() => setShowUpdateProfile(false)}
+              />
+            )}
           </div>
         </div>
       </div>
-      <ProfileTabs  />
-
-      <div className="container mx-auto mt-3 p-3 sm:p-5"> 
-      {/* <ProfileTabs/> */}
-      </div>
+      <ProfileTabs />
     </div>
   );
 };
