@@ -34,7 +34,11 @@ const SidebarVideos = ({videos}) => {
       navigate('/register')
     }
     const response = await axiosInstance.post(`/users/add-to-watch-later/${videoId}`);
-  console.log(response);
+    console.log(response);
+
+    if(response.status===200){
+      alert("Video added toi watch later -")
+    }
   };
 
   const handlePlayNext = async (videoId) => {
