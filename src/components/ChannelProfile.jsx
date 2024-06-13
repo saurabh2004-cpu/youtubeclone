@@ -33,9 +33,7 @@ const ChannelProfile = () => {
   };
 
   useEffect(() => {
-    // if (user && !channelProfile) {
       fetchChannel();
-    // }
 
   }, [user, channelProfile]);
 
