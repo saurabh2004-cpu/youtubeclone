@@ -33,10 +33,10 @@ function GetVideo() {
                     setViews(videoData.views);
 
                     const channelProfileResponse = await axiosInstance.get(`/users/get-channel-profile/${videoData.owner._id}`);
-                    setIsSubscribed(channelProfileResponse.data.data.isSubscribed);
                     if (channelProfileResponse.status === 200) {
                         const channelData = channelProfileResponse.data.data;
                         setSubscribers(channelData.subscribersCount);
+                        setIsSubscribed(channelData.isSubscribed);
                     }
                 }
             } catch (error) {
@@ -74,7 +74,7 @@ function GetVideo() {
         }
 
         fetchVideo();
-    }, [videoId, commentsChanged,]);
+    }, [videoId, commentsChanged]);
 
     const handleCommentAdded = () => {
         setCommentsChanged(prev => !prev); // Toggle commentsChanged to trigger useEffect
@@ -85,7 +85,7 @@ function GetVideo() {
             try {
                 const response = await axiosInstance.post(`/subscription/toggle-subscription/${channelId}`);
                 if (response.data.success) {
-                    setIsSubscribed(prev => !prev);
+                    setIsSubscribed(!isSubscribed);
                     setSubscribers(prev => (isSubscribed ? prev - 1 : prev + 1));
                 }
             } catch (error) {
