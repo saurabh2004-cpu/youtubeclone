@@ -63,7 +63,7 @@ function GetPlayList() {
     return (
         <>
             <Header showCatagories={false} />
-            <div className="flex flex-col lg:flex-row p-6 space-y-6 lg:space-y-0 lg:space-x-6 bg-gray-900 text-white h-90 overflow-hidden">
+            <div className="flex flex-col lg:flex-row p-6 space-y-6 lg:space-y-0 lg:space-x-6 bg-gray-900 text-white h-90 overflow-hidden rounded-lg">
                 <div className="bg-gradient-to-r from-purple-800 via-blue-600 to-indigo-500 p-4 rounded-lg w-full h-full lg:w-1/3 lg:sticky lg:top-0">
                     <img src={playlist.videos[0]?.thumbnail} alt={playlist.name} className="w-full h-60 rounded-lg object-cover" />
                     <h2 className="text-2xl font-bold mt-4 text-left">{playlist.name}</h2>
