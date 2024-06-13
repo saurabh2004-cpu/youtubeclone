@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 import UpdateProfile from './UpdateProfile';
 import { FaCamera } from 'react-icons/fa';
 import axiosInstance from "../axiosInstance.js"
+import { setChannel } from '../store/channelSlice.js';
+import { useDispatch,useSelector } from 'react-redux';
 
 
 
@@ -16,13 +18,23 @@ const ChannelProfile = () => {
   const [isAvatarHover, setIsAvatarHover] = useState(false);
   const [isCoverImageHover, setIsCoverImageHover] = useState(false);
   const [showUpdateProfile, setShowUpdateProfile] = useState(false);
+  const dispatch=useDispatch()
 
-  const channel=useSelector(state=>state.channel.channelData)
-  // console.log("object",channel)
+  const fetchChannel=async()=>{
+    const channel = await axiosInstance.get(`/users/get-channel-profile/${response.data.data._id}`);
+    if (channelProfileResponse.status === 200) {
+      setChannelProfile(channel)
+      dispatch(setChannel(channelProfileResponse.data.data));
+    }
+  }
+
+  const channelll=useSelector(state=>state.auth.channelData)
+  console.log("chanProf",channelll)
+
 
   useEffect(() => {
-    setChannelProfile(channel)
-  }, );
+    fetchChannel()
+  }, []);
 
   const handleAvatarChange = async (e) => {
     const file = e.target.files[0];

@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { setChannel } from '../../store/channelSlice.js';
 import axiosInstance from '../../axiosInstance.js';
 
-function Header({ showCatagories = true,dispatchChannel=true }) {
+function Header({ showCatagories = true }) {
   const dispatch = useDispatch();
   const [userData, setUserData] = useState();
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -17,8 +17,7 @@ function Header({ showCatagories = true,dispatchChannel=true }) {
   
 
   const user = useSelector((state) => state.auth.userData);
-  const currrentChannel = useSelector((state) => state.channel.channelData);
-  console.log("currentchan",currrentChannel)
+  
 
   useEffect(() => {
     const fetchCurrentUser = async () => {
@@ -30,13 +29,7 @@ function Header({ showCatagories = true,dispatchChannel=true }) {
           setUserData(response.data.data)
           dispatch(login(response.data.data));
 
-
-          if (dispatchChannel) {
-            const channelProfileResponse = await axiosInstance.get(`/users/get-channel-profile/${response.data.data._id}`);
-            if (channelProfileResponse.status === 200) {
-              dispatch(setChannel(channelProfileResponse.data.data));
-            }
-          }
+          
 
         }
       } catch (error) {
@@ -45,7 +38,7 @@ function Header({ showCatagories = true,dispatchChannel=true }) {
     };
   
     fetchCurrentUser();
-  }, []);
+  }, [dispatch]);
   
   useEffect(() => {
     if (userData) {
