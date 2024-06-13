@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { setChannel } from '../../store/channelSlice.js';
 import axiosInstance from '../../axiosInstance.js';
 
-function Header({ showCatagories = true, dispatchChannel }) {
+function Header({ showCatagories = true,dispatchChannel=true }) {
   const dispatch = useDispatch();
   const [userData, setUserData] = useState();
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -27,18 +27,17 @@ function Header({ showCatagories = true, dispatchChannel }) {
         
         if (response.status === 200) {
           setUserData(response.data.data)
+          dispatch(login(response.data.data));
 
-          if(dispatchChannel==true){
-            dispatch(login(response.data.data));
+
+          if (dispatchChannel) {
+            const channelProfileResponse = await axiosInstance.get(`/users/get-channel-profile/${response.data.data._id}`);
+            if (channelProfileResponse.status === 200) {
+              dispatch(setChannel(channelProfileResponse.data.data));
+            }
           }
 
-          const channelProfileResponse = await axiosInstance.get(`users/get-channel-profile/${response.data.data._id}`);
-          // console.log("channelProf",channelProfileResponse)
-         
-          if (channelProfileResponse.status === 200) {
-            dispatch(setChannel(channelProfileResponse.data.data));
-          }
-          }
+        }
       } catch (error) {
         console.error('Error fetching current user:', error);
       }
@@ -47,15 +46,11 @@ function Header({ showCatagories = true, dispatchChannel }) {
     fetchCurrentUser();
   }, [dispatch]);
   
-  // useEffect(() => {
-  //   if (userData) {
-
-  //     if(dispatchChannel==true){
-  //     dispatch(login(userData));
-
-  //     }
-  //   }
-  // }, [userData, dispatch]);
+  useEffect(() => {
+    if (userData) {
+      dispatch(login(userData));
+    }
+  }, [userData, dispatch]);
 
   const categories = ['All', 'Music', 'Gaming', 'News', 'Sports'];
 
