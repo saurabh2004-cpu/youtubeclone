@@ -97,7 +97,7 @@ function GetAllPlaylists() {
                                         <h3 className="text-lg font-bold mb-2 min-h-[3rem]">{playlist.name}</h3>
                                         <p className="text-gray-400 mb-2">{playlist.videos.length} videos</p>
                                         <a href={`/get-playlist/${playlist._id}`} className="text-blue-500">
-                                            View full playlist
+                                            View full playlist{playlist._id}
                                         </a>
                                     </div>
                                     <button
