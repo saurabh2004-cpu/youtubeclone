@@ -20,7 +20,7 @@ const EmptyPlaylistCard = ({ onClick }) => {
 
 function GetAllPlaylists() {
     const [playlists, setPlaylists] = useState([]);
-    const [showOptions, setShowOptions] = useState({});
+    const [showOptions, setShowOptions] = useState(null);
     const [showConfirmDelete, setShowConfirmDelete] = useState(false);
     const [selectedPlaylist, setSelectedPlaylist] = useState(null);
     const [showCreatePlayList, setShowCreatePlayList] = useState(false);
@@ -43,10 +43,7 @@ function GetAllPlaylists() {
     }, [channel._id, showCreatePlayList, editingPlaylist]);
 
     const handleToggleOptions = (playlistId) => {
-        setShowOptions(prevState => ({
-            ...prevState,
-            [playlistId]: !prevState[playlistId]
-        }));
+        setShowOptions(prevState => prevState === playlistId ? null : playlistId);
     };
 
     const handleUpdateClick = (playlist) => {
@@ -81,7 +78,12 @@ function GetAllPlaylists() {
                     {showCreatePlayList && <CreatePlayList setShowCreatePlayList={setShowCreatePlayList} />}
                     
                     {playlists?.map((playlist) => (
-                        <div key={playlist._id} className="relative bg-gray-800 hover:bg-gray-700 rounded-lg shadow-lg">
+                        <div
+                            key={playlist._id}
+                            className="relative bg-gray-800 hover:bg-gray-700 rounded-lg shadow-lg"
+                            onMouseEnter={() => setShowOptions(playlist._id)}
+                            onMouseLeave={() => setShowOptions(null)}
+                        >
                             {editingPlaylist && editingPlaylist._id === playlist._id ? (
                                 <UpdatePlaylist playlist={editingPlaylist} setShowEditPlayList={handleCancelEdit} />
                             ) : (
@@ -104,7 +106,7 @@ function GetAllPlaylists() {
                                     >
                                         <FiMoreVertical />
                                     </button>
-                                    {showOptions[playlist._id] && user && user._id === playlist.owner._id && (
+                                    {showOptions === playlist._id && user && user._id === playlist.owner._id && (
                                         <div className="absolute top-8 right-2 bg-black rounded-lg shadow-lg">
                                             <button className="block px-4 py-2 text-white hover:bg-gray-600 w-full" onClick={() => handleUpdateClick(playlist)}>
                                                 Edit
