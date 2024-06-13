@@ -9,6 +9,7 @@ function WatchLater() {
     const [watchLaterVideos, setWatchLaterVideos] = useState([]);
     const [hoveredVideo, setHoveredVideo] = useState(null);
     const [showOptions, setShowOptions] = useState(null);
+    const [deletion,setDeletion] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -22,7 +23,7 @@ function WatchLater() {
         };
 
         fetchWatchLater();
-    }, []);
+    }, [deletion]);
 
     const handlePlayClick = (videoId) => {
         navigate(`/getVideo/${videoId}`);
@@ -39,6 +40,7 @@ function WatchLater() {
     const handleRemoveVideoClick = async (videoId) => {
         await axiosInstance.post(`/users/remove-from-watch-later/${videoId}`);
         alert("Video removed");
+        setDeletion(true)
     };
 
     const calculateDaysAgo = (createdAt) => {
