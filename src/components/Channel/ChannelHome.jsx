@@ -7,7 +7,6 @@ function ChannelHome() {
 
     const [videos,setVideos]=useState()
     const channel=useSelector(state=>state.channel.channelData)
-    console.log("homechan",channel)
 
     useEffect(()=>{
         const fetchVideos=async()=>{
