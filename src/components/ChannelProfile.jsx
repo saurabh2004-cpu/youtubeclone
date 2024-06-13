@@ -38,6 +38,7 @@ const ChannelProfile = () => {
         });
 
         if (response.status === 200) {
+          alert("avatar image updated ")
           setChannelProfile(prev => ({
             ...prev,
             avatar: response.data.data.avatar,
@@ -63,6 +64,7 @@ const ChannelProfile = () => {
         });
 
         if (response.status === 200) {
+          alert("cover image updated ")
           setChannelProfile(prev => ({
             ...prev,
             coverImage: response.data.data.coverImage,
