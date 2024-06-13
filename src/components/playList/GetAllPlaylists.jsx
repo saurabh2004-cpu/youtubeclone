@@ -61,7 +61,7 @@ function GetAllPlaylists() {
     const handleConfirmDelete = async () => {
         try {
             await axiosInstance.post(`/playlist/delete-playlist/${selectedPlaylist}`);
-            setPlaylists(playlists.filter(playlist => playlist._id !== selectedPlaylist));
+            setPlaylists(prevPlaylists => prevPlaylists.filter(playlist => playlist._id !== selectedPlaylist));
             setShowConfirmDelete(false);
             setSelectedPlaylist(null); // Reset selected playlist after deletion
         } catch (error) {
