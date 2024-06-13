@@ -21,7 +21,7 @@ const EmptyPlaylistCard = ({ onClick }) => {
 function GetAllPlaylists() {
     const [playlists, setPlaylists] = useState([]);
     const [showOptions, setShowOptions] = useState({});
-    const [showConfirmDelete, setShowConfirmDelete] = useState(null);
+    const [showConfirmDelete, setShowConfirmDelete] = useState(false);
     const [selectedPlaylist, setSelectedPlaylist] = useState(null);
     const [showCreatePlayList, setShowCreatePlayList] = useState(false);
     const [editingPlaylist, setEditingPlaylist] = useState(null);
@@ -63,6 +63,7 @@ function GetAllPlaylists() {
             await axiosInstance.post(`/playlist/delete-playlist/${selectedPlaylist}`);
             setPlaylists(playlists.filter(playlist => playlist._id !== selectedPlaylist));
             setShowConfirmDelete(false);
+            setSelectedPlaylist(null); // Reset selected playlist after deletion
         } catch (error) {
             console.error('Error deleting playlist:', error);
         }
