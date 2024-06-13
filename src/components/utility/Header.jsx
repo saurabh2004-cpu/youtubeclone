@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { setChannel } from '../../store/channelSlice.js';
 import axiosInstance from '../../axiosInstance.js';
 
-function Header({ showCatagories = true, dispatchChannel=true }) {
+function Header({ showCatagories = true, dispatchChannel }) {
   const dispatch = useDispatch();
   const [userData, setUserData] = useState();
   const [sidebarOpen, setSidebarOpen] = useState(false);
