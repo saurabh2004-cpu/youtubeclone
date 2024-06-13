@@ -33,7 +33,7 @@ function GetVideo() {
                     setViews(videoData.views);
 
                     const channelProfileResponse = await axiosInstance.get(`/users/get-channel-profile/${videoData.owner._id}`);
-                    setIsSubscribed(channelData.isSubscribed);
+                    setIsSubscribed(channelProfileResponse.data.data.isSubscribed);
                     if (channelProfileResponse.status === 200) {
                         const channelData = channelProfileResponse.data.data;
                         setSubscribers(channelData.subscribersCount);
