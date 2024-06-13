@@ -16,8 +16,7 @@ function GetChannelVideos({ ShowDots }) {
     const navigate = useNavigate();
 
     const channel = useSelector(state => state.channel.channelData);
-    
-    
+
     useEffect(() => {
         const fetchVideos = async () => {
             try {
@@ -40,6 +39,7 @@ function GetChannelVideos({ ShowDots }) {
             navigate(`/editVideo/${video._id}`, { state: { video } });
         }
     };
+
     const toggleMenu = (videoId) => {
         setMenuVisible(prevState => ({
             ...prevState,
@@ -64,6 +64,7 @@ function GetChannelVideos({ ShowDots }) {
             await  axiosInstance.post(`/video/delete-video/${selectedVideoId}`);
             setVideos(videos.filter(video => video._id !== selectedVideoId));
             setShowConfirmDelete(false);
+            setSelectedVideoId(null); // Reset selected video after deletion
         } catch (error) {
             console.error('Error deleting video:', error);
         }
@@ -89,6 +90,7 @@ function GetChannelVideos({ ShowDots }) {
                     <div
                         key={video._id}
                         className="overflow-hidden cursor-pointer rounded-lg shadow-lg relative"
+                        onMouseEnter={() => toggleMenu(video._id)}
                         onMouseLeave={() => handleMouseLeave(video._id)}
                     >
                         <img
