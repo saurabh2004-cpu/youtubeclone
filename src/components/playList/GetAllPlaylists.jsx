@@ -1,10 +1,8 @@
-import axios from 'axios';
+import axiosInstance from '../../axiosInstance';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { FiMoreVertical, FiPlus } from 'react-icons/fi';
-import { useNavigate } from 'react-router-dom';
 import { ConfirmDeleteCard, CreatePlayList, UpdatePlaylist } from '../index.js';
-import axiosInstance from '../../axiosInstance';
 
 const EmptyPlaylistCard = ({ onClick }) => {
     return (
@@ -15,7 +13,6 @@ const EmptyPlaylistCard = ({ onClick }) => {
             <div className="mt-4">
                 <h3 className="text-lg font-bold mb-2 min-h-[3rem] text-gray-600">Create a Playlist</h3>
                 <p className="text-gray-400 mb-2">Click here to create a new playlist.</p>
-                <a href="" className="text-blue-500">Create Playlist</a>
             </div>
         </div>
     );
@@ -28,7 +25,7 @@ function GetAllPlaylists() {
     const [selectedPlaylist, setSelectedPlaylist] = useState(null);
     const [showCreatePlayList, setShowCreatePlayList] = useState(false);
     const [editingPlaylist, setEditingPlaylist] = useState(null);
-    
+
     const channel = useSelector(state => state.channel.channelData);
     const user = useSelector(state => state.auth.userData);
 
@@ -43,7 +40,7 @@ function GetAllPlaylists() {
         };
 
         fetchPlaylists();
-    }, [channel._id, showCreatePlayList,editingPlaylist]);
+    }, [channel._id, showCreatePlayList, editingPlaylist]);
 
     const handleToggleOptions = (playlistId) => {
         setShowOptions(prevState => ({
@@ -121,7 +118,7 @@ function GetAllPlaylists() {
                         </div>
                     ))}
 
-                    {!playlists && <h1>Channel Has Not Created Any Playlist Yet !!</h1>}
+                    {!playlists.length && <h1>Channel Has Not Created Any Playlist Yet !!</h1>}
                 </div>
             </div>
 
