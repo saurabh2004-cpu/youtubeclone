@@ -33,10 +33,10 @@ function GetVideo() {
                     setViews(videoData.views);
 
                     const channelProfileResponse = await axiosInstance.get(`/users/get-channel-profile/${videoData.owner._id}`);
+                    setIsSubscribed(channelData.isSubscribed);
                     if (channelProfileResponse.status === 200) {
                         const channelData = channelProfileResponse.data.data;
                         setSubscribers(channelData.subscribersCount);
-                        setIsSubscribed(channelData.isSubscribed);
                     }
                 }
             } catch (error) {
@@ -74,7 +74,7 @@ function GetVideo() {
         }
 
         fetchVideo();
-    }, [videoId, commentsChanged,isSubscribed]);
+    }, [videoId, commentsChanged,]);
 
     const handleCommentAdded = () => {
         setCommentsChanged(prev => !prev); // Toggle commentsChanged to trigger useEffect
