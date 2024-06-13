@@ -81,7 +81,7 @@ const router = createBrowserRouter([
       }
       ,
       {
-        path:"/get-playlist/:playlistId",   
+        path:"/get-playlist",   
         element:<GetPlayList />
       }
       ,

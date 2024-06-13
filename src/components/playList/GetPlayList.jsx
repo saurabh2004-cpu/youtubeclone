@@ -20,7 +20,7 @@ function GetPlayList() {
     useEffect(() => {
         const fetchPlaylist = async () => {
             try {
-                const response = await axiosInstance.get(`/api/v1/playlist/get-playlist/${playlistId}`);
+                const response = await axiosInstance.get(`/playlist/get-playlist/${playlistId}`);
                 setPlaylist(response.data.data);
                 setVideos(response.data.data.videos);
                 console.log(videos)
