@@ -43,7 +43,7 @@ function GetChannel() {
 
     return (
         <>
-            <Header showCategories={false} />
+            {/* <Header showCategories={false} /> */}
             <div className="container mx-auto p-4 bg-black">
                 <div className="bg-black rounded-lg shadow-lg p-6 mb-4 text-white">
                     <div className="flex items-center space-x-4">
