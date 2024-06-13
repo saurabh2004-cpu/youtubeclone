@@ -7,7 +7,7 @@ import UpdateProfile from './UpdateProfile';
 import { FaCamera } from 'react-icons/fa';
 import axiosInstance from "../axiosInstance.js"
 import { setChannel } from '../store/channelSlice.js';
-import { useDispatch,useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 
 
