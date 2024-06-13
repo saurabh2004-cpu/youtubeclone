@@ -19,27 +19,20 @@ function GetVideo() {
     const navigate = useNavigate();
     const viewCounted = useRef(false);
     const [commentsChanged, setCommentsChanged] = useState(false);
-    const user=useSelector(state=>state.auth.userData)
-    
+    const user = useSelector(state => state.auth.userData);
 
     const videos = useSelector(state => state.videos.videosData);
 
     useEffect(() => {
         const fetchVideo = async () => {
             try {
-                const response = await  axiosInstance.get(`/video/get-video/${videoId}`);
+                const response = await axiosInstance.get(`/video/get-video/${videoId}`);
                 if (response.status === 200) {
                     const videoData = response.data.data.video;
                     setVideo(videoData);
                     setViews(videoData.views);
-        
-                    // const isLikedResponse = await  axiosInstance.get(`/video/is-liked/${videoId}`); // Corrected URL
-               
-                    // if (isLikedResponse.status === 200) {
-                    //     setIsLiked(isLikedResponse.data.data.isLiked);
-                    // }
-        
-                    const channelProfileResponse = await  axiosInstance.get(`/users/get-channel-profile/${videoData.owner._id}`);
+
+                    const channelProfileResponse = await axiosInstance.get(`/users/get-channel-profile/${videoData.owner._id}`);
                     if (channelProfileResponse.status === 200) {
                         const channelData = channelProfileResponse.data.data;
                         setSubscribers(channelData.subscribersCount);
@@ -50,12 +43,11 @@ function GetVideo() {
                 setError(error.response?.data?.message || error.message);
             }
         };
-        
 
         const createWatchHistory = async () => {
-            if(user){
+            if (user) {
                 try {
-                    await  axiosInstance.post(`/users/create-watch-history/${videoId}`);
+                    await axiosInstance.post(`/users/create-watch-history/${videoId}`);
                 } catch (error) {
                     console.error('Error creating watch history:', error);
                 }
@@ -63,9 +55,9 @@ function GetVideo() {
         };
 
         const createView = async () => {
-            if(user){
+            if (user) {
                 try {
-                    const response = await  axiosInstance.post(`/video/increment-video-views/${videoId}`);
+                    const response = await axiosInstance.post(`/video/increment-video-views/${videoId}`);
                     if (response.data.success) {
                         setViews(response.data.data.views);
                     }
@@ -82,45 +74,41 @@ function GetVideo() {
         }
 
         fetchVideo();
-    }, [videoId,commentsChanged]);
+    }, [videoId, commentsChanged]);
 
     const handleCommentAdded = () => {
         setCommentsChanged(prev => !prev); // Toggle commentsChanged to trigger useEffect
     };
 
     const handleSubscribe = async (channelId) => {
-       if(user){
-        try {
-            const response = await  axiosInstance.post(`/subscription/toggle-subscription/${channelId}`);
-            if (response.data.success) {
-                setIsSubscribed(!isSubscribed);
-                setSubscribers(prev => isSubscribed ? prev - 1 : prev + 1);
+        if (user) {
+            try {
+                const response = await axiosInstance.post(`/subscription/toggle-subscription/${channelId}`);
+                if (response.data.success) {
+                    setIsSubscribed(prev => !prev);
+                    setSubscribers(prev => (isSubscribed ? prev - 1 : prev + 1));
+                }
+            } catch (error) {
+                setError(error.response?.data?.message || error.message);
             }
-        } catch (error) {
-            setError(error.response?.data?.message || error.message);
+        } else {
+            navigate('/register');
         }
-       }
-       else{
-        navigate('/register')
-       }
     };
 
     const handleLikeVideo = async (videoId) => {
-       if(user){
-        try {
-            // const response = await  axiosInstance.post(`/like/toggle-video-like/${videoId}`);
-            if (response.data.success) {
-                setIsLiked(!isLiked);
-                console.log(isLiked)
-                setLikeCount(prev => isLiked ? prev - 1 : prev + 1 ); 
+        if (user) {
+            try {
+                const response = await axiosInstance.post(`/like/toggle-video-like/${videoId}`);
+                if (response.data.success) {
+                    setIsLiked(!isLiked);
+                    setLikeCount(prev => (isLiked ? prev - 1 : prev + 1));
+                }
+            } catch (error) {
+                setError(error.response?.data?.message || error.message);
             }
-        } catch (error) {
-            setError(error.response?.data?.message || error.message);
         }
-       }
     };
-    
-    
 
     const handleGetChannel = (channelId) => {
         navigate(`/get-channel/${channelId}`);
@@ -139,7 +127,7 @@ function GetVideo() {
             <Header showCatagories={false} />
             <div className="flex bg-black px-4 py-8">
                 {/* Left Section: Video Player and Details */}
-                <div className="flex-grow max-w-3xl h-screen  w-full bg-black rounded-xl p-6 shadow-md overflow-y-auto hide-scrollbar">
+                <div className="flex-grow max-w-3xl h-screen w-full bg-black rounded-xl p-6 shadow-md overflow-y-auto hide-scrollbar">
                     <div className="relative">
                         <video controls className="w-full h-auto rounded-md mb-4 mx-auto">
                             <source src={video.videoFile} type="video/mp4" />
@@ -170,7 +158,7 @@ function GetVideo() {
                         </button>
                         <div className="ml-auto text-white">
                             <button
-                                className="bg-gray-700 text-white px-4 py-2  rounded-full m-2"
+                                className="bg-gray-700 text-white px-4 py-2 rounded-full m-2"
                                 onClick={() => handleLikeVideo(video._id)}
                             >
                                 {isLiked ? <AiFillLike /> : <AiOutlineLike />} {likeCount}
@@ -195,7 +183,7 @@ function GetVideo() {
                 </div>
 
                 {/* Right Section: Sidebar Videos */}
-                <div className="w-1/2 ml-4 flex-shrink-0 sticky top-20 ">
+                <div className="w-1/2 ml-4 flex-shrink-0 sticky top-20">
                     <SidebarVideos videos={videos} getVideos={true} />
                 </div>
             </div>
