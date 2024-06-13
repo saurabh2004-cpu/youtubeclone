@@ -16,6 +16,7 @@ const ChannelProfile = () => {
   const [showUpdateProfile, setShowUpdateProfile] = useState(false);
   
   const fetchChannel = async () => {
+    const user = useSelector((state) => state.auth.userData);
     try {
       const response = await axiosInstance.get(`/users/get-channel-profile/${user._id}`);
       if (response.status === 200) {
@@ -33,7 +34,6 @@ const ChannelProfile = () => {
     if (user && !channelProfile) {
       fetchChannel();
     }
-    const user = useSelector((state) => state.auth.userData);
   }, [user, channelProfile]);
 
   const handleAvatarChange = async (e) => {
