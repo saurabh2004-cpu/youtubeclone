@@ -30,11 +30,11 @@ const SidebarVideos = ({videos}) => {
   };
 
   const handleSaveToWatchLater = async (videoId) => {
-    if(currentUser){
-      const response = await axiosInstance.post(`/users/add-to-watch-later/${videoId}`);
-    console.log(response);
+    if(!currentUser){
+      navigate('/register')
     }
-    navigate('/register')
+    const response = await axiosInstance.post(`/users/add-to-watch-later/${videoId}`);
+  console.log(response);
   };
 
   const handlePlayNext = async (videoId) => {
