@@ -23,7 +23,7 @@ function GetChannel() {
                 }
 
                 // Fetch Channel Profile
-                const profileResponse = await axiosInstance.get(`/api/v1/users/get-channel-profile/${channelId}`);
+                const profileResponse = await axiosInstance.get(`/users/get-channel-profile/${channelId}`);
                 if (profileResponse.status === 200) {
                     setChannelDetails(profileResponse.data.data);
                     dispatch(setChannel(profileResponse.data.data));
