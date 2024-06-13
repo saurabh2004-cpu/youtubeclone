@@ -47,11 +47,15 @@ function Header({ showCatagories = true, dispatchChannel }) {
     fetchCurrentUser();
   }, [dispatch]);
   
-  useEffect(() => {
-    if (userData) {
-      // dispatch(login(userData));
-    }
-  }, [userData, dispatch]);
+  // useEffect(() => {
+  //   if (userData) {
+
+  //     if(dispatchChannel==true){
+  //     dispatch(login(userData));
+
+  //     }
+  //   }
+  // }, [userData, dispatch]);
 
   const categories = ['All', 'Music', 'Gaming', 'News', 'Sports'];
 
