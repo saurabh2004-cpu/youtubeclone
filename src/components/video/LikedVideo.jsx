@@ -51,6 +51,12 @@ function LikedVideo() {
     return `${differenceInDays} days ago`;
   };
 
+  if(!likedVideos && likedVideos.length==0){
+    return(
+      <h1>No Lied Video Found </h1>
+    )
+  }
+
   return (
     <> <Header showCatagories={false}/>
       <div className="container mx-auto p-4 bg-gray-900 text-white flex">
