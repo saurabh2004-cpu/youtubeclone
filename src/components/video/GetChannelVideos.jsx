@@ -15,10 +15,10 @@ function GetChannelVideos({ ShowDots }) {
     const [showAddToPlaylist, setShowAddToPlaylist] = useState(false);
     const navigate = useNavigate();
 
-    const channel = useSelector(state => state.channel.channelData);
-    console.log("getachannelvid",channel)
-
+    
     useEffect(() => {
+        const channel = useSelector(state => state.channel.channelData);
+        console.log("getachannelvid",channel)
         const fetchVideos = async () => {
             try {
                 const response = await  axiosInstance.get(`/video/get-channel-all-videos/${channel._id}`);
