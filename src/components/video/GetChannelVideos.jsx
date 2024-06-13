@@ -16,7 +16,6 @@ function GetChannelVideos({ ShowDots }) {
     const navigate = useNavigate();
 
     const channel = useSelector(state => state.channel.channelData);
-    console.log("getachannelvid",channel)
     
     useEffect(() => {
         const fetchVideos = async () => {
