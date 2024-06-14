@@ -22,8 +22,8 @@ function GetChannelVideos({ ShowDots }) {
 
     useEffect(() => {
         const fetchVideos = async () => {
-            nprogress.start()
             try {
+                nprogress.start()
                 const response = await  axiosInstance.get(`/video/get-channel-all-videos/${channel._id}`);
                 setVideos(response.data.data.docs);
             } catch (error) {
