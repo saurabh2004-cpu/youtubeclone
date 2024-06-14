@@ -4,6 +4,8 @@ import { Header } from '../index.js';
 import { useNavigate } from 'react-router-dom';
 import { FiMoreVertical } from 'react-icons/fi';
 import axiosInstance from '../../axiosInstance.js';
+import nprogress from 'nprogress';
+import 'nprogress/nprogress.css'; 
 
 const WatchHistory = () => {
   const [history, setHistory] = useState([]);
@@ -15,12 +17,15 @@ const WatchHistory = () => {
   useEffect(() => {
     const fetchWatchHistory = async () => {
       try {
+        nprogress.start()
         const response = await axiosInstance.get('/users/watch-history');
         setHistory(response.data.data);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching watch history:', error);
         setLoading(false);
+      }finally {
+        nprogress.done(); 
       }
     };
 
