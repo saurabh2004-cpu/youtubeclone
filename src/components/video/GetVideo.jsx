@@ -114,6 +114,20 @@ function GetVideo() {
         navigate(`/get-channel/${channelId}`);
     };
 
+    const calculateTimeAgo = (createdAt) => {
+        const currentDate = new Date();
+        const createdDate = new Date(createdAt);
+        const differenceInTime = currentDate - createdDate;
+        const differenceInHours = Math.floor(differenceInTime / (1000 * 3600));
+    
+        if (differenceInHours < 24) {
+          return `${differenceInHours} hours ago`;
+        }
+    
+        const differenceInDays = Math.floor(differenceInTime / (1000 * 3600 * 24));
+        return `${differenceInDays} days ago`;
+      };
+
     if (error) {
         return <div className="text-red-600">{error}</div>;
     }
@@ -136,7 +150,7 @@ function GetVideo() {
                     </div>
                     <div className="mb-4">
                         <h2 className="text-2xl text-left font-bold text-white">{video.title}</h2>
-                        <p className="text-gray-500">{views} views</p>
+                        <p className="text-gray-500">{views} views .{calculateTimeAgo(video.createdAt)}</p>
                     </div>
                     <div className="flex items-center mb-4">
                         <div className='flex cursor-pointer' onClick={() => handleGetChannel(video.owner._id)}>
