@@ -47,13 +47,13 @@ function UploadVideo() {
             const response = await axiosInstance.post('/video/upload-video', formData, config);
             if (response) {
                 alert("Video uploaded");
-                setUploadProgress(0); // Reset upload progress
+                setUploadProgress(0); 
                 console.log(uploadProgress)
                 navigate("/");
             }
         } catch (error) {
             console.error('Error occurred while uploading:', error);
-            setUploadProgress(0); // Reset upload progress in case of error
+            setUploadProgress(0); 
         }
     };
 
