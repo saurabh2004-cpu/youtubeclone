@@ -80,7 +80,7 @@ function GetVideo() {
         }
 
         fetchVideo();
-    }, [videoId, commentsChanged]);
+    }, [videoId, commentsChanged,fetchVideo]);
 
     const handleCommentAdded = () => {
         setCommentsChanged(prev => !prev); // Toggle commentsChanged to trigger useEffect
