@@ -45,7 +45,7 @@ function GetVideo() {
                         const channelData = channelProfileResponse.data.data;
 
                         dispatch(setChannel(channelData))
-                        console.log("getvideo channel",channelData,channelProfileResponse)
+                        console.log("getvideo channel",channelProfileResponse)
 
                         setSubscribers(channelData.subscribersCount);
                         setIsSubscribed(channelData.isSubscribed);
