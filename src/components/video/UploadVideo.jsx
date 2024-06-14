@@ -48,6 +48,7 @@ function UploadVideo() {
             if (response) {
                 alert("Video uploaded");
                 setUploadProgress(0); // Reset upload progress
+                console.log(uploadProgress)
                 navigate("/");
             }
         } catch (error) {
@@ -72,6 +73,7 @@ function UploadVideo() {
             </div>
         )
     }
+    
 
 
     return (
