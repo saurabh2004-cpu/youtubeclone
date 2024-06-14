@@ -34,6 +34,7 @@ const AllUsersVideos = ({ isSidebarOpen }) => {
       } finally {
         nprogress.done(); 
       }
+      
     };
     fetchAllVideos();
   }, [dispatch]);
