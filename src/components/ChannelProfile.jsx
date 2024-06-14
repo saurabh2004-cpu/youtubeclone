@@ -40,7 +40,7 @@ const ChannelProfile = () => {
   useEffect(() => {
       fetchChannel();
 
-  }, [user, channelProfile]);
+  }, [user]);
 
   const handleAvatarChange = async (e) => {
     const file = e.target.files[0];
