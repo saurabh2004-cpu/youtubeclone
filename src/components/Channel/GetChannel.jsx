@@ -15,8 +15,8 @@ function GetChannel() {
 
     useEffect(() => {
         const fetchChannelData = async () => {
-            nprogress.start()
             try {
+                nprogress.start()
                 // Fetch Channel Stats
                 const statsResponse = await axiosInstance.get(`/dashbord/get-channel-stats/${channelId}`);
                 if (statsResponse.status === 200) {
