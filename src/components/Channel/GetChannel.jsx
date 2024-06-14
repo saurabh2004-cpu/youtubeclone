@@ -26,13 +26,9 @@ function GetChannel() {
                 if (statsResponse.status === 200) {
                     setChannelStats(statsResponse.data.data);
                 }
-
-                // Fetch Channel Profile
-                // const profileResponse = await axiosInstance.get(`/users/get-channel-profile/${channelId}`);
-                // if (profileResponse.status === 200) {
-                    setChannelDetails(channel);
-                    // dispatch(setChannel(profileResponse.data.data));
-                // }
+                
+                setChannelDetails(channel);
+         
             } catch (error) {
                 console.error("Error fetching channel data:", error);
             }finally {
