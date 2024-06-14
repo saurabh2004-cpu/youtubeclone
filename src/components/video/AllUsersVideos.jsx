@@ -22,7 +22,7 @@ const AllUsersVideos = ({ isSidebarOpen }) => {
   
   useEffect(() => {
     const fetchAllVideos = async () => {
-      nprogress.start(); // Start the progress bar
+      nprogress.start(); 
       try {
         const response = await  axiosInstance.get(`/video/all-users-videos`);
         const shuffledVideos = response.data.data.filter(video => video.isPublished === true).sort(() => 0.5 - Math.random());
@@ -32,7 +32,7 @@ const AllUsersVideos = ({ isSidebarOpen }) => {
         console.error('Error fetching videos:', error);
         setLoading(false);
       } finally {
-        nprogress.done(); // Stop the progress bar
+        nprogress.done(); 
       }
     };
     fetchAllVideos();

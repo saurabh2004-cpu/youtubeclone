@@ -6,6 +6,8 @@ import UpdateProfile from './UpdateProfile';
 import { FaCamera } from 'react-icons/fa';
 import axiosInstance from "../axiosInstance.js";
 import { setChannel } from '../store/channelSlice.js';
+import nprogress from 'nprogress';
+import 'nprogress/nprogress.css'; 
 
 const ChannelProfile = () => {
   const dispatch = useDispatch();
@@ -20,6 +22,7 @@ const ChannelProfile = () => {
 
 
   const fetchChannel = async () => {
+    nprogress.start(); 
     try {
       const response = await axiosInstance.get(`/users/get-channel-profile/${user._id}`);
       if (response.status === 200) {
@@ -29,6 +32,8 @@ const ChannelProfile = () => {
       }
     } catch (error) {
       console.error('Error fetching channel profile:', error);
+    } finally {
+      nprogress.done(); 
     }
   };
 
