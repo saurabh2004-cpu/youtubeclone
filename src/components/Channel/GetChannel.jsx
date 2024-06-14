@@ -13,6 +13,9 @@ function GetChannel() {
     const [channelStats, setChannelStats] = useState(null);
     const dispatch = useDispatch();
 
+    // const channelData=useSelector(state=>state.channel.channelData)
+    // console.log("chhanel from get channel",channelData)
+
     useEffect(() => {
         const fetchChannelData = async () => {
             try {
@@ -27,7 +30,7 @@ function GetChannel() {
                 const profileResponse = await axiosInstance.get(`/users/get-channel-profile/${channelId}`);
                 if (profileResponse.status === 200) {
                     setChannelDetails(profileResponse.data.data);
-                    dispatch(setChannel(profileResponse.data.data));
+                    // dispatch(setChannel(profileResponse.data.data));
                 }
             } catch (error) {
                 console.error("Error fetching channel data:", error);
