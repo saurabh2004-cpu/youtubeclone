@@ -1,12 +1,14 @@
 import axios from 'axios';
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Header, AddComment, GetVideoComments, SidebarVideos } from "../index.js";
 import { AiOutlineLike, AiFillLike } from 'react-icons/ai';
 import axiosInstance from '../../axiosInstance.js';
 import nprogress from 'nprogress';
 import 'nprogress/nprogress.css'; 
+import { setChannel } from '../../store/channelSlice.js';
+
 
 function GetVideo() {
     const { videoId } = useParams();
@@ -22,8 +24,10 @@ function GetVideo() {
     const viewCounted = useRef(false);
     const [commentsChanged, setCommentsChanged] = useState(false);
     const user = useSelector(state => state.auth.userData);
-
+    const dispatch=useDispatch()
+    
     const videos = useSelector(state => state.videos.videosData);
+    
 
     useEffect(() => {
         const fetchVideo = async () => {
@@ -38,6 +42,7 @@ function GetVideo() {
                     const channelProfileResponse = await axiosInstance.get(`/users/get-channel-profile/${videoData.owner._id}`);
                     if (channelProfileResponse.status === 200) {
                         const channelData = channelProfileResponse.data.data;
+                        dispatch(setChannel(channelData))
                         setSubscribers(channelData.subscribersCount);
                         setIsSubscribed(channelData.isSubscribed);
                     }
@@ -80,7 +85,7 @@ function GetVideo() {
         }
 
         fetchVideo();
-    }, [videoId, commentsChanged,fetchVideo]);
+    }, [videoId, commentsChanged]);
 
     const handleCommentAdded = () => {
         setCommentsChanged(prev => !prev); // Toggle commentsChanged to trigger useEffect
