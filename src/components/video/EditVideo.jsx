@@ -43,10 +43,11 @@ const EditVideo = () => {
         setIsPublished(videoData.isPublished);
       } catch (error) {
         console.error('Error fetching video details:', error);
-      }finally {
+      }
+      finally {
         nprogress.done(); 
       }
-      
+
     };
     fetchVideo();
   }, [videoId]);
