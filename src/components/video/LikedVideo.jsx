@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { Header } from '../index.js';
 import { FiMoreVertical } from 'react-icons/fi'; 
 import axiosInstance from '../../axiosInstance.js';
+import nprogress from 'nprogress';
+import 'nprogress/nprogress.css'; 
 
 function LikedVideo() {
   const [likedVideos, setLikedVideos] = useState([]);
@@ -13,12 +15,15 @@ function LikedVideo() {
 
   useEffect(() => {
     const fetchLikedVideos = async () => {
+      nprogress.start()
       try {
         const response = await axiosInstance.get('/like/get-liked-video');
         setLikedVideos(response.data.data);
         console.log(":resssssss",response)
       } catch (error) {
         console.error('Error fetching liked videos:', error);
+      }finally {
+        nprogress.done(); 
       }
     };
 
