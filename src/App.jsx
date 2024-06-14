@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import './App.css';
 import nprogress from 'nprogress';
+import { useEffect } from 'react';
 
 
  // Configure nprogress
@@ -28,7 +29,7 @@ import nprogress from 'nprogress';
  }, []);
 
 
- 
+
 
 
 function App() {
