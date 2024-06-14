@@ -4,8 +4,6 @@ import { Header } from '../index.js';
 import { useNavigate } from 'react-router-dom';
 import { FiMoreVertical } from 'react-icons/fi';
 import axiosInstance from '../../axiosInstance.js';
-import nprogress from 'nprogress';
-import 'nprogress/nprogress.css';
 
 const WatchHistory = () => {
   const [history, setHistory] = useState([]);
@@ -16,15 +14,13 @@ const WatchHistory = () => {
 
   useEffect(() => {
     const fetchWatchHistory = async () => {
-      nprogress.start();
       try {
         const response = await axiosInstance.get('/users/watch-history');
         setHistory(response.data.data);
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching watch history:', error);
-      } finally {
         setLoading(false);
-        nprogress.done();
       }
     };
 
@@ -36,16 +32,9 @@ const WatchHistory = () => {
   };
 
   const handleRemoveVideoClick = async (videoId) => {
-    nprogress.start();
-    try {
-      await axiosInstance.post(`/users/remove-from-history/${videoId}`);
-      setHistory(history.filter(video => video._id !== videoId));
-      alert("Video removed");
-    } catch (error) {
-      console.error('Error removing video from history:', error);
-    } finally {
-      nprogress.done();
-    }
+    await axiosInstance.post(`/users/remove-from-history/${videoId}`);
+    setHistory(history.filter(video => video._id !== videoId));
+    alert("Video removed");
   };
 
   const calculateDaysAgo = (createdAt) => {
