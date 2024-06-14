@@ -5,26 +5,28 @@ import { Header } from '../index.js';
 import { FiMoreVertical } from 'react-icons/fi'; 
 import axiosInstance from '../../axiosInstance.js';
 import nprogress from 'nprogress';
-import 'nprogress/nprogress.css';
+import 'nprogress/nprogress.css'; 
+
+
 
 function WatchLater() {
     const [watchLaterVideos, setWatchLaterVideos] = useState([]);
     const [hoveredVideo, setHoveredVideo] = useState(null);
     const [showOptions, setShowOptions] = useState(null);
-    const [deletion, setDeletion] = useState(false);
+    const [deletion,setDeletion] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchWatchLater = async () => {
-            nprogress.start();
             try {
+                nprogress.start()
                 const response = await axiosInstance.get('/users/get-watch-later');
                 setWatchLaterVideos(response.data.data);
             } catch (error) {
                 console.error('Error fetching watch later videos:', error);
-            } finally {
-                nprogress.done();
-            }
+            }finally {
+                nprogress.done(); 
+              }
         };
 
         fetchWatchLater();
@@ -43,16 +45,9 @@ function WatchLater() {
     };
 
     const handleRemoveVideoClick = async (videoId) => {
-        nprogress.start();
-        try {
-            await axiosInstance.post(`/users/remove-from-watch-later/${videoId}`);
-            alert("Video removed");
-            setDeletion(true);
-        } catch (error) {
-            console.error('Error removing video from watch later:', error);
-        } finally {
-            nprogress.done();
-        }
+        await axiosInstance.post(`/users/remove-from-watch-later/${videoId}`);
+        alert("Video removed");
+        setDeletion(true)
     };
 
     const calculateDaysAgo = (createdAt) => {
