@@ -114,20 +114,6 @@ function GetVideo() {
         navigate(`/get-channel/${channelId}`);
     };
 
-    const calculateTimeAgo = (createdAt) => {
-        const currentDate = new Date();
-        const createdDate = new Date(createdAt);
-        const differenceInTime = currentDate - createdDate;
-        const differenceInHours = Math.floor(differenceInTime / (1000 * 3600));
-    
-        if (differenceInHours < 24) {
-          return `${differenceInHours} hours ago`;
-        }
-    
-        const differenceInDays = Math.floor(differenceInTime / (1000 * 3600 * 24));
-        return `${differenceInDays} days ago`;
-      };
-
     if (error) {
         return <div className="text-red-600">{error}</div>;
     }
@@ -150,7 +136,7 @@ function GetVideo() {
                     </div>
                     <div className="mb-4">
                         <h2 className="text-2xl text-left font-bold text-white">{video.title}</h2>
-                        <p className="text-gray-500">{views} views .{calculateTimeAgo(video.createdAt)}</p>
+                        <p className="text-gray-500">{views} views</p>
                     </div>
                     <div className="flex items-center mb-4">
                         <div className='flex cursor-pointer' onClick={() => handleGetChannel(video.owner._id)}>
@@ -184,10 +170,12 @@ function GetVideo() {
                     </div>
                     <div className="mt-4 text-left">
                         <p className="text-gray-300">
-                            {showFullDescription ? video.description : `${video.description.slice(0, 100)} `}
-                            <span className="text-blue-500 cursor-pointer" onClick={() => setShowFullDescription(!showFullDescription)}>
-                                {showFullDescription ? 'Show less' : '....'}
-                            </span>
+                            {showFullDescription ? video.description : `${video.description.slice(0, 200)} `}
+                            {video.description.length > 200 && (
+                                <span className="text-blue-500 cursor-pointer" onClick={() => setShowFullDescription(!showFullDescription)}>
+                                    {showFullDescription ? 'Show less' : 'Show more'}
+                                </span>
+                            )}
                         </p>
                     </div>
                     <AddComment videoId={video._id} onCommentAdded={handleCommentAdded} />
