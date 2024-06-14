@@ -86,6 +86,7 @@ function Register() {
                 <h2 className="text-center text-2xl font-bold leading-tight">Sign up to create an account</h2>
                 <p className="mt-2 text-center text-base text-gray-600">
                     Already have an account?&nbsp;
+                    <p>Wait while uploading avatar and coverImage</p>
                     <Link
                         to="/login"
                         className="font-medium text-blue-600 transition-all duration-200 hover:underline"
