@@ -5,6 +5,8 @@ import { FiMoreVertical } from 'react-icons/fi';
 import { ConfirmDeleteCard, AddToPlaylist } from '../index.js'; 
 import { useSelector } from 'react-redux';
 import axiosInstance from '../../axiosInstance.js';
+import nprogress from 'nprogress';
+import 'nprogress/nprogress.css'; 
 
 function GetChannelVideos({ ShowDots }) {
     const [videos, setVideos] = useState([]);
@@ -20,12 +22,15 @@ function GetChannelVideos({ ShowDots }) {
 
     useEffect(() => {
         const fetchVideos = async () => {
+            nprogress.start()
             try {
                 const response = await  axiosInstance.get(`/video/get-channel-all-videos/${channel._id}`);
                 setVideos(response.data.data.docs);
             } catch (error) {
                 console.error('Error fetching videos:', error);
-            }
+            }finally {
+                nprogress.done(); 
+              }
         };
         fetchVideos();
     }, [channel._id]);

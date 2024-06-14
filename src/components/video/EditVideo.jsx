@@ -1,24 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useParams, useNavigate } from 'react-router-dom';
-import { Header } from '../index.js';
-import { FaCamera,FaPlay } from 'react-icons/fa';
-import { useLocation } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import axiosInstance from '../../axiosInstance';
-import nprogress from 'nprogress';
-import 'nprogress/nprogress.css'; 
-
 const EditVideo = () => {
   const { videoId } = useParams();
-
   const location = useLocation();
-  const { video} = location.state ;
+  const { video } = location.state;
   const [thumbnailFile, setThumbnailFile] = useState(null);
-  const [thumbnailPreview, setThumbnailPreview] = useState(null); 
+  const [thumbnailPreview, setThumbnailPreview] = useState(null);
 
-  // console.log("object",video)
-  const { register, handleSubmit,watch, formState: { errors } } = useForm({
+  const { register, handleSubmit, watch, formState: { errors } } = useForm({
     defaultValues: {
       title: video?.title || '',
       description: video?.description || '',
@@ -31,73 +18,81 @@ const EditVideo = () => {
   const [owner, setOwner] = useState(null);
   const title = watch("title", "");
 
-
   useEffect(() => {
     const fetchVideo = async () => {
-      nprogress.start(); 
+      nprogress.start(); // Start the progress bar
       try {
-        const response = await  axiosInstance.get(`/video/get-video/${videoId}`);
+        const response = await axiosInstance.get(`/video/get-video/${videoId}`);
         const videoData = response.data.data.video;
         setOwner(videoData.owner);
-        setThumbnailPreview(videoData.thumbnail); 
+        setThumbnailPreview(videoData.thumbnail);
         setIsPublished(videoData.isPublished);
       } catch (error) {
         console.error('Error fetching video details:', error);
+      } finally {
+        nprogress.done(); // Stop the progress bar
       }
-      finally {
-        nprogress.done(); 
-      }
-
     };
     fetchVideo();
   }, [videoId]);
 
   const handleUpdateDetails = async (data) => {
+    nprogress.start(); // Start the progress bar
     try {
-      const response = await  axiosInstance.patch(`/video/update-video-details/${videoId}`, data);
+      const response = await axiosInstance.patch(`/video/update-video-details/${videoId}`, data);
       alert(response.data.message);
     } catch (error) {
       console.error('Error updating video details:', error);
+    } finally {
+      nprogress.done(); // Stop the progress bar
     }
   };
 
   const handleUpdateThumbnail = async () => {
     const formData = new FormData();
     formData.append('thumbnail', thumbnailFile);
-
+    nprogress.start(); // Start the progress bar
     try {
-      const response = await  axiosInstance.patch(`/video/update-video-thumbnail/${videoId}`, formData, {
+      const response = await axiosInstance.patch(`/video/update-video-thumbnail/${videoId}`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       alert(response.data.message);
     } catch (error) {
       console.error('Error updating video thumbnail:', error);
+    } finally {
+      nprogress.done(); // Stop the progress bar
     }
   };
 
   const handleThumbnailChange = (e) => {
     const file = e.target.files[0];
     setThumbnailFile(file);
-    setThumbnailPreview(URL.createObjectURL(file)); // Create a preview URL
+    setThumbnailPreview(URL.createObjectURL(file));
   };
 
   const handleDeleteVideo = async () => {
+    nprogress.start(); // Start the progress bar
     try {
-      const response = await  axiosInstance.post(`/video/delete-video/${videoId}`);
+      const response = await axiosInstance.post(`/video/delete-video/${videoId}`);
       alert(response.data.message);
       navigate('/manageVideo'); // Redirect to the manage videos page
     } catch (error) {
       console.error('Error deleting video:', error);
+    } finally {
+      nprogress.done(); // Stop the progress bar
     }
   };
 
   const handleTogglePublishStatus = async () => {
+    nprogress.start(); // Start the progress bar
     try {
-      const response = await  axiosInstance.post(`/video/toggle-status/${videoId}`);
+      const response = await axiosInstance.post(`/video/toggle-status/${videoId}`);
       setIsPublished(response.data.data.isPublished);
       alert(response.data.message);
     } catch (error) {
       console.error('Error toggling publish status:', error);
+    } finally {
+      nprogress.done(); // Stop the progress bar
     }
   };
 
@@ -121,7 +116,7 @@ const EditVideo = () => {
               onClick={() => document.getElementById('thumbnail-input').click()}
               className="absolute top-2 right-2 bg-gray-800 bg-opacity-50 text-white p-2 rounded-full"
             >
-             <FaCamera/>
+              <FaCamera/>
             </button>
             <input
               type="file"
@@ -148,12 +143,12 @@ const EditVideo = () => {
                 <input
                   type="text"
                   id="title"
-                  {...register("title", { required: true,maxLength: 100 })}
+                  {...register("title", { required: true, maxLength: 100 })}
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
-                 {title.length > 100 && (
-                    <p className="text-red-500 text-sm">Title must be 100 characters or less</p>
-                  )}
+                {title.length > 100 && (
+                  <p className="text-red-500 text-sm">Title must be 100 characters or less</p>
+                )}
 
                 {errors.title && <span className="text-red-500">Title is required</span>}
               </div>
@@ -207,4 +202,3 @@ const EditVideo = () => {
 };
 
 export default EditVideo;
-
