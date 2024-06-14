@@ -5,6 +5,8 @@ import { useSelector } from 'react-redux';
 import { Header, AddComment, GetVideoComments, SidebarVideos } from "../index.js";
 import { AiOutlineLike, AiFillLike } from 'react-icons/ai';
 import axiosInstance from '../../axiosInstance.js';
+import nprogress from 'nprogress';
+import 'nprogress/nprogress.css'; 
 
 function GetVideo() {
     const { videoId } = useParams();
@@ -25,6 +27,7 @@ function GetVideo() {
 
     useEffect(() => {
         const fetchVideo = async () => {
+            nprogress.start()
             try {
                 const response = await axiosInstance.get(`/video/get-video/${videoId}`);
                 if (response.status === 200) {
@@ -41,7 +44,10 @@ function GetVideo() {
                 }
             } catch (error) {
                 setError(error.response?.data?.message || error.message);
-            }
+            } finally {
+                nprogress.done(); 
+              }
+              
         };
 
         const createWatchHistory = async () => {
