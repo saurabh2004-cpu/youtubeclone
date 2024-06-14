@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setChannel } from '../../store/channelSlice.js';
 import axiosInstance from "../../axiosInstance.js";
 import { ChannelTabs, Header } from '../index.js';
+import nprogress from 'nprogress';
+import 'nprogress/nprogress.css'; 
 
 function GetChannel() {
     const { channelId } = useParams();
@@ -13,6 +15,7 @@ function GetChannel() {
 
     useEffect(() => {
         const fetchChannelData = async () => {
+            nprogress.start()
             try {
                 // Fetch Channel Stats
                 const statsResponse = await axiosInstance.get(`/dashbord/get-channel-stats/${channelId}`);
@@ -28,7 +31,9 @@ function GetChannel() {
                 }
             } catch (error) {
                 console.error("Error fetching channel data:", error);
-            }
+            }finally {
+                nprogress.done(); 
+              }
         };
 
         fetchChannelData();
