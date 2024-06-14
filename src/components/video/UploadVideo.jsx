@@ -192,7 +192,7 @@ function UploadVideo() {
                                 )}
                             </div>
                         </form>
-)   }
+                    )}
 
                     </div>
                 </div>
