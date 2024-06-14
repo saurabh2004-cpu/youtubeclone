@@ -4,6 +4,7 @@ const EditVideo = () => {
   const { video } = location.state;
   const [thumbnailFile, setThumbnailFile] = useState(null);
   const [thumbnailPreview, setThumbnailPreview] = useState(null);
+  import { useNavigate } from "react-router-dom";
 
   const { register, handleSubmit, watch, formState: { errors } } = useForm({
     defaultValues: {
@@ -20,7 +21,7 @@ const EditVideo = () => {
 
   useEffect(() => {
     const fetchVideo = async () => {
-      nprogress.start(); // Start the progress bar
+      nprogress.start(); 
       try {
         const response = await axiosInstance.get(`/video/get-video/${videoId}`);
         const videoData = response.data.data.video;
@@ -30,28 +31,28 @@ const EditVideo = () => {
       } catch (error) {
         console.error('Error fetching video details:', error);
       } finally {
-        nprogress.done(); // Stop the progress bar
+        nprogress.done(); 
       }
     };
     fetchVideo();
   }, [videoId]);
 
   const handleUpdateDetails = async (data) => {
-    nprogress.start(); // Start the progress bar
+    nprogress.start(); 
     try {
       const response = await axiosInstance.patch(`/video/update-video-details/${videoId}`, data);
       alert(response.data.message);
     } catch (error) {
       console.error('Error updating video details:', error);
     } finally {
-      nprogress.done(); // Stop the progress bar
+      nprogress.done(); 
     }
   };
 
   const handleUpdateThumbnail = async () => {
     const formData = new FormData();
     formData.append('thumbnail', thumbnailFile);
-    nprogress.start(); // Start the progress bar
+    nprogress.start(); 
     try {
       const response = await axiosInstance.patch(`/video/update-video-thumbnail/${videoId}`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
@@ -60,7 +61,7 @@ const EditVideo = () => {
     } catch (error) {
       console.error('Error updating video thumbnail:', error);
     } finally {
-      nprogress.done(); // Stop the progress bar
+      nprogress.done(); 
     }
   };
 
@@ -71,20 +72,19 @@ const EditVideo = () => {
   };
 
   const handleDeleteVideo = async () => {
-    nprogress.start(); // Start the progress bar
+    nprogress.start(); 
     try {
       const response = await axiosInstance.post(`/video/delete-video/${videoId}`);
       alert(response.data.message);
-      navigate('/manageVideo'); // Redirect to the manage videos page
+      navigate('/manageVideo'); 
     } catch (error) {
       console.error('Error deleting video:', error);
     } finally {
-      nprogress.done(); // Stop the progress bar
-    }
+      nprogress.done(); 
   };
 
   const handleTogglePublishStatus = async () => {
-    nprogress.start(); // Start the progress bar
+    nprogress.start(); 
     try {
       const response = await axiosInstance.post(`/video/toggle-status/${videoId}`);
       setIsPublished(response.data.data.isPublished);
@@ -92,7 +92,7 @@ const EditVideo = () => {
     } catch (error) {
       console.error('Error toggling publish status:', error);
     } finally {
-      nprogress.done(); // Stop the progress bar
+      nprogress.done(); 
     }
   };
 
