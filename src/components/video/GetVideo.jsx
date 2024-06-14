@@ -41,10 +41,10 @@ function GetVideo() {
                     setViews(videoData.views);
 
 
-                    const channelSubscribers=await axiosInstance.get(`/get-channel-subscribers/${videoData.owner._id}`)
-                    if(channelSubscribers.status===200){
-                        console.log("subscribers",channelSubscribers)
-                    }
+                    // const channelSubscribers=await axiosInstance.get(`/get-channel-subscribers/${videoData.owner._id}`)
+                    // if(channelSubscribers.status===200){
+                    //     console.log("subscribers",channelSubscribers)
+                    // }
 
                     const channelProfileResponse = await axiosInstance.get(`/users/get-channel-profile/${videoData.owner._id}`);
                     if (channelProfileResponse.status === 200) {
