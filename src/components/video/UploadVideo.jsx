@@ -145,9 +145,7 @@ function UploadVideo() {
                                 <div className="space-y-5">
                                     <Input
                                         label="Title"
-                                        placeholder="Enter your title
-                                        ...
-                                        label="Enter your title"
+                                        placeholder="Enter your title"
                                         {...register("title", { required: true, maxLength: 100})}
                                         className="w-full px-4 py-2 text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
