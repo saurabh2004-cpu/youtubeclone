@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { Input, Header } from '../index';
 import axios from 'axios';
 import axiosInstance from '../../axiosInstance.js';
+import { useNavigate } from 'react-router-dom';
 
 function UploadVideo() {
     const { register, handleSubmit,watch } = useForm();
@@ -11,6 +12,7 @@ function UploadVideo() {
     const [thumbnailFile, setThumbnailFile] = useState(null);
     const [uploadProgress, setUploadProgress] = useState(0);
     const title = watch("title", "");
+    const navigate=useNavigate()
 
 
     const handleVideoSelect = (event) => {
@@ -35,11 +37,23 @@ function UploadVideo() {
         formData.append("title", data.title);
         formData.append("description", data.description);
 
-        console.log(formData)
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            },
+            onUploadProgress: progressEvent => {
+                const { loaded, total } = progressEvent;
+                const progress = Math.round((loaded / total) * 100);
+                setUploadProgress(progress);
+            }
+        };
 
-       const response= await axiosInstance.post('/video//upload-video',formData)
+        // console.log(formData)
+
+       const response= await axiosInstance.post('/video//upload-video',formData,config)
        if(response){
         alert("video uploaded")
+        navigate("/")
        }
     };
 
@@ -178,7 +192,7 @@ function UploadVideo() {
                                 )}
                             </div>
                         </form>
-)}
+)   }
 
                     </div>
                 </div>
