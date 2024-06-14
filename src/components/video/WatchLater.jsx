@@ -4,6 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import { Header } from '../index.js';
 import { FiMoreVertical } from 'react-icons/fi'; 
 import axiosInstance from '../../axiosInstance.js';
+import nprogress from 'nprogress';
+import 'nprogress/nprogress.css'; 
+
+
 
 function WatchLater() {
     const [watchLaterVideos, setWatchLaterVideos] = useState([]);
@@ -14,12 +18,15 @@ function WatchLater() {
 
     useEffect(() => {
         const fetchWatchLater = async () => {
+            nprogress.start()
             try {
                 const response = await axiosInstance.get('/users/get-watch-later');
                 setWatchLaterVideos(response.data.data);
             } catch (error) {
                 console.error('Error fetching watch later videos:', error);
-            }
+            }finally {
+                nprogress.done(); 
+              }
         };
 
         fetchWatchLater();
