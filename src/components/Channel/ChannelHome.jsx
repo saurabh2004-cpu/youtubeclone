@@ -16,6 +16,20 @@ function ChannelHome() {
 
         fetchVideos()
     })
+
+    const calculateTimeAgo = (createdAt) => {
+        const currentDate = new Date();
+        const createdDate = new Date(createdAt);
+        const differenceInTime = currentDate - createdDate;
+        const differenceInHours = Math.floor(differenceInTime / (1000 * 3600));
+    
+        if (differenceInHours < 24) {
+          return `${differenceInHours} hours ago`;
+        }
+    
+        const differenceInDays = Math.floor(differenceInTime / (1000 * 3600 * 24));
+        return `${differenceInDays} days ago`;
+      };
   return (
     <div>
       <div className="mt-6 ">
@@ -25,7 +39,7 @@ function ChannelHome() {
                         <div key={video.id} className=" rounded-lg shadow-md p-4">
                             <img src={video.thumbnail} alt={video.title} className="w-full h-48 object-cover rounded-md mb-2" />
                             <h3 className="text-lg font-semibold text-white">{video.title}</h3>
-                            <p className="text-white">{video.views} views • {video.uploaded} ago</p>
+                            <p className="text-white">{video.views} views • {calculateTimeAgo(video.createdAt)} ago</p>
                         </div>
                     ))}
                 </div>
