@@ -6,6 +6,8 @@ import { FaCamera,FaPlay } from 'react-icons/fa';
 import { useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import axiosInstance from '../../axiosInstance';
+import nprogress from 'nprogress';
+import 'nprogress/nprogress.css'; 
 
 const EditVideo = () => {
   const { videoId } = useParams();
@@ -32,6 +34,7 @@ const EditVideo = () => {
 
   useEffect(() => {
     const fetchVideo = async () => {
+      nprogress.start(); 
       try {
         const response = await  axiosInstance.get(`/video/get-video/${videoId}`);
         const videoData = response.data.data.video;
@@ -40,7 +43,10 @@ const EditVideo = () => {
         setIsPublished(videoData.isPublished);
       } catch (error) {
         console.error('Error fetching video details:', error);
+      }finally {
+        nprogress.done(); 
       }
+      
     };
     fetchVideo();
   }, [videoId]);
