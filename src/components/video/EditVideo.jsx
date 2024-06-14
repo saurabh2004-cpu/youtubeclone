@@ -4,7 +4,6 @@ const EditVideo = () => {
   const { video } = location.state;
   const [thumbnailFile, setThumbnailFile] = useState(null);
   const [thumbnailPreview, setThumbnailPreview] = useState(null);
-  import { useNavigate } from "react-router-dom";
 
   const { register, handleSubmit, watch, formState: { errors } } = useForm({
     defaultValues: {
