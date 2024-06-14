@@ -1,23 +1,20 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Input, Header } from '../index';
-import axios from 'axios';
 import axiosInstance from '../../axiosInstance.js';
 import { useNavigate } from 'react-router-dom';
 
 function UploadVideo() {
-    const { register, handleSubmit,watch } = useForm();
+    const { register, handleSubmit, watch } = useForm();
     const [selectedTab, setSelectedTab] = useState('video');
     const [videoFile, setVideoFile] = useState(null);
     const [thumbnailFile, setThumbnailFile] = useState(null);
     const [uploadProgress, setUploadProgress] = useState(0);
     const title = watch("title", "");
-    const navigate=useNavigate()
-
+    const navigate = useNavigate();
 
     const handleVideoSelect = (event) => {
         setVideoFile(event.target.files[0]);
-        console.log(videoFile)
     };
 
     const handleThumbnailSelect = (event) => {
@@ -29,8 +26,6 @@ function UploadVideo() {
     };
 
     const handleVideoUpload = async (data) => {
-        console.log(data)
-
         const formData = new FormData();
         formData.append("videoFile", videoFile);
         formData.append("thumbnail", thumbnailFile);
@@ -48,13 +43,17 @@ function UploadVideo() {
             }
         };
 
-        // console.log(formData)
-
-       const response= await axiosInstance.post('/video//upload-video',formData,config)
-       if(response){
-        alert("video uploaded")
-        navigate("/")
-       }
+        try {
+            const response = await axiosInstance.post('/video/upload-video', formData, config);
+            if (response) {
+                alert("Video uploaded");
+                setUploadProgress(0); // Reset upload progress
+                navigate("/");
+            }
+        } catch (error) {
+            console.error('Error occurred while uploading:', error);
+            setUploadProgress(0); // Reset upload progress in case of error
+        }
     };
 
     return (
@@ -141,57 +140,59 @@ function UploadVideo() {
                                 </div>
                             </div>
                         )}
-                       {selectedTab === 'details' && (
-                        <form onSubmit={handleSubmit(handleVideoUpload)}>
-                            <div className="space-y-5">
-                                <Input
-                                    label="Title"
-                                    placeholder="Enter your title"
-                                    {...register("title", { required: true, maxLength: 100})}
-                                    className="w-full px-4 py-2 text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                />
-                                {title.length > 100 && (
-                                    <p className="text-red-500 text-sm">Title must be 100 characters or less</p>
-                                )}
-                                <Input
-                                    label="Description"
-                                    placeholder="Enter your description"
-                                    {...register("description", { required: true })}
-                                    className="w-full px-4 py-2 text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                />
-                                <div className="w-full">
-                                    <label htmlFor="category" className="block text-sm font-medium text-gray-700">Category</label>
-                                    <select
-                                        id="category"
-                                        {...register("category")}
-                                        className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                                    >
-                                        <option value="All">All</option>
-                                        <option value="Music">Music</option>
-                                        <option value="Gaming">Gaming</option>
-                                        <option value="News">News</option>
-                                        <option value="Sports">Sports</option>
-                                    </select>
-                                </div>
-                                <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-all duration-200">
-                                    Upload Video
-                                </button>
-                                {uploadProgress > 0 && (
-                                    <div className="relative pt-1">
-                                        <div className="flex mb-2 items-center justify-between">
-                                            <div>
-                                                <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-blue-600 bg-blue-200">
-                                                    Uploading {uploadProgress}%
-                                                </span>
+                        {selectedTab === 'details' && (
+                            <form onSubmit={handleSubmit(handleVideoUpload)}>
+                                <div className="space-y-5">
+                                    <Input
+                                        label="Title"
+                                        placeholder="Enter your title
+                                        ...
+                                        label="Enter your title"
+                                        {...register("title", { required: true, maxLength: 100})}
+                                        className="w-full px-4 py-2 text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                    {title.length > 100 && (
+                                        <p className="text-red-500 text-sm">Title must be 100 characters or less</p>
+                                    )}
+                                    <Input
+                                        label="Description"
+                                        placeholder="Enter your description"
+                                        {...register("description", { required: true })}
+                                        className="w-full px-4 py-2 text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                    <div className="w-full">
+                                        <label htmlFor="category" className="block text-sm font-medium text-gray-700">Category</label>
+                                        <select
+                                            id="category"
+                                            {...register("category")}
+                                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        >
+                                            <option value="All">All</option>
+                                            <option value="Music">Music</option>
+                                            <option value="Gaming">Gaming</option>
+                                            <option value="News">News</option>
+                                            <option value="Sports">Sports</option>
+                                        </select>
+                                    </div>
+                                    <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-all duration-200">
+                                        Upload Video
+                                    </button>
+                                    {uploadProgress > 0 && (
+                                        <div className="relative pt-1">
+                                            <div className="flex mb-2 items-center justify-between">
+                                                <div>
+                                                    <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-blue-600 bg-blue-200">
+                                                        Uploading {uploadProgress}%
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-blue-200">
+                                                <div style={{ width: `${uploadProgress}%` }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500"></div>
                                             </div>
                                         </div>
-                                        <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-blue-200">
-                                            <div style={{ width: `${uploadProgress}%` }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500"></div>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-                        </form>
+                                    )}
+                                </div>
+                            </form>
                         )}
 
                     </div>
