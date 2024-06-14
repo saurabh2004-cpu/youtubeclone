@@ -39,7 +39,7 @@ function ChannelHome() {
                         <div key={video.id} className=" rounded-lg shadow-md p-4">
                             <img src={video.thumbnail} alt={video.title} className="w-full h-48 object-cover rounded-md mb-2" />
                             <h3 className="text-lg font-semibold text-white">{video.title}</h3>
-                            <p className="text-white">{video.views} views • {calculateTimeAgo(video.createdAt)} ago</p>
+                            <p className="text-white">{video.views} views • {calculateTimeAgo(video.createdAt)} </p>
                         </div>
                     ))}
                 </div>
