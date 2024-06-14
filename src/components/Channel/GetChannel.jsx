@@ -13,8 +13,9 @@ function GetChannel() {
     const [channelStats, setChannelStats] = useState(null);
     const dispatch = useDispatch();
 
-    // const channelData=useSelector(state=>state.channel.channelData)
-    // console.log("chhanel from get channel",channelData)
+    const channel = useSelector(state => state.channel.channelData);
+    console.log("getchan", channel);
+
 
     useEffect(() => {
         const fetchChannelData = async () => {
@@ -27,11 +28,11 @@ function GetChannel() {
                 }
 
                 // Fetch Channel Profile
-                const profileResponse = await axiosInstance.get(`/users/get-channel-profile/${channelId}`);
-                if (profileResponse.status === 200) {
-                    setChannelDetails(profileResponse.data.data);
+                // const profileResponse = await axiosInstance.get(`/users/get-channel-profile/${channelId}`);
+                // if (profileResponse.status === 200) {
+                    setChannelDetails(channel);
                     // dispatch(setChannel(profileResponse.data.data));
-                }
+                // }
             } catch (error) {
                 console.error("Error fetching channel data:", error);
             }finally {
@@ -42,9 +43,7 @@ function GetChannel() {
         fetchChannelData();
     }, [channelId, dispatch]);
 
-    const channel = useSelector(state => state.channel.channelData);
-    console.log("getchan", channel);
-
+   
     if (!channelDetails || !channelStats) {
         return <div>Loading...</div>;
     }
