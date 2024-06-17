@@ -34,7 +34,7 @@ function GetVideo() {
         const fetchVideo = async () => {
             try {
                 nprogress.start()
-                const response = await axiosInstance.get(`/video/get-video/${videoId}/${user._id}`);
+                const response = await axiosInstance.get(`/video/get-video/${videoId}`);
                 if (response.status === 200) {
                     const videoData = response.data.data.video;
                     setVideo(videoData);
@@ -46,7 +46,7 @@ function GetVideo() {
                     //     console.log("subscribers",channelSubscribers)
                     // }
 
-                    const channelProfileResponse = await axiosInstance.get(`/users/get-channel-profile/${videoData.owner._id}`);
+                    const channelProfileResponse = await axiosInstance.get(`/users/get-channel-profile/${videoData.owner._id}/${user._id}`);
                     if (channelProfileResponse.status === 200) {
                         const channelData = channelProfileResponse.data.data;
 
