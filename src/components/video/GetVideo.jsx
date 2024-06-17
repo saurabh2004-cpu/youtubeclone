@@ -34,7 +34,7 @@ function GetVideo() {
         const fetchVideo = async () => {
             try {
                 nprogress.start()
-                const response = await axiosInstance.get(`/video/get-video/${videoId}`);
+                const response = await axiosInstance.get(`/video/get-video/${videoId}/${user._id}`);
                 if (response.status === 200) {
                     const videoData = response.data.data.video;
                     setVideo(videoData);
