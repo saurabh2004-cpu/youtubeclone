@@ -28,6 +28,7 @@ function GetVideo() {
     
     const videos = useSelector(state => state.videos.videosData);
     const channelData = useSelector(state => state.channel.channelData);
+    console.log("userId",user._id)
     
 
     useEffect(() => {
