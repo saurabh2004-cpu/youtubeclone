@@ -32,8 +32,8 @@ function GetVideo() {
 
     useEffect(() => {
         const fetchVideo = async () => {
-            nprogress.start()
             try {
+                nprogress.start()
                 const response = await axiosInstance.get(`/video/get-video/${videoId}`);
                 if (response.status === 200) {
                     const videoData = response.data.data.video;
