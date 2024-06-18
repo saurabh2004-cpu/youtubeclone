@@ -209,14 +209,14 @@ function GetVideo() {
                         </p>
                     </div>
                     <AddComment videoId={video._id} onCommentAdded={handleCommentAdded} />
-                    <GetVideoComments videoId={video._id} commentsChanged={commentsChanged} />
+                    <div>
+                        <GetVideoComments videoId={video._id} />
+                    </div>
                 </div>
 
                 {/* Right Section: Sidebar Videos */}
-                <div className="w-96 ml-6 flex-shrink-0 h-screen overflow-y-auto hide-scrollbar">
-                    {sidebarVideos && sidebarVideos.length > 0 && (
-                        <SidebarVideos videos={sidebarVideos} />
-                    )}
+                <div className="w-1/2 ml-4 flex-shrink-0 sticky top-20">
+                    <SidebarVideos videos={sidebarVideos} getVideos={true} />
                 </div>
             </div>
         </>
