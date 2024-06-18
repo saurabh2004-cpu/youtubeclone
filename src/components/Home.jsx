@@ -1,20 +1,16 @@
 import React from 'react';
 import { Header, AllUsersVideos, Sidebar } from './index';
-import { useSelector } from 'react-redux';
-import { Container } from '../components/index.js';
+import useBlockBackNavigation from './customHooks/useBlockBackNavigation';
 
 function Home() {
-    // const user = useSelector((state) => state.auth.userData);
-    // console.log("user", user);
+    useBlockBackNavigation(); 
 
     return (
         <>
-        <Header />
-        <AllUsersVideos />
-        <Sidebar/>
-        
+            <Header />
+            <AllUsersVideos />
+            <Sidebar />
         </>
-     
     );
 }
 
