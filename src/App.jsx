@@ -26,8 +26,8 @@ const user=useSelector(state=>state.auth.userData)
 function App() {
   return (
     <Routes>
-      {!userData && <Route path="/register" element={<Register />} />}
-     {!userData && <Route path="/login" element={<Login />} />}
+      {!user && <Route path="/register" element={<Register />} />}
+     {!user && <Route path="/login" element={<Login />} />}
       <Route path="/" element={<Home />} />
       <Route path="/channel-profile" element={<ChannelProfile />} />
       <Route path="/upload-video" element={<UploadVideo />} />
