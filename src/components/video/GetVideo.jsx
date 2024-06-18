@@ -47,13 +47,13 @@ function GetVideo() {
                     //     console.log("subscribers",channelSubscribers)
                     // }
 
+                    
+
                     const channelProfileResponse = await axiosInstance.get(`/users/get-channel-profile/${videoData.owner._id}/${user._id}`);
                     if (channelProfileResponse.status === 200) {
                         const channelData = channelProfileResponse.data.data;
-
                         dispatch(setChannel(channelData))
                         console.log("getvideo channel",channelProfileResponse)
-
                         setSubscribers(channelData.subscribersCount);
                         setIsSubscribed(channelData.isSubscribed);
                     }
@@ -184,7 +184,8 @@ function GetVideo() {
                                 className="bg-gray-700 text-white px-4 py-2 rounded-full m-2"
                                 onClick={() => handleLikeVideo(video._id)}
                             >
-                                {isLiked ? <AiFillLike /> : <AiOutlineLike />} {likeCount}
+                                {/* {isLiked ? <AiFillLike /> : <AiOutlineLike />} {likeCount} */}
+                                {isLiked ? 'Unlike' : 'Like' {likeCount}
                             </button>
                             
                             <button className="bg-gray-700 text-white px-4 py-2 rounded-full m-2">Share</button>
