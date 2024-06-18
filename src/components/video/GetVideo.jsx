@@ -26,8 +26,10 @@ function GetVideo() {
     const [commentsChanged, setCommentsChanged] = useState(false);
     const user = useSelector(state => state.auth.userData);
     const dispatch=useDispatch()
+    const [sidebarVideos,setSideBarVideos]=useState(null)
     
     const videos = useSelector(state => state.videos.videosData);
+    setSideBarVideos(videos)
     const channelData = useSelector(state => state.channel.channelData);
     console.log("getvideo",videos)
     
@@ -60,10 +62,10 @@ function GetVideo() {
                     }
                 }
 
-                if(!videos){
+                if(!sidebarVideos){
                     const response = await  axiosInstance.get(`/video/all-users-videos`);
                     const shuffledVideos = response.data.data.filter(video => video.isPublished === true).sort(() => 0.5 - Math.random());
-                    dispatch(setVideos(shuffledVideos));
+                    setSideBarVideos(shuffledVideos)
                 }
 
 
@@ -227,7 +229,7 @@ function GetVideo() {
 
                 {/* Right Section: Sidebar Videos */}
                 <div className="w-1/2 ml-4 flex-shrink-0 sticky top-20">
-                    <SidebarVideos videos={videos} getVideos={true} />
+                    <SidebarVideos videos={sidebarVideos} getVideos={true} />
                 </div>
             </div>
         </>
