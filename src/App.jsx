@@ -26,8 +26,8 @@ function App() {
 
   return (
     <Routes>
-      {!user && <Route path="/register" element={<Register />} />}
-      {!user && <Route path="/login" element={<Login />} />}
+       <Route path="/register" element={<Register />} />
+       <Route path="/login" element={<Login />} />
       <Route path="/" element={<Home />} />
       <Route path="/channel-profile" element={<ChannelProfile />} />
       <Route path="/upload-video" element={<UploadVideo />} />
