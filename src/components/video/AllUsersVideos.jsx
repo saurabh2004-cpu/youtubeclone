@@ -108,7 +108,7 @@ const AllUsersVideos = ({ isSidebarOpen }) => {
   // }
 
   return (
-    <div className={`container mx-auto p-4 grid gap-6 ${isSidebarOpen ? 'grid-cols-3' : 'grid-cols-4'}`}>
+    <div className={`container mx-auto p-4 grid gap-6 ${isSidebarOpen ? 'grid-cols-3' : 'grid-cols-4'} mb: grid-1`}>
       {allVideos?.map(video => (
         <div key={video._id} className="relative cursor-pointer group" onMouseLeave={() => handleMouseLeave(video._id)}>
           {video.isPublished && (
