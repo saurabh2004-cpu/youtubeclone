@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 
-function SubscribeButton({subscribed ,toggleSubscribe}) {
+function SubscribeButton({subscribed ,toggleSubscribe,channelId}) {
   const [isClicked, setIsClicked] = useState(false);
 
   const handleClick = () => {
     setIsClicked(true);
     setTimeout(() => setIsClicked(false), 600); // Reset after animation duration
-    toggleSubscribe()
+    toggleSubscribe(channelId)
   };
 
   return (
