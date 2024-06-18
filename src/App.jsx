@@ -21,9 +21,9 @@ import {
 import Login from './components/Login.jsx';
 import { useSelector } from 'react-redux';
 
-const user=useSelector(state=>state.auth.userData)
 
 function App() {
+  const user=useSelector(state=>state.auth.userData)
   return (
     <Routes>
       {!user && <Route path="/register" element={<Register />} />}
