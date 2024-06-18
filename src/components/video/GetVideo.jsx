@@ -29,9 +29,9 @@ function GetVideo() {
     const [sidebarVideos,setSideBarVideos]=useState(null)
     
     const videos = useSelector(state => state.videos.videosData);
-    setSideBarVideos(videos)
+    
     const channelData = useSelector(state => state.channel.channelData);
-    console.log("getvideo",videos)
+    console.log("getvideosidebar",videos)
     
 
     useEffect(() => {
@@ -62,10 +62,13 @@ function GetVideo() {
                     }
                 }
 
-                if(!sidebarVideos){
-                    const response = await  axiosInstance.get(`/video/all-users-videos`);
-                    const shuffledVideos = response.data.data.filter(video => video.isPublished === true).sort(() => 0.5 - Math.random());
-                    setSideBarVideos(shuffledVideos)
+                if (!videos || videos.length === 0) {
+                    const videoResponse = await axiosInstance.get(`/video/all-users-videos`);
+                    const shuffledVideos = videoResponse.data.data.filter(video => video.isPublished === true).sort(() => 0.5 - Math.random());
+                    setSideBarVideos(shuffledVideos);
+                    dispatch(setVideos(shuffledVideos));
+                } else {
+                    setSideBarVideos(videos);
                 }
 
 
