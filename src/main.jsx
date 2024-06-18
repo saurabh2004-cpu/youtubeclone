@@ -6,7 +6,6 @@ import { Provider } from 'react-redux';
 import store from './store/store.js';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Login from "./components/Login.jsx"
-import { useSelector } from 'react-redux';
 import {
   Register,
   Home, 
@@ -29,7 +28,7 @@ import CreatePlayList from './components/playList/CreatePlayList.jsx';  //temp
 import GetPlayList from './components/playList/GetPlayList.jsx';        //temp  
 import GetAllPlaylists from './components/playList/GetAllPlaylists.jsx';
 
-const user = useSelector((state) => state.auth.userData);
+
 
 
 
