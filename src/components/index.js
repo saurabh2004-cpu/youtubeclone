@@ -33,6 +33,7 @@ import LikedVideo from "./video/LikedVideo.jsx";
 import WatchHistory from "./video/WatchHistory.jsx";
 import WatchLater from "./video/WatchLater.jsx";
 import CreatePlayList from "./playList/CreatePlayList.jsx";
+import GetPlayList from "./playList/GetPlayList.jsx"
 
 
 
@@ -74,7 +75,8 @@ export {
     LikedVideo,
     WatchHistory,
     WatchLater,
-    CreatePlayList
+    CreatePlayList,
+    GetPlayList
 
 
 
