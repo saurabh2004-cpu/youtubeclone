@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const loadStateFromLocalStorage = () => {
     try {
-        const serializedState = localStorage.getItem('authState');
+        const serializedState = localStorage.getItem('channelState');
         if (serializedState === null) {
             return undefined;
         }
@@ -16,15 +16,14 @@ const loadStateFromLocalStorage = () => {
 const saveStateToLocalStorage = (state) => {
     try {
         const serializedState = JSON.stringify(state);
-        localStorage.setItem('authState', serializedState);
+        localStorage.setItem('channelState', serializedState);
     } catch (e) {
         console.warn("Could not save state to localStorage", e);
     }
 };
 
-
 const initialState = loadStateFromLocalStorage() || {
-    userData: null
+    channelData: null,
 };
 
 const channelSlice = createSlice({
@@ -37,7 +36,7 @@ const channelSlice = createSlice({
         },
         clearChannel: (state) => {
             state.channelData = null;
-            localStorage.removeItem('authState');
+            localStorage.removeItem('channelState');
         },
     },
 });
