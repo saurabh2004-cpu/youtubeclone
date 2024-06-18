@@ -129,15 +129,15 @@ function GetVideo() {
             try {
                 const response = await axiosInstance.post(`/like/toggle-video-like/${videoId}`);
                 if (response.data.success) {
-                    setIsLiked(!isLiked);
-                    setLikeCount(prev => (isLiked ? prev - 1 : prev + 1));
+                    setIsLiked(prevIsLiked => !prevIsLiked);
+                    setLikeCount(prevLikeCount => prevIsLiked ? prevLikeCount - 1 : prevLikeCount + 1);
                 }
             } catch (error) {
                 setError(error.response?.data?.message || error.message);
             }
         }
     };
-
+    
     const handleGetChannel = (channelId) => {
         navigate(`/get-channel/${channelId}`);
     };
