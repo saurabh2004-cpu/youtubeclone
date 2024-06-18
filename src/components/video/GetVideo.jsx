@@ -216,7 +216,9 @@ function GetVideo() {
 
                 {/* Right Section: Sidebar Videos */}
                 <div className="w-1/2 ml-4 flex-shrink-0 sticky top-20">
-                    <SidebarVideos videos={sidebarVideos} getVideos={true} />
+                    {sidebarVideos && sidebarVideos.length > 0 && (
+                        <SidebarVideos videos={sidebarVideos} />
+                    )}
                 </div>
             </div>
         </>
