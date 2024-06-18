@@ -101,7 +101,7 @@ const AllUsersVideos = ({ isSidebarOpen }) => {
   };
 
   if (loading) {
-    return <div><Loader/></div>;
+    return <div className='flex justify-center'><Loader/></div>;
   }
 
   // if (!allVideos.length) {
