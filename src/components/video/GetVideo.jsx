@@ -50,7 +50,7 @@ function GetVideo() {
                     const videoLikeStatus=await axiosInstance.get(`/video/is-liked/${videoId}`)
                     if(videoLikeStatus.status===200){
                         console.log("videoLikeStatus",videoLikeStatus.data.data)
-                        
+
                         setIsLiked(videoLikeStatus.data.data.isLiked)
                         setLikeCount(videoLikeStatus.data.data.likesCount)
                     }
@@ -60,7 +60,7 @@ function GetVideo() {
                     if (channelProfileResponse.status === 200) {
                         const channelData = channelProfileResponse.data.data;
                         dispatch(setChannel(channelData))
-                        console.log("getvideo channel",channelProfileResponse)
+                        console.log("getvideo channel",channelProfileResponse.data.data)
                         setSubscribers(channelData.subscribersCount);
                         setIsSubscribed(channelData.isSubscribed);
                     }
@@ -130,7 +130,6 @@ function GetVideo() {
             try {
                 const response = await axiosInstance.post(`/like/toggle-video-like/${videoId}`);
                 if (response.data.success) {
-                    console.log("response of toggle like ",response)
                     setIsLiked(!isLiked);
                     setLikeCount(prev => (isLiked ? prev - 1 : prev + 1));
                 }
