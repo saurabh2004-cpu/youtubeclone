@@ -129,8 +129,11 @@ function GetVideo() {
             try {
                 const response = await axiosInstance.post(`/like/toggle-video-like/${videoId}`);
                 if (response.data.success) {
-                    setIsLiked(prevIsLiked => !prevIsLiked);
-                    setLikeCount(prevLikeCount => !isLiked ? prevLikeCount + 1 : prevLikeCount - 1);
+                    setIsLiked(prevIsLiked => {
+                        const newIsLiked = !prevIsLiked;
+                        setLikeCount(prevLikeCount => newIsLiked ? prevLikeCount + 1 : prevLikeCount - 1);
+                        return newIsLiked;
+                    });
                 }
             } catch (error) {
                 setError(error.response?.data?.message || error.message);
