@@ -50,7 +50,6 @@ function GetVideo() {
                     const videoLikeStatus=await axiosInstance.get(`/video/is-liked/${videoId}/${user._id}`)
                     console.log("videoLikeStatus",videoLikeStatus.data.data)
                     if(videoLikeStatus.status===200){
-
                         setIsLiked(videoLikeStatus.data.data.isLiked)
                         setLikeCount(videoLikeStatus.data.data.likesCount)
                     }
@@ -190,8 +189,8 @@ function GetVideo() {
                                 className="bg-gray-700 text-white px-4 py-2 rounded-full m-2"
                                 onClick={() => handleLikeVideo(video._id)}
                             >
-                                {/* {isLiked ? <AiFillLike /> : <AiOutlineLike />} {likeCount} */}
-                                {isLiked ? 'Unlike' : 'Like' }{likeCount}
+                                {isLiked ? <AiFillLike /> : <AiOutlineLike />} {likeCount}
+                                {/* {isLiked ? 'Unlike' : 'Like' } */}
                             </button>
                             
                             <button className="bg-gray-700 text-white px-4 py-2 rounded-full m-2">Share</button>
