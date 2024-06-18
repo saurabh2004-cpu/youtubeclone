@@ -8,6 +8,7 @@ import { useRef } from 'react';
 import axiosInstance from '../../axiosInstance';
 import nprogress from 'nprogress';
 import 'nprogress/nprogress.css'; 
+import Loader from '../index.js';
 
 const AllUsersVideos = ({ isSidebarOpen }) => {
   const [loading, setLoading] = useState(true);
@@ -100,7 +101,7 @@ const AllUsersVideos = ({ isSidebarOpen }) => {
   };
 
   if (loading) {
-    return <div className='text-white'>Loading...</div>;
+    return <div><Loader/></div>;
   }
 
   // if (!allVideos.length) {

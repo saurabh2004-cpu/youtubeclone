@@ -34,6 +34,7 @@ import WatchHistory from "./video/WatchHistory.jsx";
 import WatchLater from "./video/WatchLater.jsx";
 import CreatePlayList from "./playList/CreatePlayList.jsx";
 import GetPlayList from "./playList/GetPlayList.jsx"
+import Loader from "./utility/Loader.jsx";
 
 
 
@@ -76,7 +77,9 @@ export {
     WatchHistory,
     WatchLater,
     CreatePlayList,
-    GetPlayList
+    GetPlayList,
+    Loader
+    
 
 
 
