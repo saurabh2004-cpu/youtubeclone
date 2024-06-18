@@ -6,6 +6,7 @@ import { login } from '../store/authSlice.js';
 import Input from './utility/Input.jsx';
 import { FaCamera, FaEye, FaEyeSlash } from 'react-icons/fa';
 import axiosInstance from '../axiosInstance.js';
+import { Btn } from './index.js';
 
 function Register() {
     const navigate = useNavigate();
@@ -221,12 +222,10 @@ function Register() {
                                 </button>
                             )}
                             {activeTab === 3 && (
-                                <button
-                                    type="submit"
-                                    className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-all duration-200 ml-auto"
-                                >
-                                    Create Account
-                                </button>
+                                <Btn 
+                                type={'text'}
+                                text={'Create Account'}
+                                />
                             )}
 
                         </div>
