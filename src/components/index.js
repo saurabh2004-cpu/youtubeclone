@@ -35,6 +35,7 @@ import WatchLater from "./video/WatchLater.jsx";
 import CreatePlayList from "./playList/CreatePlayList.jsx";
 import GetPlayList from "./playList/GetPlayList.jsx"
 import Loader from "./utility/Loader.jsx";
+import SubscribeBtn from "./utility/SubscribeBtn.jsx"
 
 
 
@@ -78,7 +79,8 @@ export {
     WatchLater,
     CreatePlayList,
     GetPlayList,
-    Loader
+    Loader,
+    SubscribeBtn
     
 
 
