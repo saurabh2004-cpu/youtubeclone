@@ -19,12 +19,15 @@ import {
   GetAllPlaylists,
 } from './components/index.js';
 import Login from './components/Login.jsx';
+import { useSelector } from 'react-redux';
+
+const user=useSelector(state=>state.auth.userData)
 
 function App() {
   return (
     <Routes>
-      <Route path="/register" element={<Register />} />
-      <Route path="/login" element={<Login />} />
+      {!userData && <Route path="/register" element={<Register />} />}
+     {!userData && <Route path="/login" element={<Login />} />}
       <Route path="/" element={<Home />} />
       <Route path="/channel-profile" element={<ChannelProfile />} />
       <Route path="/upload-video" element={<UploadVideo />} />
