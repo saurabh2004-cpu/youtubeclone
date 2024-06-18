@@ -34,34 +34,75 @@ function GetVideo() {
     useEffect(() => {
         const fetchVideo = async () => {
             try {
-                nprogress.start();
+                nprogress.start()
                 const response = await axiosInstance.get(`/video/get-video/${videoId}`);
                 if (response.status === 200) {
                     const videoData = response.data.data.video;
                     setVideo(videoData);
+                    setViews(videoData.views);
 
-                    const videoLikeStatus = await axiosInstance.get(`/video/is-liked/${videoId}/${user._id}`);
-                    if (videoLikeStatus.status === 200) {
-                        setIsLiked(videoLikeStatus.data.data.isLiked);
-                        setLikeCount(videoLikeStatus.data.data.likesCount);
+
+                    // const channelSubscribers=await axiosInstance.get(`/get-channel-subscribers/${videoData.owner._id}`)
+                    // if(channelSubscribers.status===200){
+                    //     console.log("subscribers",channelSubscribers)
+                    // }
+
+                    const videoLikeStatus=await axiosInstance.get(`/video/is-liked/${videoId}/${user._id}`)
+                    console.log("videoLikeStatus",videoLikeStatus.data.data)
+                    if(videoLikeStatus.status===200){
+                        setIsLiked(videoLikeStatus.data.data.isLiked)
+                        setLikeCount(videoLikeStatus.data.data.likesCount)
                     }
+                    
 
                     const channelProfileResponse = await axiosInstance.get(`/users/get-channel-profile/${videoData.owner._id}/${user._id}`);
                     if (channelProfileResponse.status === 200) {
                         const channelData = channelProfileResponse.data.data;
-                        dispatch(setChannel(channelData));
+                        dispatch(setChannel(channelData))
+                        console.log("getvideo channel",channelProfileResponse.data.data)
+                        setSubscribers(channelData.subscribersCount);
+                        setIsSubscribed(channelData.isSubscribed);
                     }
                 }
             } catch (error) {
                 setError(error.response?.data?.message || error.message);
             } finally {
-                nprogress.done();
+                nprogress.done(); 
+              }
+              
+        };
+
+        const createWatchHistory = async () => {
+            if (user) {
+                try {
+                    await axiosInstance.post(`/users/create-watch-history/${videoId}`);
+                } catch (error) {
+                    console.error('Error creating watch history:', error);
+                }
             }
         };
 
-        fetchVideo();
-    }, [videoId]);
+        const createView = async () => {
+            if (user) {
+                try {
+                    const response = await axiosInstance.post(`/video/increment-video-views/${videoId}`);
+                    if (response.data.success) {
+                        setViews(response.data.data.views);
+                    }
+                } catch (error) {
+                    console.error('Error incrementing view count:', error);
+                }
+            }
+        };
 
+        if (!viewCounted.current) {
+            createView();
+            createWatchHistory();
+            viewCounted.current = true;
+        }
+
+        fetchVideo();
+    }, [videoId, commentsChanged]);
 
     const handleCommentAdded = () => {
         setCommentsChanged(prev => !prev); // Toggle commentsChanged to trigger useEffect
@@ -88,17 +129,14 @@ function GetVideo() {
             try {
                 const response = await axiosInstance.post(`/like/toggle-video-like/${videoId}`);
                 if (response.data.success) {
-                    const newIsLiked = !isLiked;
-                    setIsLiked(newIsLiked);
-                    setLikeCount(prevLikeCount => newIsLiked ? prevLikeCount + 1 : prevLikeCount - 1);
+                    setIsLiked(prevIsLiked => !prevIsLiked);
+                    setLikeCount(prevLikeCount => !isLiked ? prevLikeCount + 1 : prevLikeCount - 1);
                 }
             } catch (error) {
                 setError(error.response?.data?.message || error.message);
             }
         }
     };
-    
-    
     
     // Usage in JSX
     <button
@@ -156,12 +194,13 @@ function GetVideo() {
                             {isSubscribed ? 'Unsubscribe' : 'Subscribe'}
                         </button>
                         <div className="ml-auto text-white">
-                            <div>
-                                <p>{likeCount} likes</p>
-                                <button onClick={handleLikeVideo}>
-                                    {isLiked ? <AiFillLike /> : <AiOutlineLike />} {likeCount}
-                                </button>
-                            </div>
+                            <button
+                                className="bg-gray-700 text-white px-4 py-2 rounded-full m-2"
+                                onClick={() => handleLikeVideo(video._id)}
+                            >
+                                {/* {isLiked ? <AiFillLike /> : <AiOutlineLike />} {likeCount} */}
+                                {isLiked ? 'Unlike' : 'Like' }{likeCount}
+                            </button>
                             
                             <button className="bg-gray-700 text-white px-4 py-2 rounded-full m-2">Share</button>
                             <button className="bg-gray-700 text-white px-4 py-2 rounded-full m-2">Download</button>
