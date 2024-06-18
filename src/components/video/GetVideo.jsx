@@ -124,19 +124,28 @@ function GetVideo() {
         }
     };
 
-    const handleLikeVideo = async (videoId) => {
+    const handleLikeVideo = async () => {
         if (user) {
             try {
                 const response = await axiosInstance.post(`/like/toggle-video-like/${videoId}`);
                 if (response.data.success) {
                     setIsLiked(prevIsLiked => !prevIsLiked);
-                    setLikeCount(prevLikeCount => prevIsLiked ? prevLikeCount - 1 : prevLikeCount + 1);
+                    setLikeCount(prevLikeCount => !isLiked ? prevLikeCount + 1 : prevLikeCount - 1);
                 }
             } catch (error) {
                 setError(error.response?.data?.message || error.message);
             }
         }
     };
+    
+    // Usage in JSX
+    <button
+        className="bg-gray-700 text-white px-4 py-2 rounded-full m-2"
+        onClick={handleLikeVideo}
+    >
+        {isLiked ? <AiFillLike /> : <AiOutlineLike />} {likeCount}
+    </button>
+    
     
     const handleGetChannel = (channelId) => {
         navigate(`/get-channel/${channelId}`);
