@@ -129,17 +129,16 @@ function GetVideo() {
             try {
                 const response = await axiosInstance.post(`/like/toggle-video-like/${videoId}`);
                 if (response.data.success) {
-                    setIsLiked(prevIsLiked => {
-                        const newIsLiked = !prevIsLiked;
-                        setLikeCount(prevLikeCount => newIsLiked ? prevLikeCount + 1 : prevLikeCount - 1);
-                        return newIsLiked;
-                    });
+                    const updatedIsLiked = !isLiked; // Determine the new state
+                    setIsLiked(updatedIsLiked);
+                    setLikeCount(prevLikeCount => updatedIsLiked ? prevLikeCount + 1 : prevLikeCount - 1);
                 }
             } catch (error) {
                 setError(error.response?.data?.message || error.message);
             }
         }
     };
+    
     
     // Usage in JSX
     <button
