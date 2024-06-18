@@ -181,13 +181,13 @@ function GetVideo() {
                                 <p className="text-white">{subscribers} subscribers</p>
                             </div>
                         </div>
-                        <button
+                        {/* <button
                             className={`px-4 py-2 rounded-full ${isSubscribed ? 'bg-white text-gray-800' : 'bg-red-600 text-white'}`}
                             onClick={() => handleSubscribe(video.owner._id)}
                         >
                             {/* {isSubscribed ? 'Unsubscribe' : 'Subscribe'} */}
+                        {/* </button> */} */}
                             <SubscribeBtn subscribed={isSubscribed}/>
-                        </button>
                         <div className="ml-auto text-white">
                             <button
                                 className="bg-gray-700 text-white px-4 py-2 rounded-full m-2"
