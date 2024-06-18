@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+//modify it letter
+
 function SubscribeButton({subscribed ,toggleSubscribe,channelId}) {
   const [isClicked, setIsClicked] = useState(false);
 
@@ -21,7 +23,7 @@ function SubscribeButton({subscribed ,toggleSubscribe,channelId}) {
             border: none;
             color: ${!subscribed? 'black':'white'}
             cursor: pointer;
-            background-color: ${!subscribed ?'#8B0000':'white'};
+            background-color: ${!subscribed ?'#FFA07A':'white'};
             transition: all 0.2s ease;
           }
 
