@@ -11,7 +11,7 @@ function Register() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [error, setError] = useState("");
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const [activeTab, setActiveTab] = useState(0);
     const [avatarPreview, setAvatarPreview] = useState(null);
     const [coverImagePreview, setCoverImagePreview] = useState(null);
@@ -109,12 +109,14 @@ function Register() {
                                         {...register("fullName", { required: true })}
                                         className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
+                                    {errors.fullName && <p className="text-red-600">Full name is required</p>}
                                     <Input
                                         label="Username"
                                         placeholder="Enter your username"
                                         {...register("username", { required: true })}
                                         className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
+                                    {errors.username && <p className="text-red-600">Username is required</p>}
                                 </>
                             )}
                             {activeTab === 1 && (
@@ -132,6 +134,7 @@ function Register() {
                                         })}
                                         className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
+                                    {errors.email && <p className="text-red-600">{errors.email.message}</p>}
                                     <Input
                                         label="Password"
                                         type={showPassword ? 'text' : 'password'}
@@ -139,6 +142,7 @@ function Register() {
                                         {...register("password", { required: true })}
                                         className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
+                                    {errors.password && <p className="text-red-600">Password is required</p>}
                                     <button
                                         type="button"
                                         onClick={togglePasswordVisibility}
