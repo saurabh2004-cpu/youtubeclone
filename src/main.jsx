@@ -4,7 +4,7 @@ import App from './App.jsx';
 import './index.css';
 import { Provider } from 'react-redux';
 import store from './store/store.js';
-import { RouterProvider, browserRouter } from 'react-router-dom';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Login from "./components/Login.jsx"
 import {
   Register,
@@ -33,7 +33,7 @@ import GetAllPlaylists from './components/playList/GetAllPlaylists.jsx';
 
 
 
-const router = browserRouter([
+const router = createBrowserRouter([
   {
     
     children: [
