@@ -47,6 +47,13 @@ function GetVideo() {
                     //     console.log("subscribers",channelSubscribers)
                     // }
 
+                    const videoLikeStatus=await axiosInstance.get(`/video/is-liked/${videoId}`)
+                    if(videoLikeStatus.status===200){
+                        console.log("videoLikeStatus",videoLikeStatus.data.data)
+                        
+                        setIsLiked(videoLikeStatus.data.data.isLiked)
+                        setLikeCount(videoLikeStatus.data.data.likesCount)
+                    }
                     
 
                     const channelProfileResponse = await axiosInstance.get(`/users/get-channel-profile/${videoData.owner._id}/${user._id}`);
@@ -108,7 +115,7 @@ function GetVideo() {
                 const response = await axiosInstance.post(`/subscription/toggle-subscription/${channelId}`);
                 if (response.data.success) {
                     setIsSubscribed(!isSubscribed);
-                    setSubscribers(prev => (isSubscribed ? prev - 1 : prev + 1));   ///modify it 
+                    setSubscribers(prev => (isSubscribed ? prev - 1 : prev + 1));   
                 }
             } catch (error) {
                 setError(error.response?.data?.message || error.message);
