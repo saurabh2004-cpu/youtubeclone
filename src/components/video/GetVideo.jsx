@@ -47,7 +47,7 @@ function GetVideo() {
                     //     console.log("subscribers",channelSubscribers)
                     // }
 
-                    const videoLikeStatus=await axiosInstance.get(`/video/is-liked/${videoId}`)
+                    const videoLikeStatus=await axiosInstance.get(`/video/is-liked/${videoId}/${user._id}`)
                     console.log("videoLikeStatus",videoLikeStatus.data.data)
                     if(videoLikeStatus.status===200){
 
