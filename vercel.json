@@ -3,7 +3,13 @@
       {
         "source": "/api/(.*)",
         "destination": "https://backend-project-7.onrender.com/$1"
+      },
+      
+      {
+        "source": "/(.*)",
+        "destination": "/index.html"
       }
+      
     ]
   }
   
