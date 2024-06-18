@@ -21,13 +21,13 @@ import {
 import Login from './components/Login.jsx';
 import { useSelector } from 'react-redux';
 
-
 function App() {
-  const user=useSelector(state=>state.auth.userData)
+  const user = useSelector(state => state.auth.userData);
+
   return (
     <Routes>
       {!user && <Route path="/register" element={<Register />} />}
-     {!user && <Route path="/login" element={<Login />} />}
+      {!user && <Route path="/login" element={<Login />} />}
       <Route path="/" element={<Home />} />
       <Route path="/channel-profile" element={<ChannelProfile />} />
       <Route path="/upload-video" element={<UploadVideo />} />
@@ -43,6 +43,8 @@ function App() {
       <Route path="/liked-videos" element={<LikedVideo />} />
       <Route path="/watch-history" element={<WatchHistory />} />
       <Route path="/watch-later" element={<WatchLater />} />
+      {/* Add a fallback route for non-matching routes */}
+      <Route path="*" element={<Home />} />
     </Routes>
   );
 }
