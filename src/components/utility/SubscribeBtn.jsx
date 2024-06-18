@@ -6,10 +6,11 @@ function SubscribeButton({subscribed ,toggleSubscribe}) {
   const handleClick = () => {
     setIsClicked(true);
     setTimeout(() => setIsClicked(false), 600); // Reset after animation duration
+    toggleSubscribe()
   };
 
   return (
-    <button className={`button ${isClicked ? 'clicked' : ''}`} onClick={toggleSubscribe}>
+    <button className={`button ${isClicked ? 'clicked' : ''}`} onClick={handleClick}>
       {subscribed? 'Unsubscribe' :'Subscribe'}
       <style>
         {`
