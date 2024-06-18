@@ -8,6 +8,7 @@ import axiosInstance from '../../axiosInstance.js';
 import nprogress from 'nprogress';
 import 'nprogress/nprogress.css'; 
 import { setChannel } from '../../store/channelSlice.js';
+import { setVideos } from '../../store/videosSlice.js';
 
 
 function GetVideo() {
@@ -28,7 +29,7 @@ function GetVideo() {
     
     const videos = useSelector(state => state.videos.videosData);
     const channelData = useSelector(state => state.channel.channelData);
-    console.log("userId",user._id)
+    // console.log("userId",user._id)
     
 
     useEffect(() => {
@@ -40,12 +41,6 @@ function GetVideo() {
                     const videoData = response.data.data.video;
                     setVideo(videoData);
                     setViews(videoData.views);
-
-
-                    // const channelSubscribers=await axiosInstance.get(`/get-channel-subscribers/${videoData.owner._id}`)
-                    // if(channelSubscribers.status===200){
-                    //     console.log("subscribers",channelSubscribers)
-                    // }
 
                     const videoLikeStatus=await axiosInstance.get(`/video/is-liked/${videoId}/${user._id}`)
                     console.log("videoLikeStatus",videoLikeStatus.data.data)
@@ -64,6 +59,14 @@ function GetVideo() {
                         setIsSubscribed(channelData.isSubscribed);
                     }
                 }
+
+                if(!videos){
+                    const response = await  axiosInstance.get(`/video/all-users-videos`);
+                    const shuffledVideos = response.data.data.filter(video => video.isPublished === true).sort(() => 0.5 - Math.random());
+                    dispatch(setVideos(shuffledVideos));
+                }
+
+
             } catch (error) {
                 setError(error.response?.data?.message || error.message);
             } finally {
