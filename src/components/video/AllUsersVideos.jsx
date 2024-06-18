@@ -120,10 +120,7 @@ const AllUsersVideos = ({ isSidebarOpen }) => {
                 onClick={() => handleGetVideo(video._id)}
               />
               <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black to-transparent p-4">
-              <p className="text-white">
-                {`${Math.floor(video.duration / 60)}:${video.duration % 60 < 10 ? '0' : ''}${video.duration % 60} min (${video.duration} sec)`}
-              </p>
-
+                <p className="text-white">{Math.floor(video.duration / 60)}:{video.duration % 60 < 10 ? '0' : ''}{video.duration % 60} min</p>
               </div>
             </div>
           )}
