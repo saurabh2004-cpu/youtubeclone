@@ -104,14 +104,14 @@ function Register() {
                             {activeTab === 0 && (
                                 <>
                                     <Input
-                                        label="Full Name"
+                                        // label="Full Name"
                                         placeholder="Enter your full name"
                                         {...register("fullName", { required: true })}
                                         className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
                                     {errors.fullName && <p className="text-red-600">Full name is required</p>}
                                     <Input
-                                        label="Username"
+                                        // label="Username"
                                         placeholder="Enter your username"
                                         {...register("username", { required: true })}
                                         className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -136,7 +136,7 @@ function Register() {
                                     />
                                     {errors.email && <p className="text-red-600">{errors.email.message}</p>}
                                     <Input
-                                        label="Password"
+                                        // label="Password"
                                         type={showPassword ? 'text' : 'password'}
                                         placeholder="Enter your password"
                                         {...register("password", { required: true })}
