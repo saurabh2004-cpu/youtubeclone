@@ -54,7 +54,7 @@ function GetVideo() {
                     }
                 }
                 
-                if (!videos || videos.length === 0) {
+                if (!videos ) {
                     const videoResponse = await axiosInstance.get(`/video/all-users-videos`);
                     const shuffledVideos = videoResponse.data.data.filter(video => video.isPublished === true).sort(() => 0.5 - Math.random());
                     setSideBarVideos(shuffledVideos);
