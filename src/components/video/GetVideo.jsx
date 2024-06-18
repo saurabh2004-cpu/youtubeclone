@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -9,7 +8,6 @@ import nprogress from 'nprogress';
 import 'nprogress/nprogress.css'; 
 import { setChannel } from '../../store/channelSlice.js';
 import { setVideos } from '../../store/videosSlice.js';
-
 
 function GetVideo() {
     const { videoId } = useParams();
@@ -25,43 +23,37 @@ function GetVideo() {
     const viewCounted = useRef(false);
     const [commentsChanged, setCommentsChanged] = useState(false);
     const user = useSelector(state => state.auth.userData);
-    const dispatch=useDispatch()
-    const [sidebarVideos,setSideBarVideos]=useState(null)
+    const dispatch = useDispatch();
+    const [sidebarVideos, setSideBarVideos] = useState(null);
     
     const videos = useSelector(state => state.videos.videosData);
-    
     const channelData = useSelector(state => state.channel.channelData);
-    console.log("getvideosidebar",videos)
-    
 
     useEffect(() => {
         const fetchVideo = async () => {
             try {
-                nprogress.start()
+                nprogress.start();
                 const response = await axiosInstance.get(`/video/get-video/${videoId}`);
                 if (response.status === 200) {
                     const videoData = response.data.data.video;
                     setVideo(videoData);
                     setViews(videoData.views);
 
-                    const videoLikeStatus=await axiosInstance.get(`/video/is-liked/${videoId}/${user._id}`)
-                    console.log("videoLikeStatus",videoLikeStatus.data.data)
-                    if(videoLikeStatus.status===200){
-                        setIsLiked(videoLikeStatus.data.data.isLiked)
-                        setLikeCount(videoLikeStatus.data.data.likesCount)
+                    const videoLikeStatus = await axiosInstance.get(`/video/is-liked/${videoId}/${user._id}`);
+                    if (videoLikeStatus.status === 200) {
+                        setIsLiked(videoLikeStatus.data.data.isLiked);
+                        setLikeCount(videoLikeStatus.data.data.likesCount);
                     }
-                    
 
                     const channelProfileResponse = await axiosInstance.get(`/users/get-channel-profile/${videoData.owner._id}/${user._id}`);
                     if (channelProfileResponse.status === 200) {
                         const channelData = channelProfileResponse.data.data;
-                        dispatch(setChannel(channelData))
-                        console.log("getvideo channel",channelProfileResponse.data.data)
+                        dispatch(setChannel(channelData));
                         setSubscribers(channelData.subscribersCount);
                         setIsSubscribed(channelData.isSubscribed);
                     }
                 }
-
+                
                 if (!videos || videos.length === 0) {
                     const videoResponse = await axiosInstance.get(`/video/all-users-videos`);
                     const shuffledVideos = videoResponse.data.data.filter(video => video.isPublished === true).sort(() => 0.5 - Math.random());
@@ -70,14 +62,11 @@ function GetVideo() {
                 } else {
                     setSideBarVideos(videos);
                 }
-
-
             } catch (error) {
                 setError(error.response?.data?.message || error.message);
             } finally {
-                nprogress.done(); 
-              }
-              
+                nprogress.done();
+            }
         };
 
         const createWatchHistory = async () => {
@@ -110,7 +99,7 @@ function GetVideo() {
         }
 
         fetchVideo();
-    }, [videoId, commentsChanged]);
+    }, [videoId, commentsChanged, user, dispatch, videos]);
 
     const handleCommentAdded = () => {
         setCommentsChanged(prev => !prev); // Toggle commentsChanged to trigger useEffect
@@ -145,15 +134,6 @@ function GetVideo() {
             }
         }
     };
-    
-    // Usage in JSX
-    <button
-        className="bg-gray-700 text-white px-4 py-2 rounded-full m-2"
-        onClick={handleLikeVideo}
-    >
-        {isLiked ? <AiFillLike /> : <AiOutlineLike />} {likeCount}
-    </button>
-    
     
     const handleGetChannel = (channelId) => {
         navigate(`/get-channel/${channelId}`);
@@ -204,10 +184,9 @@ function GetVideo() {
                         <div className="ml-auto text-white">
                             <button
                                 className="bg-gray-700 text-white px-4 py-2 rounded-full m-2"
-                                onClick={() => handleLikeVideo(video._id)}
+                                onClick={handleLikeVideo}
                             >
-                                {/* {isLiked ? <AiFillLike /> : <AiOutlineLike />} {likeCount} */}
-                                {isLiked ? 'Unlike' : 'Like' }{likeCount}
+                                {isLiked ? <AiFillLike /> : <AiOutlineLike />} {likeCount}
                             </button>
                             
                             <button className="bg-gray-700 text-white px-4 py-2 rounded-full m-2">Share</button>
