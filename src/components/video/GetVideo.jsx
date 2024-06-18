@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -27,6 +28,12 @@ function GetVideo() {
     const [sidebarVideos, setSideBarVideos] = useState(null);
     
     const videos = useSelector(state => state.videos.videosData);
+    useEffect(() => {
+        if (videos) {
+            setSideBarVideos(videos);
+        }
+    }, [videos]);
+
     const channelData = useSelector(state => state.channel.channelData);
 
     useEffect(() => {
@@ -39,10 +46,12 @@ function GetVideo() {
                     setVideo(videoData);
                     setViews(videoData.views);
 
-                    const videoLikeStatus = await axiosInstance.get(`/video/is-liked/${videoId}/${user._id}`);
-                    if (videoLikeStatus.status === 200) {
-                        setIsLiked(videoLikeStatus.data.data.isLiked);
-                        setLikeCount(videoLikeStatus.data.data.likesCount);
+                    if (user) {
+                        const videoLikeStatus = await axiosInstance.get(`/video/is-liked/${videoId}/${user._id}`);
+                        if (videoLikeStatus.status === 200) {
+                            setIsLiked(videoLikeStatus.data.data.isLiked);
+                            setLikeCount(videoLikeStatus.data.data.likesCount);
+                        }
                     }
 
                     const channelProfileResponse = await axiosInstance.get(`/users/get-channel-profile/${videoData.owner._id}/${user._id}`);
@@ -53,19 +62,16 @@ function GetVideo() {
                         setIsSubscribed(channelData.isSubscribed);
                     }
                 }
-                
-                if (!videos ) {
-                    const videoResponse = await axiosInstance.get(`/video/all-users-videos`);
-                    const shuffledVideos = videoResponse.data.data.filter(video => video.isPublished === true).sort(() => 0.5 - Math.random());
+
+                if (!sidebarVideos) {
+                    const response = await axiosInstance.get(`/video/all-users-videos`);
+                    const shuffledVideos = response.data.data.filter(video => video.isPublished === true).sort(() => 0.5 - Math.random());
                     setSideBarVideos(shuffledVideos);
-                    dispatch(setVideos(shuffledVideos));
-                } else {
-                    setSideBarVideos(videos);
                 }
             } catch (error) {
                 setError(error.response?.data?.message || error.message);
             } finally {
-                nprogress.done();
+                nprogress.done(); 
             }
         };
 
@@ -99,7 +105,7 @@ function GetVideo() {
         }
 
         fetchVideo();
-    }, [videoId, commentsChanged, user, dispatch, videos]);
+    }, [videoId, commentsChanged, user]);
 
     const handleCommentAdded = () => {
         setCommentsChanged(prev => !prev); // Toggle commentsChanged to trigger useEffect
@@ -134,7 +140,7 @@ function GetVideo() {
             }
         }
     };
-    
+
     const handleGetChannel = (channelId) => {
         navigate(`/get-channel/${channelId}`);
     };
@@ -184,11 +190,10 @@ function GetVideo() {
                         <div className="ml-auto text-white">
                             <button
                                 className="bg-gray-700 text-white px-4 py-2 rounded-full m-2"
-                                onClick={handleLikeVideo}
+                                onClick={() => handleLikeVideo(video._id)}
                             >
                                 {isLiked ? <AiFillLike /> : <AiOutlineLike />} {likeCount}
                             </button>
-                            
                             <button className="bg-gray-700 text-white px-4 py-2 rounded-full m-2">Share</button>
                             <button className="bg-gray-700 text-white px-4 py-2 rounded-full m-2">Download</button>
                         </div>
@@ -204,14 +209,14 @@ function GetVideo() {
                         </p>
                     </div>
                     <AddComment videoId={video._id} onCommentAdded={handleCommentAdded} />
-                    <div>
-                        <GetVideoComments videoId={video._id} />
-                    </div>
+                    <GetVideoComments videoId={video._id} commentsChanged={commentsChanged} />
                 </div>
 
                 {/* Right Section: Sidebar Videos */}
-                <div className="w-1/2 ml-4 flex-shrink-0 sticky top-20">
-                    <SidebarVideos videos={sidebarVideos} getVideos={true} />
+                <div className="w-96 ml-6 flex-shrink-0 h-screen overflow-y-auto hide-scrollbar">
+                    {sidebarVideos && sidebarVideos.length > 0 && (
+                        <SidebarVideos videos={sidebarVideos} />
+                    )}
                 </div>
             </div>
         </>
