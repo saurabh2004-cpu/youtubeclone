@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function SubscribeButton() {
+function SubscribeButton({subscribe}) {
   const [isClicked, setIsClicked] = useState(false);
 
   const handleClick = () => {
@@ -10,7 +10,7 @@ function SubscribeButton() {
 
   return (
     <button className={`button ${isClicked ? 'clicked' : ''}`} onClick={handleClick}>
-      Subscribe
+      {subscribe? 'Unsubscribe' :'Subscribe'}
       <style>
         {`
           .button {

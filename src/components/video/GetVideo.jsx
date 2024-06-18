@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Header, AddComment, GetVideoComments, SidebarVideos } from "../index.js";
+import { Header, AddComment, GetVideoComments, SidebarVideos,SubscribeBtn } from "../index.js";
 import { AiOutlineLike, AiFillLike } from 'react-icons/ai';
 import axiosInstance from '../../axiosInstance.js';
 import nprogress from 'nprogress';
@@ -185,7 +185,8 @@ function GetVideo() {
                             className={`px-4 py-2 rounded-full ${isSubscribed ? 'bg-white text-gray-800' : 'bg-red-600 text-white'}`}
                             onClick={() => handleSubscribe(video.owner._id)}
                         >
-                            {isSubscribed ? 'Unsubscribe' : 'Subscribe'}
+                            {/* {isSubscribed ? 'Unsubscribe' : 'Subscribe'} */}
+                            <SubscribeBtn subscribed={isSubscribed}/>
                         </button>
                         <div className="ml-auto text-white">
                             <button
