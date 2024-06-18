@@ -185,7 +185,7 @@ function GetVideo() {
                                 onClick={() => handleLikeVideo(video._id)}
                             >
                                 {/* {isLiked ? <AiFillLike /> : <AiOutlineLike />} {likeCount} */}
-                                {isLiked ? 'Unlike' : 'Like' {likeCount}
+                                {isLiked ? 'Unlike' : 'Like' {likeCount}}
                             </button>
                             
                             <button className="bg-gray-700 text-white px-4 py-2 rounded-full m-2">Share</button>
