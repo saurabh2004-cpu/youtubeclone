@@ -10,7 +10,7 @@ function SubscribeButton({subscribe}) {
 
   return (
     <button className={`button ${isClicked ? 'clicked' : ''}`} onClick={handleClick}>
-      {subscribe? 'Unsubscribe' :'Subscribe'}
+      {subscribe==true? 'Unsubscribe' :'Subscribe'}
       <style>
         {`
           .button {
