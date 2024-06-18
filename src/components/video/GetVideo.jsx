@@ -122,6 +122,7 @@ function GetVideo() {
         if (user) {
             try {
                 const response = await axiosInstance.post(`/like/toggle-video-like/${videoId}`);
+                console.log("response of toggle like ",response)
                 if (response.data.success) {
                     setIsLiked(!isLiked);
                     setLikeCount(prev => (isLiked ? prev - 1 : prev + 1));
