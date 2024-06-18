@@ -108,7 +108,7 @@ function GetVideo() {
                 const response = await axiosInstance.post(`/subscription/toggle-subscription/${channelId}`);
                 if (response.data.success) {
                     setIsSubscribed(!isSubscribed);
-                    setSubscribers(prev => (isSubscribed ? prev - 1 : prev + 1));
+                    setSubscribers(prev => (isSubscribed ? prev - 1 : prev + 1));   ///modify it 
                 }
             } catch (error) {
                 setError(error.response?.data?.message || error.message);
@@ -122,8 +122,8 @@ function GetVideo() {
         if (user) {
             try {
                 const response = await axiosInstance.post(`/like/toggle-video-like/${videoId}`);
-                console.log("response of toggle like ",response)
                 if (response.data.success) {
+                    console.log("response of toggle like ",response)
                     setIsLiked(!isLiked);
                     setLikeCount(prev => (isLiked ? prev - 1 : prev + 1));
                 }
