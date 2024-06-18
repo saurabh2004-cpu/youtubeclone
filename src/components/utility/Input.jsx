@@ -18,7 +18,7 @@ function Input({ label, type = "text", className = "", ...props }) {
       )}
       <input
         type={type}
-        className={`input ${className}`}
+        className={`my-input ${className}`}
         {...props}
         onFocus={handleFocus}
         onBlur={handleBlur}

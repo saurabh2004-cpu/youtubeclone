@@ -1,10 +1,10 @@
-/* input.css */
+/* my-my-input.css */
 
 .group {
     position: relative;
   }
   
-  .input {
+  .my-my-input {
     font-size: 16px;
     padding: 10px 10px 10px 5px;
     display: block;
@@ -15,7 +15,7 @@
     outline: none;
   }
   
-  .input:focus {
+  .my-my-input:focus {
     outline: none;
   }
   
@@ -32,8 +32,8 @@
     -webkit-transition: 0.2s ease all;
   }
   
-  .input:focus ~ label,
-  .input:valid ~ label {
+  .my-my-input:focus ~ label,
+  .my-my-input:valid ~ label {
     top: -20px;
     font-size: 14px;
     color: #5264AE;
@@ -66,8 +66,8 @@
     right: 50%;
   }
   
-  .input:focus ~ .bar:before,
-  .input:focus ~ .bar:after {
+  .my-input:focus ~ .bar:before,
+  .my-input:focus ~ .bar:after {
     width: 50%;
   }
   
@@ -81,11 +81,11 @@
     opacity: 0.5;
   }
   
-  .input:focus ~ .highlight {
-    animation: inputHighlighter 0.3s ease;
+  .my-input:focus ~ .highlight {
+    animation: my-inputHighlighter 0.3s ease;
   }
   
-  @keyframes inputHighlighter {
+  @keyframes my-inputHighlighter {
     from {
       background: #5264AE;
     }

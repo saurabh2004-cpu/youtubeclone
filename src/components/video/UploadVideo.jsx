@@ -164,7 +164,7 @@ function UploadVideo() {
                             <form onSubmit={handleSubmit(handleVideoUpload)}>
                                 <div className="space-y-5">
                                     <Input
-                                        label="Title"
+                                        // label="Title"
                                         placeholder="Enter your title"
                                         {...register("title", { required: true, maxLength: 100})}
                                         className="w-full px-4 py-2 text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -173,7 +173,7 @@ function UploadVideo() {
                                         <p className="text-red-500 text-sm">Title must be 100 characters or less</p>
                                     )}
                                     <Input
-                                        label="Description"
+                                        // label="Description"
                                         placeholder="Enter your description"
                                         {...register("description", { required: true })}
                                         className="w-full px-4 py-2 text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
