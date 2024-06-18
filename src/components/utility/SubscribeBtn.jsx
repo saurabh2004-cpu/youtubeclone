@@ -19,7 +19,7 @@ function SubscribeButton({subscribed ,toggleSubscribe,channelId}) {
             padding: 10px 22px;
             border-radius: 6px;
             border: none;
-            color: ${subscribed ?'black':'white'}
+            color: ${subscribed? 'black':'white'}
             cursor: pointer;
             background-color: ${!subscribed ?'#8B0000':'white'};
             transition: all 0.2s ease;
