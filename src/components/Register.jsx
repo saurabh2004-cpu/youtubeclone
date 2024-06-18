@@ -122,7 +122,7 @@ function Register() {
                             {activeTab === 1 && (
                                 <>
                                     <Input
-                                        label="Email"
+                                        // label="Email"
                                         placeholder="Enter your email"
                                         type="email"
                                         {...register("email", {

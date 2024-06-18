@@ -53,7 +53,7 @@ function Login() {
                     <form onSubmit={handleSubmit(handleLogin)}>
                         <div className="space-y-5">
                             <Input
-                                label="Username"
+                                // label="Username"
                                 placeholder="Enter your username"
                                 type="userName"
                                 {...register("userName", {
@@ -63,7 +63,7 @@ function Login() {
                             />
                             {errors.userName && <p className="text-red-600">{errors.userName.message}</p>}
                             <Input
-                                label="Email"
+                                // label="Email"
                                 placeholder="Enter your email"
                                 type="email"
                                 {...register("email", {
@@ -77,7 +77,7 @@ function Login() {
                             />
                             {errors.email && <p className="text-red-600">{errors.email.message}</p>}
                             <Input
-                                label="Password"
+                                // label="Password"
                                 type="password"
                                 placeholder="Enter your password"
                                 {...register("password", { required: "Password is required" })}
