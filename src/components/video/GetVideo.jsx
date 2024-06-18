@@ -187,7 +187,7 @@ function GetVideo() {
                         >
                             {/* {isSubscribed ? 'Unsubscribe' : 'Subscribe'} */}
                         {/* </button> */} 
-                            <SubscribeBtn subscribed={isSubscribed} toggleSubscribe={handleSubscribe}/>
+                            <SubscribeBtn subscribed={isSubscribed} toggleSubscribe={handleSubscribe(video.owner._id)}/>
                         <div className="ml-auto text-white">
                             <button
                                 className="bg-gray-700 text-white px-4 py-2 rounded-full m-2"
