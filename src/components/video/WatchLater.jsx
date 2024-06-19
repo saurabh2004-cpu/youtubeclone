@@ -7,8 +7,6 @@ import axiosInstance from '../../axiosInstance.js';
 import nprogress from 'nprogress';
 import 'nprogress/nprogress.css'; 
 
-
-
 function WatchLater() {
     const [watchLaterVideos, setWatchLaterVideos] = useState([]);
     const [hoveredVideo, setHoveredVideo] = useState(null);
@@ -24,7 +22,7 @@ function WatchLater() {
                 setWatchLaterVideos(response.data.data);
             } catch (error) {
                 console.error('Error fetching watch later videos:', error);
-            }finally {
+            } finally {
                 nprogress.done(); 
               }
         };
@@ -61,9 +59,9 @@ function WatchLater() {
     return (
         <>
             <Header showCatagories={false} />
-            <div className="container mx-auto p-4 bg-gray-900 text-white flex">
+            <div className="container mx-auto p-4 bg-gray-900 text-white flex flex-col md:flex-row">
                 {/* Left side - Thumbnail of the first video */}
-                <div className="w-1/3 p-4 flex flex-col items-center sticky top-0">
+                <div className="w-full md:w-1/3 p-4 flex flex-col items-center md:sticky top-0">
                     {watchLaterVideos.length > 0 && (
                         <div className="w-full bg-gradient-to-r from-purple-500 to-pink-500 p-4 rounded-lg flex flex-col items-center justify-center mb-4 md:mb-0">
                             <img
@@ -83,7 +81,7 @@ function WatchLater() {
                 </div>
 
                 {/* Right side - List of watch later videos */}
-                <div className="w-1/2 p-4 overflow-y-auto h-screen no-scrollbar">
+                <div className="w-full md:w-2/3 p-4 overflow-y-auto h-screen no-scrollbar">
                     {watchLaterVideos.map((video, index) => (
                         <div
                             key={index}
@@ -97,7 +95,7 @@ function WatchLater() {
                             <img
                                 src={video.thumbnail}
                                 alt={video.title}
-                                className="w-40 h-24 object-cover rounded-lg mr-4"
+                                className="w-24 h-16 md:w-40 md:h-24 object-cover rounded-lg mr-4"
                             />
                             <div>
                                 <h3 className="text-lg font-bold">{video.title}</h3>

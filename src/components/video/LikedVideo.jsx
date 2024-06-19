@@ -64,9 +64,9 @@ function LikedVideo() {
 
   return (
     <> <Header showCatagories={false}/>
-      <div className="container mx-auto p-4 bg-gray-900 text-white flex">
+      <div className="container mx-auto p-4 bg-gray-900 text-white flex flex-col md:flex-row">
         {/* Left side - Thumbnail of the first video */}
-        <div className="w-1/3 p-4 flex flex-col items-center sticky top-0">
+        <div className="w-full md:w-1/3 p-4 flex flex-col items-center md:sticky md:top-0">
           {likedVideos.length > 0 && (
             <div className="w-full bg-gradient-to-r from-purple-600 via-blue-600 to-blue-800 p-4 rounded-lg flex flex-col items-center justify-center mb-4">
               <img
@@ -85,7 +85,7 @@ function LikedVideo() {
         </div>
 
         {/* Right side - List of liked videos */}
-        <div className="w-1/2 p-4 overflow-y-auto h-screen hide-scrollbar">
+        <div className="w-full md:w-2/3 p-4 overflow-y-auto h-screen hide-scrollbar">
           {likedVideos.map((video, index) => (
             <div key={index} className="relative flex items-center mb-4"
               onMouseEnter={() => setHoveredVideo(index)}
@@ -97,11 +97,11 @@ function LikedVideo() {
               <img
                 src={video.thumbnail}
                 alt={video.title}
-                className="w-40 h-24 object-cover rounded-lg mr-4"
+                className="w-24 h-16 md:w-40 md:h-24 object-cover rounded-lg mr-4"
               />
               <div>
                 <h3 className="text-lg font-bold">{video.title}</h3>
-                <p className="text-gray-400">{video.channelName} • {video.views} views •  {calculateDaysAgo(video.createdAt)}</p>
+                <p className="text-gray-400">{video.channelName} • {video.views} views • {calculateDaysAgo(video.createdAt)}</p>
               </div>
               {hoveredVideo === index && (
                 <div className="absolute right-0 top-0">
@@ -109,7 +109,7 @@ function LikedVideo() {
                     className="text-white"
                     onClick={() => setShowOptions(index)}
                   >
-                   <FiMoreVertical/>
+                    <FiMoreVertical/>
                   </button>
                   {showOptions === index && (
                     <div className="absolute right-0 mt-2 w-48 bg-white text-black rounded-lg shadow-lg z-10">
