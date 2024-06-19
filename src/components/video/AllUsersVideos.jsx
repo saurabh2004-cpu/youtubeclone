@@ -107,7 +107,7 @@ const AllUsersVideos = ({ isSidebarOpen }) => {
   }
 
   return (
-    <div className="container mx-auto p-4 grid gap-6 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-4">
+    <div className="container mx-auto p-4 grid gap-6 sm:grid-cols-1 md:grid-cols-1 md:gap-0 lg:grid-cols-3 xl:grid-cols-4">
       {allVideos?.map(video => (
         <div key={video._id} className="relative cursor-pointer group mb-6" onMouseLeave={() => handleMouseLeave(video._id)}>
           {video.isPublished && (
@@ -115,7 +115,7 @@ const AllUsersVideos = ({ isSidebarOpen }) => {
               <img
                 src={video.thumbnail}
                 alt={video.title}
-                className="w-full h-60 object-cover"
+                className="w-full h-60 object-cover md:h-50 md:gap-0"
                 onClick={() => handleGetVideo(video._id)}
               />
               <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black to-transparent p-4">

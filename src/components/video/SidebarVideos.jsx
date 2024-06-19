@@ -9,7 +9,7 @@ const SidebarVideos = ({videos}) => {
   const [menuVisible, setMenuVisible] = useState({});
   const currentUser=useSelector(state=>state.auth.userData)
 
-  const isVideoOwnerIsCurrentUser=videos[0].owner===currentUser?._id?true:false
+  const isVideoOwnerIsCurrentUser=videos[0]?.owner===currentUser?._id?true:false
   // console.log(isVideoOwnerIsCurrentUser)
 
   const navigate = useNavigate();
