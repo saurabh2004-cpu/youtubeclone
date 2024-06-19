@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Header, AddComment, GetVideoComments, SidebarVideos, SubscribeBtn } from "../index.js";
+import { Header, AddComment, GetVideoComments, SidebarVideos,SubscribeBtn } from "../index.js";
 import { AiOutlineLike, AiFillLike } from 'react-icons/ai';
 import axiosInstance from '../../axiosInstance.js';
 import nprogress from 'nprogress';
@@ -156,9 +156,9 @@ function GetVideo() {
     return (
         <>
             <Header showCatagories={false} />
-            <div className="flex flex-col lg:flex-row bg-black px-4 py-8">
+            <div className="flex bg-black px-4 py-8">
                 {/* Left Section: Video Player and Details */}
-                <div className="flex-grow lg:max-w-3xl w-full bg-black rounded-xl p-6 shadow-md overflow-y-auto hide-scrollbar">
+                <div className="flex-grow max-w-3xl h-screen w-full bg-black rounded-xl p-6 shadow-md overflow-y-auto hide-scrollbar">
                     <div className="relative">
                         <video controls className="w-full h-auto rounded-md mb-4 mx-auto">
                             <source src={video.videoFile} type="video/mp4" />
@@ -181,8 +181,14 @@ function GetVideo() {
                                 <p className="text-white">{subscribers} subscribers</p>
                             </div>
                         </div>
-                        <SubscribeBtn subscribed={isSubscribed} toggleSubscribe={handleSubscribe} channelId={video.owner._id} />
-                        <div className="ml-auto text-white flex space-x-2">
+                        {/* <button
+                            className={`px-4 py-2 rounded-full ${isSubscribed ? 'bg-white text-gray-800' : 'bg-red-600 text-white'}`}
+                            onClick={() => handleSubscribe(video.owner._id)}
+                        >
+                            {/* {isSubscribed ? 'Unsubscribe' : 'Subscribe'} */}
+                        {/* </button> */} 
+                            <SubscribeBtn subscribed={isSubscribed} toggleSubscribe={handleSubscribe} channelId={video.owner._id}/>
+                        <div className="ml-auto text-white">
                             <button
                                 className="bg-gray-700 text-white px-4 py-2 rounded-full m-2"
                                 onClick={() => handleLikeVideo(video._id)}
@@ -210,7 +216,7 @@ function GetVideo() {
                 </div>
 
                 {/* Right Section: Sidebar Videos */}
-                <div className="w-full lg:w-1/2 mt-8 lg:mt-0 lg:ml-4 flex-shrink-0">
+                <div className="w-1/2 ml-4 flex-shrink-0 sticky top-20">
                     {sidebarVideos && sidebarVideos.length > 0 && (
                         <SidebarVideos videos={sidebarVideos} />
                     )}
