@@ -35,7 +35,7 @@ function CreatePlayList({ setShowCreatePlayList }) {
                 {error && <p className="text-red-600 mb-6 ">{error}</p>}
                 <form onSubmit={handleSubmit(handleCreatePlayList)} className="space-y-6">
                     <Input
-                        label="Playlist Name"
+                        // label="Playlist Name"
                         placeholder="Enter playlist name"
                         type="text"
                         {...register('name', {
@@ -44,7 +44,7 @@ function CreatePlayList({ setShowCreatePlayList }) {
                         className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                     <Input
-                        label="Description"
+                        // label="Description"
                         placeholder="Enter playlist description"
                         {...register('description', {
                             required: true,
