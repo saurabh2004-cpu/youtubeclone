@@ -37,7 +37,7 @@ function AddComment({ videoId,onCommentAdded }) {
     return (
         <div className="mt-4">
             <form onSubmit={handleSubmit(handleComment)} className="flex items-center ">
-                <Input
+                <input
                     type="text"
                     className="flex-1 p-2 rounded-l-md bg-gray-600 text-black"
                     placeholder="Add a comment..."
