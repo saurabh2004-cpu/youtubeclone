@@ -32,7 +32,7 @@ function PostTweet() {
             <form onSubmit={handleSubmit(handleTweetPost)}>
                 <div className="space-y-5">
                     <Input
-                        label="Tweet"
+                        // label="Tweet"
                         placeholder="Write Something Here ..."
                         type="text"
                         {...register("tweet", {

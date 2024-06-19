@@ -7,7 +7,7 @@ import { FaCamera } from 'react-icons/fa';
 import axiosInstance from "../axiosInstance.js";
 import { setChannel } from '../store/channelSlice.js';
 import nprogress from 'nprogress';
-import 'nprogress/nprogress.css'; 
+import 'nprogress/nprogress.css';
 
 const ChannelProfile = () => {
   const dispatch = useDispatch();
@@ -17,9 +17,6 @@ const ChannelProfile = () => {
   const [isAvatarHover, setIsAvatarHover] = useState(false);
   const [isCoverImageHover, setIsCoverImageHover] = useState(false);
   const [showUpdateProfile, setShowUpdateProfile] = useState(false);
-
-  
-
 
   const fetchChannel = async () => {
     nprogress.start(); 
@@ -39,7 +36,6 @@ const ChannelProfile = () => {
 
   useEffect(() => {
       fetchChannel();
-
   }, [user]);
 
   const handleAvatarChange = async (e) => {
@@ -140,7 +136,6 @@ const ChannelProfile = () => {
                   accept="image/*"
                   className="hidden"
                   onChange={handleAvatarChange}
-                  
                 />
               </label>
             </div>
@@ -158,7 +153,7 @@ const ChannelProfile = () => {
           <div className="mt-4 flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-3">
             <Link
               to="/manageVideo"
-              className="bg-blue-500 text-white font-semibold px-3 py-1 sm:px-4 sm:py-2 rounded-lg shadow-md hover:bg-blue-600 hover:shadow-lg transition-transform transform hover:-translate-y-1"
+              className="text-center bg-blue-500 text-white font-semibold px-3 py-1 sm:px-4 sm:py-2 rounded-lg shadow-md hover:bg-blue-600 hover:shadow-lg transition-transform transform hover:-translate-y-1"
             >
               Manage Videos
             </Link>
@@ -166,7 +161,6 @@ const ChannelProfile = () => {
               onClick={() => setShowUpdateProfile(true)}
               className="bg-green-500 text-white font-semibold px-3 py-1 sm:px-4 sm:py-2 rounded-lg shadow-md hover:bg-green-600 hover:shadow-lg transition-transform transform hover:-translate-y-1"
             >
-
               Customize Channel
             </button>
             {showUpdateProfile && (
