@@ -39,13 +39,11 @@ const UpdateProfile = ({ channelProfile, onClose }) => {
         <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center ">Update Profile</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Input
-            label="Full Name"
             name="fullName"
             {...register("fullName", { required: true })}
             errors={errors}
           />
           <Input
-            label="Username"
             name="username"
             {...register("username", { required: true })}
             errors={errors}

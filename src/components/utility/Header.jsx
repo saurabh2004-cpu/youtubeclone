@@ -82,22 +82,7 @@ function Header({ showCatagories = true }) {
           </div>
         </div>
         <div className="flex items-center space-x-4">
-          <button className="p-2 rounded-full bg-gray-800 hover:bg-gray-700">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M15 10l4.55 2.3M15 14.47V11.3a6 6 0 100 7.4V17a2 2 0 11-2-2 1.91 1.91 0 00-1 2.83A4 4 0 1114 9v-.07a4 4 0 11-1 .6V13"
-              />
-            </svg>
-          </button>
+         
           
           <div className="relative">
             <button

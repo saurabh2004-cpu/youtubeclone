@@ -109,13 +109,14 @@ const ChannelProfile = () => {
       >
         {isCoverImageHover && (
           <div className="absolute inset-0 flex items-center justify-center bg-opacity-50 bg-black">
-            <label className="text-white py-2 px-4 rounded cursor-pointer">
+            <label htmlFor='cover-image' className="text-white py-2 px-4 rounded cursor-pointer">
               <FaCamera />
               <input
                 type="file"
                 accept="image/*"
                 className="hidden"
                 onChange={handleCoverImageChange}
+                id='cover-image'                
               />
             </label>
           </div>
@@ -139,6 +140,7 @@ const ChannelProfile = () => {
                   accept="image/*"
                   className="hidden"
                   onChange={handleAvatarChange}
+                  
                 />
               </label>
             </div>

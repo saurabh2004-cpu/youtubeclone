@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState ,useRef} from 'react';
 import { useForm } from 'react-hook-form';
 import { Input, Header } from '../index';
 import axiosInstance from '../../axiosInstance.js';
@@ -12,6 +12,8 @@ function UploadVideo() {
     const [uploadProgress, setUploadProgress] = useState(0);
     const title = watch("title", "");
     const navigate = useNavigate();
+      
+    const videoInputRef = useRef(null);
 
     const handleVideoSelect = (event) => {
         setVideoFile(event.target.files[0]);
@@ -48,7 +50,6 @@ function UploadVideo() {
             if (response) {
                 alert("Video uploaded");
                 setUploadProgress(0); 
-                console.log(uploadProgress)
                 navigate("/");
             }
         } catch (error) {
@@ -56,25 +57,6 @@ function UploadVideo() {
             setUploadProgress(0); 
         }
     };
-
-    // if(uploadProgress>0){
-    //     return (
-    //         <div className="relative pt-1">
-    //             <div className="flex mb-2 items-center justify-between">
-    //                 <div>
-    //                     <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-blue-600 bg-blue-200">
-    //                         Uploading {uploadProgress}%
-    //                     </span>
-    //                 </div>
-    //             </div>
-    //             <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-blue-200">
-    //                 <div style={{ width: `${uploadProgress}%` }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500"></div>
-    //             </div>
-    //         </div>
-    //     )
-    // }
-    
-
 
     return (
         <>
@@ -102,29 +84,33 @@ function UploadVideo() {
                         </button>
                     </div>
                     <div className="p-4 border border-t-0 border-gray-200 rounded-b-lg">
-                        {selectedTab === 'video' && (
+                    {selectedTab === 'video' && (
                             <div className="text-center">
-                                <div className="flex justify-center items-center border-2 border-dashed border-gray-300 rounded-lg p-6 h-64">
+                                <div className="flex flex-col justify-center items-center border-2 border-dashed border-gray-300 rounded-lg p-6 h-64">
                                     <input
                                         type="file"
                                         accept="video/*"
                                         onChange={handleVideoSelect}
-                                        className="hidden"
-                                        id="video-upload"
+                                        className="mt-32"
+                                        ref={videoInputRef}
                                     />
-                                    <label htmlFor="video-upload" className="cursor-pointer">
+                                    <label
+                                        htmlFor="video-upload"
+                                        className="cursor-pointer w-full h-full flex flex-col justify-center items-center"
+                                        onClick={() => videoInputRef.current.click()}
+                                    >
                                         <div className="text-center">
-                                            <div className="mb-4">
+                                            <div className="mb-4 mt-60">
                                                 <svg className="w-16 h-16 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16V8a2 2 0 012-2h10l4 4v6a2 2 0 01-2 2H6a2 2 0 01-2-2z"></path>
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2v-6a2 2 0 00-.586-1.414L16 8.586A2 2 0 0014.586 8H14z"></path>
                                                 </svg>
                                             </div>
                                             <div className="text-gray-500">
-                                                {videoFile ? videoFile.name : "Drag and drop video files to upload"}
+                                                {videoFile ? videoFile.name : ""}
                                             </div>
                                             <div className="text-blue-500 mt-2">
-                                                SELECT FILES
+                                                
                                             </div>
                                         </div>
                                     </label>
@@ -138,22 +124,22 @@ function UploadVideo() {
                                         type="file"
                                         accept="image/*"
                                         onChange={handleThumbnailSelect}
-                                        className="hidden"
+                                        className="mt-32"
                                         id="thumbnail-upload"
                                     />
-                                    <label htmlFor="thumbnail-upload" className="cursor-pointer">
+                                    <label htmlFor="thumbnail-upload" className="cursor-pointer w-full h-full flex flex-col justify-center items-center">
                                         <div className="text-center">
-                                            <div className="mb-4">
+                                            <div className="mb-4 mt-60">
                                                 <svg className="w-16 h-16 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16V8a2 2 0 012-2h10l4 4v6a2 2 0 01-2 2H6a2 2 0 01-2-2z"></path>
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2v-6a2 2 0 00-.586-1.414L16 8.586A2 2 0 0014.586 8H14z"></path>
                                                 </svg>
                                             </div>
                                             <div className="text-gray-500">
-                                                {thumbnailFile ? thumbnailFile.name : "Drag and drop thumbnail image to upload"}
+                                                {thumbnailFile ? thumbnailFile.name : ""}
                                             </div>
                                             <div className="text-blue-500 mt-2">
-                                                SELECT FILES
+                                                {/* SELECT FILES */}
                                             </div>
                                         </div>
                                     </label>
@@ -164,16 +150,14 @@ function UploadVideo() {
                             <form onSubmit={handleSubmit(handleVideoUpload)}>
                                 <div className="space-y-5">
                                     <Input
-                                        // label="Title"
                                         placeholder="Enter your title"
-                                        {...register("title", { required: true, maxLength: 100})}
+                                        {...register("title", { required: true, maxLength: 100 })}
                                         className="w-full px-4 py-2 text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
                                     {title.length > 100 && (
                                         <p className="text-red-500 text-sm">Title must be 100 characters or less</p>
                                     )}
                                     <Input
-                                        // label="Description"
                                         placeholder="Enter your description"
                                         {...register("description", { required: true })}
                                         className="w-full px-4 py-2 text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -195,12 +179,11 @@ function UploadVideo() {
                                     <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-all duration-200">
                                         Upload Video
                                     </button>
-                                    
                                 </div>
                             </form>
                         )}
 
-                        {uploadProgress>0 &&
+                        {uploadProgress > 0 && (
                             <div className="relative pt-1">
                                 <div className="flex mb-2 items-center justify-between">
                                     <div>
@@ -213,8 +196,7 @@ function UploadVideo() {
                                     <div style={{ width: `${uploadProgress}%` }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500"></div>
                                 </div>
                             </div>
-                        }
-
+                        )}
                     </div>
                 </div>
             </div>

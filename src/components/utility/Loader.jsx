@@ -6,8 +6,8 @@ function Loader() {
       <style>
         {`
           .pl {
-            width: 15rem;
-            height: 15rem;
+            width: 5rem;
+            height: 5rem;
             position: relative;
           }
 

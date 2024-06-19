@@ -4,7 +4,7 @@
     position: relative;
   }
   
-  .my-my-input {
+  .my-input {
     font-size: 16px;
     padding: 10px 10px 10px 5px;
     display: block;
@@ -15,7 +15,7 @@
     outline: none;
   }
   
-  .my-my-input:focus {
+  .my-input:focus {
     outline: none;
   }
   
@@ -32,8 +32,8 @@
     -webkit-transition: 0.2s ease all;
   }
   
-  .my-my-input:focus ~ label,
-  .my-my-input:valid ~ label {
+  .my-input:focus ~ label,
+  .my-input:valid ~ label {
     top: -20px;
     font-size: 14px;
     color: #5264AE;
@@ -66,8 +66,8 @@
     right: 50%;
   }
   
-  .my-input:focus ~ .bar:before,
-  .my-input:focus ~ .bar:after {
+  .input:focus ~ .bar:before,
+  .input:focus ~ .bar:after {
     width: 50%;
   }
   
@@ -114,7 +114,7 @@
     overflow: hidden;
    }
    
-   button::before {
+   .my-button::before {
     content: "";
     position: absolute;
     top: 0;
@@ -129,10 +129,10 @@
     transition: all 250ms
    }
    
-   button:hover {
+   .my-button:hover {
     color: #e8e8e8;
    }
    
-   button:hover::before {
+   .my-button:hover::before {
     width: 100%;
    }

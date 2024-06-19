@@ -107,14 +107,16 @@ function Register() {
                                     <Input
                                         // label="Full Name"
                                         placeholder="Enter your full name"
-                                        {...register("fullName", { required: true })}
+                                        {...register("fullName",
+                                             { required: 'Full name is required' }
+                                            )}
                                         className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
                                     {errors.fullName && <p className="text-red-600">Full name is required</p>}
                                     <Input
                                         // label="Username"
                                         placeholder="Enter your username"
-                                        {...register("username", { required: true })}
+                                        {...register("username", { required: ' Username is required' })}
                                         className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
                                     {errors.username && <p className="text-red-600">Username is required</p>}
@@ -127,7 +129,7 @@ function Register() {
                                         placeholder="Enter your email"
                                         type="email"
                                         {...register("email", {
-                                            required: true,
+                                            required: 'Email is ewquired',
                                             pattern: {
                                                 value: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
                                                 message: "Email address must be a valid address",
@@ -140,17 +142,18 @@ function Register() {
                                         // label="Password"
                                         type={showPassword ? 'text' : 'password'}
                                         placeholder="Enter your password"
-                                        {...register("password", { required: true })}
+                                        {...register("password", { required: 'Password is required' })}
                                         className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
                                     {errors.password && <p className="text-red-600">Password is required</p>}
+                                    <div className='mb-4'>
                                     <button
                                         type="button"
                                         onClick={togglePasswordVisibility}
-                                        className="absolute mt-2 mr-2"
+                                        className=" mt-2 mr-2 bg-blue-500 rounded-lg text-black p-2"
                                     >
-                                        {showPassword ? <FaEyeSlash /> : <FaEye />}
-                                    </button>
+                                        {showPassword ? "Hide" : 'Show'}
+                                    </button></div>
                                 </>
                             )}
                             {activeTab === 2 && (
@@ -170,7 +173,7 @@ function Register() {
                                         )}
                                         <input
                                             type="file"
-                                            {...register("avatar")}
+                                            {...register("avatar",{required:'avatar is required'})}
                                             onChange={handleAvatarChange}
                                             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                         />

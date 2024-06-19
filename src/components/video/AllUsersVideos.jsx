@@ -8,24 +8,21 @@ import { useRef } from 'react';
 import axiosInstance from '../../axiosInstance';
 import nprogress from 'nprogress';
 import 'nprogress/nprogress.css'; 
-import {Loader} from '../index.js';
+import { Loader } from '../index.js';
 
 const AllUsersVideos = ({ isSidebarOpen }) => {
   const [loading, setLoading] = useState(true);
   const [menuVisible, setMenuVisible] = useState({});
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const render=useRef()
-  const currentUser=useSelector(state=>state.auth.userData)
+  const render = useRef();
+  const currentUser = useSelector(state => state.auth.userData);
 
-  // const apiUrl = import.meta.env.VITE_API_URL;
- 
-  
   useEffect(() => {
     const fetchAllVideos = async () => {
       nprogress.start(); 
       try {
-        const response = await  axiosInstance.get(`/video/all-users-videos`);
+        const response = await axiosInstance.get(`/video/all-users-videos`);
         const shuffledVideos = response.data.data.filter(video => video.isPublished === true).sort(() => 0.5 - Math.random());
         dispatch(setVideos(shuffledVideos));
         setLoading(false);
@@ -35,21 +32,16 @@ const AllUsersVideos = ({ isSidebarOpen }) => {
       } finally {
         nprogress.done(); 
       }
-      
     };
     fetchAllVideos();
   }, [dispatch]);
 
   const allVideos = useSelector(state => state.videos.videosData);
 
-  
-
-  //getvideo
   const handleGetVideo = (videoId) => {
     navigate(`/getVideo/${videoId}`);
   };
 
-  //togglemenu
   const toggleMenu = (videoId) => {
     setMenuVisible(prevState => ({
       ...prevState,
@@ -57,27 +49,34 @@ const AllUsersVideos = ({ isSidebarOpen }) => {
     }));
   };
 
-  //save to watchlater 
   const handleSaveToWatchLater = async (videoId) => {
-    if(!currentUser){
-      navigate('/register')
+    if (!currentUser) {
+      navigate('/register');
+      return;
     }
 
-    const response = await  axiosInstance.post(`/users/add-to-watch-later/${videoId}`);
-    console.log(response);
+    try {
+      const response = await axiosInstance.post(`/users/add-to-watch-later/${videoId}`);
+      console.log(response);
+    } catch (error) {
+      console.error('Error saving to watch later:', error);
+    }
   };
 
-  //playnext -not working yet
   const handlePlayNext = async (videoId) => {
-    if(!currentUser){
-      navigate('/register')
+    if (!currentUser) {
+      navigate('/register');
+      return;
     }
 
-    const response = await  axiosInstance.post(`/users/add-to-play-next/${videoId}`);
-    console.log("playnext video", response);
+    try {
+      const response = await axiosInstance.post(`/users/add-to-play-next/${videoId}`);
+      console.log("Play next video:", response);
+    } catch (error) {
+      console.error('Error adding to play next:', error);
+    }
   };
 
-  //video published at
   const calculateTimeAgo = (createdAt) => {
     const currentDate = new Date();
     const createdDate = new Date(createdAt);
@@ -92,7 +91,6 @@ const AllUsersVideos = ({ isSidebarOpen }) => {
     return `${differenceInDays} days ago`;
   };
 
-  //close menu 
   const handleMouseLeave = (videoId) => {
     setMenuVisible(prevState => ({
       ...prevState,
@@ -101,17 +99,17 @@ const AllUsersVideos = ({ isSidebarOpen }) => {
   };
 
   if (loading) {
-    return <div className='flex justify-center'><Loader/></div>;
+    return (
+      <div className='flex justify-center'>
+        <Loader style={{ width: '50px', height: '50px' }} />
+      </div>
+    );
   }
 
-  // if (!allVideos.length) {
-  //   return <div>No videos found</div>;
-  // }
-
   return (
-    <div className={`container mx-auto p-4 grid gap-6 ${isSidebarOpen ? 'grid-cols-3' : 'grid-cols-4'} `}>
+    <div className="container mx-auto p-4 grid gap-6 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-4">
       {allVideos?.map(video => (
-        <div key={video._id} className="relative cursor-pointer group" onMouseLeave={() => handleMouseLeave(video._id)}>
+        <div key={video._id} className="relative cursor-pointer group mb-6" onMouseLeave={() => handleMouseLeave(video._id)}>
           {video.isPublished && (
             <div className="relative overflow-hidden rounded-lg">
               <img
@@ -128,26 +126,25 @@ const AllUsersVideos = ({ isSidebarOpen }) => {
           <div className="px-2 py-4" onClick={() => handleGetVideo(video._id)}>
             {video.isPublished && (
               <>
-              <div className="font-bold text-lg mb-2 text-left text-white" style={{ maxWidth: '100%' }}>{video.title}</div>
-              <div className="text-gray-400" style={{ position: 'absolute', bottom: '84px', width: 'calc(100% - 48px)' }}>
-                {video.views} views • {calculateTimeAgo(video.createdAt)}
-              </div>
-              
-              <div className="flex items-center mt-14" >
-                <img
-                  src={video.owner?.avatar}
-                  alt={video.owner?.username}
-                  className="w-10 h-10 rounded-full mr-4"
-                />
-                <div className="text-sm">
-                  <p className="text-gray-300 leading-none">{video.owner?.username}</p>
+                <div className="font-bold text-lg mb-2 text-left text-white" style={{ maxWidth: '100%' }}>{video.title}</div>
+                <div className="text-gray-400" style={{ position: 'absolute', bottom: '84px', width: 'calc(100% - 48px)' }}>
+                  {video.views} views • {calculateTimeAgo(video.createdAt)}
                 </div>
-              </div>
-            </>
+                <div className="flex items-center mt-14">
+                  <img
+                    src={video.owner?.avatar}
+                    alt={video.owner?.username}
+                    className="w-10 h-10 rounded-full mr-4"
+                  />
+                  <div className="text-sm">
+                    <p className="text-gray-300 leading-none">{video.owner?.username}</p>
+                  </div>
+                </div>
+              </>
             )}
           </div>
           {video.isPublished && (
-            <div className="absolute bottom-20 right-4">
+            <div className="absolute bottom-2 right-2">
               <div className="relative">
                 <button
                   className="hidden group-hover:block text-white"
@@ -159,7 +156,7 @@ const AllUsersVideos = ({ isSidebarOpen }) => {
                   &#x22EE;
                 </button>
                 {menuVisible[video._id] && (
-                  <div className="absolute bottom-0 right-5 w-48 mt-2 py-2 bg-white border rounded shadow-xl">
+                  <div className="absolute bottom-0 right-0 w-36 mt-2 py-2 bg-white border rounded shadow-xl">
                     <button className="block px-4 py-2 text-gray-800 hover:bg-gray-200 w-full text-left" onClick={() => handlePlayNext(video._id)}>Play next</button>
                     <button className="block px-4 py-2 text-gray-800 hover:bg-gray-200 w-full text-left" onClick={() => handleSaveToWatchLater(video._id)}>Save to Watch Later</button>
                     <button className="block px-4 py-2 text-gray-800 hover:bg-gray-200 w-full text-left">Save to Playlist</button>
