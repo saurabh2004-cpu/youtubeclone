@@ -209,7 +209,9 @@ function GetVideo() {
                             )}
                         </p>
                     </div>
-                    <AddComment videoId={video._id} onCommentAdded={handleCommentAdded} />
+                    {/* <AddComment videoId={video._id} onCommentAdded={handleCommentAdded} /> */}
+                    <AddComment videoId={video._id}  />
+                    
                     <div>
                         <GetVideoComments videoId={video._id} />
                     </div>

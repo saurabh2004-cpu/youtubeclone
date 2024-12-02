@@ -107,7 +107,7 @@ const AllUsersVideos = ({ isSidebarOpen }) => {
   }
 
   return (
-    <div className="container mx-auto p-4 grid gap-6 sm:grid-cols-1 md:grid-cols-1 md:gap-0 lg:grid-cols-3 xl:grid-cols-4">
+    <div className="container mx-auto p-4 grid gap-6 sm:grid-cols-1 md:grid-cols-1 md:gap-2 lg:grid-cols-3 xl:grid-cols-4">
       {allVideos?.map(video => (
         <div key={video._id} className="relative cursor-pointer group mb-6" onMouseLeave={() => handleMouseLeave(video._id)}>
           {video.isPublished && (
@@ -123,14 +123,16 @@ const AllUsersVideos = ({ isSidebarOpen }) => {
               </div>
             </div>
           )}
-          <div className="px-2 py-4" onClick={() => handleGetVideo(video._id)}>
+          <div className="px-2 py-4 min-h-[150px] flex flex-col justify-between" onClick={() => handleGetVideo(video._id)}>
             {video.isPublished && (
               <>
-                <div className="font-bold text-lg mb-2 text-left text-white" style={{ maxWidth: '100%' }}>{video.title}</div>
-                <div className="text-gray-400" style={{ position: 'absolute', bottom: '84px', width: 'calc(100% - 48px)' }}>
+                <div className="font-bold text-lg mb-2 text-left text-white truncate" style={{ maxWidth: '100%' }}>
+                  {video.title}
+                </div>
+                <div className="text-gray-400 text-sm">
                   {video.views} views • {calculateTimeAgo(video.createdAt)}
                 </div>
-                <div className="flex items-center mt-14">
+                <div className="flex items-center mt-2">
                   <img
                     src={video.owner?.avatar}
                     alt={video.owner?.username}

@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { login } from '../store/authSlice.js';
 import Input from './utility/Input.jsx';
-import { FaCamera, FaEye, FaEyeSlash } from 'react-icons/fa';
+// import { FaCamera, FaEye, FaEyeSlash } from 'react-icons/fa';
 import axiosInstance from '../axiosInstance.js';
 
 
@@ -18,6 +18,10 @@ function Register() {
     const [coverImagePreview, setCoverImagePreview] = useState(null);
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
+
+    const handleGoogleSignup = () => {
+        window.location.href = 'http://localhost:8000/api/v1/users/auth/google'; // Adjust based on your backend URL
+      };
 
     const handleRegistration = async (data) => {
         setError("");
@@ -227,13 +231,14 @@ function Register() {
                             {activeTab === 3 && (
                                 <button
                                     type="submit"
-                                    className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-all duration-200 ml-auto"
+                                    className=" bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-all duration-200 ml-auto"
                                 >
                                     Create Account
                                 </button>
                             )}
 
                         </div>
+                        <button onClick={handleGoogleSignup} className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-all duration-200"> SignUp with Google </button>
                     </form>
                 )}
             </div>

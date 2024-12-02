@@ -1,38 +1,52 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Input } from '../index.js';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../axiosInstance.js';
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-function AddComment({ videoId,onCommentAdded }) {
+
+
+function AddComment({ videoId }) {
     const { register, handleSubmit, reset } = useForm();
-    const [commentText, setCommentText] = useState('');
-    const user=useSelector(state=>state.auth.userData)
-    const navigate=useNavigate()
+    const user = useSelector(state => state.auth.userData)
+    const navigate = useNavigate()
+    const queryClient = useQueryClient()
+
 
     const handleComment = async (data) => {
-       if(user){
-            try {
-                const response = await axiosInstance.post(`/comment/add-comment/${videoId}`, data);
-                setCommentText(response.data.data.comment)
-                if (response.status !== 200) {
-                    throw new Error('Failed to add comment');
-                }
+        if (user) {
+            const response = await axiosInstance.post(`/comment/add-comment/${videoId}`, data);
+            reset();
 
-                if (onCommentAdded) {
-                    onCommentAdded(); // Notify the parent component that a new comment has been added
-                }
-                reset();      
-            } catch (error) {
-                console.error('Error adding comment:', error);
-                setError(error.response?.data?.message || 'An error occurred while adding the comment.');
-            }
-       }else{
-        navigate('/register')
-       }
+            mutate(data)
+
+            return response.data.data.comment
+        } else {
+            navigate('/register')
+        }
     };
+
+
+    const { mutate, isError, isPending, variables } = useMutation({
+        mutationFn: handleComment,
+
+        onSuccess: async () => {
+            console.log("pending state on sucess", isPending)
+            alert("comment posted")
+        },
+        onError: (error) => {
+            console.error('Error:', error);
+        },
+        onSettled: () => queryClient.invalidateQueries({ queryKey: ['comment'] }),
+        mutationKey: ['addComment'],
+    })
+
+    // console.log("variables", variables)
+
+    if (isError) return <p>{isError}</p>
 
     return (
         <div className="mt-4">
@@ -45,13 +59,13 @@ function AddComment({ videoId,onCommentAdded }) {
                         required: true,
                     })}
                 />
-                
+
                 <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition-all duration-200 ">
                     Send
                 </button>
-                
+
             </form>
-               
+
         </div>
     );
 }

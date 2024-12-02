@@ -19,13 +19,16 @@ import {
   GetAllPlaylists,
 } from './components/index.js';
 import Login from './components/Login.jsx';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
+import Dashboard from './components/Dashboard.jsx';
 
 function App() {
-  const user = useSelector(state => state.auth.userData);
+  // const user = useSelector(state => state.auth.userData);
 
   return (
     <Routes>
+      <Route path="/dashboard" element={<Dashboard />} />
+
        <Route path="/register" element={<Register />} />
        <Route path="/login" element={<Login />} />
       <Route path="/" element={<Home />} />
@@ -43,6 +46,7 @@ function App() {
       <Route path="/liked-videos" element={<LikedVideo />} />
       <Route path="/watch-history" element={<WatchHistory />} />
       <Route path="/watch-later" element={<WatchLater />} />
+
       {/* Add a fallback route for non-matching routes */}
       <Route path="*" element={<Home />} />
     </Routes>

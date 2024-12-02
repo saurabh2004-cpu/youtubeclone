@@ -1,39 +1,50 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
-import { Input,AddComment } from '../index.js';
+import { Input, AddComment } from '../index.js';
 import { useSelector } from 'react-redux';
 import { AiOutlineLike, AiFillLike } from 'react-icons/ai';
 import axiosInstance from '../../axiosInstance.js';
+import { useQuery } from '@tanstack/react-query';
 
 function GetVideoComments({ videoId }) {
     const [comments, setComments] = useState([]);
     const [error, setError] = useState(null);
     const [menuState, setMenuState] = useState({ isOpen: false, commentId: null });
     const [updatingCommentId, setUpdatingCommentId] = useState(null);
-    const [isCommentLiked,setIsCommentLiked]=useState(false)
-    const [likeCount,setLikeCount]=useState(0)
+    const [isCommentLiked, setIsCommentLiked] = useState(false)
+    const [likeCount, setLikeCount] = useState(0)
     const { register, handleSubmit, setValue, reset } = useForm();
+
 
     // const user = useSelector((state) => state.auth.userData);
 
-    useEffect(() => {
-        const fetchComments = async () => {
-            try {
-                const response = await axiosInstance.get(`/comment/get-video-comments/${videoId}`);
-                if (response.status === 200) {
-                    const sortedComments = response.data.data.docs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-                    setComments(sortedComments);
-                } else {
-                    setError('Failed to fetch comments');
-                }
-            } catch (err) {
-                console.log(err)
-            }
-        };
+    const fetchComments = async () => {
+        const response = await axiosInstance.get(`/comment/get-video-comments/${videoId}`);
+        if (response.status === 200) {
+            // const sortedComments = response.data.data.docs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            // setComments(sortedComments);
 
-        fetchComments();
-    }, [videoId,onload]);
+            return response.data.data
+        } else {
+            setError('Failed to fetch comments');
+        }
+    };
+
+
+
+    const { isError, isLoading, data: commentData } = useQuery({
+        queryKey: ['comment'],
+        queryFn: fetchComments,
+    })
+
+    console.log("comment data",commentData)
+
+
+    if (isError) return <p>Error : Getting video comments</p>
+    if (isLoading) return <p>Loading ...</p>
+
+
 
     const toggleMenu = (commentId) => {
         setMenuState((prev) => ({
@@ -62,7 +73,7 @@ function GetVideoComments({ videoId }) {
     const handleUpdateSubmit = async (data) => {
         try {
             await axiosInstance.post(`/comment/update-comment/${updatingCommentId}`, { comment: data.comment });
-            setComments(comments.map(comment => 
+            setComments(comments.map(comment =>
                 comment._id === updatingCommentId ? { ...comment, comment: data.comment } : comment
             ));
             setUpdatingCommentId(null);
@@ -72,7 +83,7 @@ function GetVideoComments({ videoId }) {
         }
     };
 
-    
+
 
     const handleLikeComment = async (commentId) => {
         try {
@@ -92,20 +103,20 @@ function GetVideoComments({ videoId }) {
 
     return (
         <div>
-            {comments.length > 0 ? (
+            {commentData.docs > 0 ? (
                 <ul>
-                    {comments.map((comment) => (
+                    {commentData.docs.map((comment) => (
                         <li key={comment._id} className="flex p-2 border-b border-gray-700 relative">
                             <img
                                 src={comment.owner.avatar}
                                 alt={comment.owner.username}
                                 className="w-8 h-8 rounded-full"
                             />
-                                
+
                             <div className="ml-2 flex-1">
                                 <div className="flex items-center mb-1">
                                     <h4 className="text-white font-bold">{comment.owner.username}</h4>
-                                   
+
                                     <span className="text-gray-500 text-sm ml-2">{new Date(comment.createdAt).toLocaleString()}</span>
                                     <div className=''>
                                         <button
@@ -114,7 +125,7 @@ function GetVideoComments({ videoId }) {
                                         >
                                             {isCommentLiked ? <AiFillLike /> : <AiOutlineLike />}
                                         </button>
-                                     </div>
+                                    </div>
 
                                     <div className="ml-auto relative flex">
                                         <div
@@ -144,9 +155,9 @@ function GetVideoComments({ videoId }) {
                                 <div className='flex'>
                                     <p className="text-gray-300">{comment.comment}</p>
 
-                                    
 
-                                    </div>
+
+                                </div>
                                 {updatingCommentId === comment._id && (
                                     <form onSubmit={handleSubmit(handleUpdateSubmit)} className="w-full mt-2">
                                         <Input

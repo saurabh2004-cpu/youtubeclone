@@ -43,6 +43,9 @@ function Login() {
         }
     };
 
+    const handleGoogleLogin = () => {
+        window.location.href = 'http://localhost:8000/api/v1/users/auth/google'; // Adjust based on your backend URL
+      };
     return (
         <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-pink-500 to-red-600">
             <div className="mx-auto w-full max-w-lg bg-gray-800 rounded-xl p-10 border border-gray-200 shadow-md text-white">
@@ -87,6 +90,7 @@ function Login() {
                         <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-all duration-200">
                             Log In
                         </button>
+                        <button onClick={handleGoogleLogin} className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-all duration-200"> Login with Google </button>
                     </div>
                 </form>
             </div>

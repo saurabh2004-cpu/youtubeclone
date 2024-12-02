@@ -5,7 +5,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://localhost:8000',  // Ensure this matches your backend server address
+        target: 'http://localhost:8000',  // Ensure this matches your backend server address
         changeOrigin: true,
         secure: false,  // This might be necessary for self-signed certificates
         rewrite: (path) => path.replace(/^\/api/, '/api/v1'),
