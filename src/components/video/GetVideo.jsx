@@ -49,6 +49,7 @@ function GetVideo() {
                     if (user) {
                         const videoLikeStatus = await axiosInstance.get(`/video/is-liked/${videoId}/${user._id}`);
                         if (videoLikeStatus.status === 200) {
+                            console.log("videoLikeStatus",videoLikeStatus)
                             setIsLiked(videoLikeStatus.data.data.isLiked);
                             setLikeCount(videoLikeStatus.data.data.likesCount);
                         }

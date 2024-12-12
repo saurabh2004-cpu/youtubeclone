@@ -15,7 +15,6 @@ const AllUsersVideos = ({ isSidebarOpen }) => {
   const [menuVisible, setMenuVisible] = useState({});
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const render = useRef();
   const currentUser = useSelector(state => state.auth.userData);
 
   useEffect(() => {
@@ -23,6 +22,7 @@ const AllUsersVideos = ({ isSidebarOpen }) => {
       nprogress.start(); 
       try {
         const response = await axiosInstance.get(`/video/all-users-videos`);
+        console.log("response",response.data)
         const shuffledVideos = response.data.data.filter(video => video.isPublished === true).sort(() => 0.5 - Math.random());
         dispatch(setVideos(shuffledVideos));
         setLoading(false);

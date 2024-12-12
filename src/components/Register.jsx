@@ -21,7 +21,7 @@ function Register() {
 
     const handleGoogleSignup = () => {
         window.location.href = 'http://localhost:8000/api/v1/users/auth/google'; // Adjust based on your backend URL
-      };
+    };
 
     const handleRegistration = async (data) => {
         setError("");
@@ -84,7 +84,7 @@ function Register() {
         setShowPassword((prevState) => !prevState);
     };
 
-    
+
     return (
         <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-pink-500 to-red-600">
             <div className="mx-auto w-full max-w-lg space-y-5 bg-gray-800 text-white rounded-xl p-10 border border-gray-200 shadow-md">
@@ -112,8 +112,8 @@ function Register() {
                                         // label="Full Name"
                                         placeholder="Enter your full name"
                                         {...register("fullName",
-                                             { required: 'Full name is required' }
-                                            )}
+                                            { required: 'Full name is required' }
+                                        )}
                                         className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
                                     {errors.fullName && <p className="text-red-600">Full name is required</p>}
@@ -151,13 +151,13 @@ function Register() {
                                     />
                                     {errors.password && <p className="text-red-600">Password is required</p>}
                                     <div className='mb-4'>
-                                    <button
-                                        type="button"
-                                        onClick={togglePasswordVisibility}
-                                        className=" mt-2 mr-2 bg-blue-500 rounded-lg text-black p-2"
-                                    >
-                                        {showPassword ? "Hide" : 'Show'}
-                                    </button></div>
+                                        <button
+                                            type="button"
+                                            onClick={togglePasswordVisibility}
+                                            className=" mt-2 mr-2 bg-blue-500 rounded-lg text-black p-2"
+                                        >
+                                            {showPassword ? "Hide" : 'Show'}
+                                        </button></div>
                                 </>
                             )}
                             {activeTab === 2 && (
@@ -177,7 +177,7 @@ function Register() {
                                         )}
                                         <input
                                             type="file"
-                                            {...register("avatar",{required:'avatar is required'})}
+                                            {...register("avatar", { required: 'avatar is required' })}
                                             onChange={handleAvatarChange}
                                             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                         />
